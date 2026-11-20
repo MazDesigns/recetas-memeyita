@@ -141,6 +141,16 @@ img { max-width: 100%; }
 .btn { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: #fff; text-decoration: none; border-radius: 999px; padding: 12px 20px; font-weight: 500; }
 .tags { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; background: var(--surface); border-radius: 999px; padding: 14px 20px; font-size: .9rem; color: var(--green); }
 
+.grp { grid-column: 1 / -1; font-family: var(--body); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 600; margin: 10px 0 0; }
+.grp:first-child { margin-top: 0; }
+.xgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.xcard { display: flex; gap: 14px; align-items: flex-start; background: var(--surface); border-radius: 16px; padding: 16px; }
+.xcard .e { font-size: 1.8rem; line-height: 1; width: 48px; height: 48px; flex: none; display: grid; place-items: center; background: var(--card); border-radius: 12px; }
+.xcard h3 { font-family: var(--body); font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+.xcard p { margin: 0; color: #3e4536; font-size: .93rem; }
+.trucos { padding-bottom: 48px; display: flex; flex-direction: column; gap: 16px; }
+.trucos h2 { font-size: 1.6rem; color: var(--green); }
+
 footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .85rem; }
 
 @media (max-width: 760px) {
@@ -169,139 +179,182 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 <main id="app"></main>
 
 <footer>
-  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina. Las marcadas como “ejemplo” son para mostrar el formato y se reemplazan por las de la familia.</div>
+  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales.</div>
 </footer>
 
 <script>
 /* ==========================================================
    CÓMO AGREGAR UNA RECETA
    Copia un bloque { ... } de la lista RECETAS y cambia los datos.
-   - id: palabra corta sin espacios ni acentos (se usa en el enlace: #arepas)
-   - categoria: "Desayunos" | "Platos fuertes" | "Dulces" | "Bebidas" (o crea otra)
-   - de: "Mamá" | "Abuela" | "Familia y amigos"
-   - c: cantidad numérica (se ajusta con las porciones). Usa null para "al gusto".
+   - id: palabra corta sin espacios ni acentos (se usa en el enlace: #pan)
+   - categoria: "Panes" | "Dulces" | "Platos fuertes" | (o crea otra)
+   - de: quién la trae, por ejemplo "Mamá", "Abuela" o "La familia"
+   - tiempoTexto / porcionesTexto: cómo se muestran el tiempo y las porciones
+   - porciones: número (si lo pones, las cantidades se ajustan por porción)
+   - ingredientes: c = cantidad (null = "al gusto", [1.5, 2] = rango)
+                   g = título de grupo (se pone en el primer ingrediente del grupo)
+   - extras: secciones como "Consejos", "Cubiertas" o "Variaciones"
    - video: enlace de YouTube cuando lo grabes (déjalo "" mientras tanto)
-   - foto: opcional; ruta a una foto del plato (ej. "fotos/arepas.jpg")
+   - foto: opcional; ruta a una foto del plato (ej. "fotos/pan.jpg")
    ========================================================== */
 const RECETAS = [
   {
-    id: "arepas", titulo: "Arepas", categoria: "Desayunos", de: "Abuela", ejemplo: true,
-    plato: "🫓", color: "#eadfc6", tiempo: 35, porciones: 4, dificultad: "Fácil",
-    descripcion: "La base de todo desayuno: crujientes por fuera, suaves por dentro, listas para rellenar con lo que haya en la nevera.",
-    nota: "La masa está lista cuando no se pega en las manos ni se agrieta en los bordes.",
+    id: "pan", titulo: "Pan (masa básica)", categoria: "Panes", de: "La familia",
+    plato: "🍞", color: "#ead9b8", tiempoTexto: "1 h 15 min + horneado", dificultad: "Media",
+    descripcion: "La masa de la casa. Sirve para panes salados y dulces, roscas de frutas, cachitos y pan de jamón.",
+    nota: "La hoja original no indica la temperatura ni el tiempo de horneado, ni la cantidad de sal.",
     ingredientes: [
-      { e: "🌽", n: "Harina de maíz precocida", c: 2, u: "tazas" },
-      { e: "💧", n: "Agua tibia", c: 2.5, u: "tazas" },
-      { e: "🧂", n: "Sal", c: 1, u: "cdta" },
-      { e: "🫒", n: "Aceite", c: 1, u: "cda" },
-      { e: "🧀", n: "Queso o relleno", c: null, u: "al gusto" }
+      { e: "🌾", n: "Harina", c: [1.5, 2], u: "kg" },
+      { e: "🧈", n: "Mantequilla", c: 200, u: "g" },
+      { e: "🫒", n: "Aceite", c: 1, u: "taza" },
+      { e: "🫧", n: "Levadura fresca (prensada en pasta)", c: 2, u: "cda" },
+      { e: "🍬", n: "Azúcar", c: 2, u: "cda" },
+      { e: "💧", n: "Agua tibia", c: 2, u: "taza" },
+      { e: "🥛", n: "Leche", c: 2, u: "taza" },
+      { e: "🥚", n: "Huevos", c: 4, u: "" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" }
     ],
     pasos: [
-      { e: "🥣", t: "Mezclar agua y sal", d: "En un bol grande, disuelve la sal en el agua tibia y agrega el aceite." },
-      { e: "🌽", t: "Agregar la harina", d: "Añade la harina poco a poco mientras mezclas con la mano hasta que no queden grumos." },
-      { e: "⏳", t: "Reposar la masa", d: "Deja reposar unos minutos; la masa se pone firme y fácil de trabajar.", min: 5 },
-      { e: "👐", t: "Formar las arepas", d: "Haz bolitas del tamaño de una mandarina y aplánalas entre las palmas hasta 1,5 cm de grosor." },
-      { e: "🔥", t: "Cocinar en el budare", d: "En budare o sartén a fuego medio, cocina cada lado hasta que se forme una costra dorada. Suenan huecas al tocarlas.", min: 15 },
-      { e: "🧀", t: "Abrir y rellenar", d: "Ábrelas con un cuchillo por el borde, unta mantequilla y rellena." }
+      { e: "🫧", t: "Activar la levadura", d: "Disuelve la levadura en el agua tibia con las 2 cucharadas de azúcar. Tapa y deja reposar.", min: 10 },
+      { e: "🥣", t: "Batir la base", d: "Aparte, bate la mantequilla con el aceite, el azúcar y los huevos. Agrega la sal, la leche y el agua con la levadura." },
+      { e: "🌾", t: "Agregar la harina", d: "Ve agregando la harina mientras bates, hasta que la masa se pegue a la batidora. Entonces amasa a mano hasta que quede suave y algo pegajosa." },
+      { e: "⏳", t: "Dejar reposar", d: "Tapada, en un envase engrasado y en un lugar tibio.", min: 60 },
+      { e: "🥖", t: "Formar los panes", d: "Divide la masa y forma los panes. Se pueden congelar ya formados, o la masa dividida y envasada." }
+    ],
+    extras: [
+      { titulo: "Consejos", items: [
+        { e: "🖌️", t: "Para pintar el pan", d: "Agua de papelón espesita con un huevo batido, o solo leche." },
+        { e: "❄️", t: "Para descongelar la masa", d: "Sácala del congelador en la noche y pásala a la nevera." }
+      ]},
+      { titulo: "Formas y variaciones", items: [
+        { e: "🥐", t: "Croissant", d: "Estira la masa, pon una cucharada de mantequilla, dobla y guarda ½ hora en la nevera. Repite 3 veces. Al final corta en triángulos, enrolla y dobla en media luna." },
+        { e: "🌀", t: "Pan de canela", d: "Estira un rectángulo y cúbrelo con canela y azúcar. Dobla, vuelve a estirar y pon otra capa. Dobla en 4, cubre con más canela y azúcar y barniza con leche." },
+        { e: "🧄", t: "Pan de ajo", d: "Mantequilla con ajo machacado." },
+        { e: "🌰", t: "Pan de especias", d: "Clavo o pimienta guayabita, canela, nueces, pasas y azúcar." },
+        { e: "🥨", t: "Pan crineja (trenza)", d: "Teje 3 tiras. Barniza con huevo y papelón, o con leche y huevo." },
+        { e: "🎀", t: "Pan de 2 tiras", d: "Teje 2 tiras y rellena con mantequilla o mermelada. (El nombre no se lee bien en la hoja original.)" },
+        { e: "🍕", t: "Calzone", d: "Relleno de salchichón, tomate, mozzarella y jamón." },
+        { e: "🍩", t: "Rosca", d: "Relleno de canela y azúcar, mermelada, chocolate rallado o frutina. Enrolla y cierra en anillo." },
+        { e: "✚", t: "Pan campesino", d: "Con un corte en cruz encima." }
+      ]}
     ],
     video: ""
   },
   {
-    id: "cachapas", titulo: "Cachapas", categoria: "Desayunos", de: "Mamá", ejemplo: true,
-    plato: "🥞", color: "#f1e2a8", tiempo: 25, porciones: 4, dificultad: "Fácil",
-    descripcion: "Panquecas de maíz tierno, dulces y saladas a la vez, dobladas sobre queso de mano que se derrite.",
-    nota: "Si el maíz está muy jugoso, agrega un poco más de harina para que la mezcla no se corra.",
+    id: "torta-zanahoria", titulo: "Torta de zanahoria o calabacín", categoria: "Dulces", de: "La familia",
+    plato: "🥕", color: "#f0d2a8", tiempoTexto: "40 min de horno", dificultad: "Fácil",
+    descripcion: "Torta húmeda y especiada que funciona igual con zanahoria o con calabacín. Se puede congelar horneada o sin hornear.",
+    nota: "La hoja dice “300°”. Lo tomamos como 300 °F, unos 150 °C, porque 300 °C es demasiado para un horno de casa.",
     ingredientes: [
-      { e: "🌽", n: "Maíz tierno desgranado", c: 3, u: "tazas" },
-      { e: "🥛", n: "Leche", c: 0.5, u: "taza" },
-      { e: "🌾", n: "Harina de maíz precocida", c: 0.25, u: "taza" },
-      { e: "🍬", n: "Azúcar", c: 3, u: "cdas" },
-      { e: "🧂", n: "Sal", c: 0.5, u: "cdta" },
-      { e: "🧈", n: "Mantequilla", c: 2, u: "cdas" },
-      { e: "🧀", n: "Queso de mano", c: null, u: "al gusto" }
+      { e: "🥕", n: "Zanahoria o calabacín finamente rallado", c: 3, u: "taza" },
+      { e: "🌾", n: "Harina sin leudante", c: 2, u: "taza" },
+      { e: "🫒", n: "Aceite", c: 1.25, u: "taza" },
+      { e: "🥚", n: "Huevos", c: 4, u: "" },
+      { e: "🍬", n: "Azúcar", c: 2, u: "taza" },
+      { e: "🟤", n: "Canela", c: 1, u: "cdta" },
+      { e: "🌿", n: "Clavo o pimienta guayabita", c: 1, u: "cdta" },
+      { e: "🥄", n: "Bicarbonato", c: 2, u: "cdta" },
+      { e: "🥜", n: "Opcional: nueces, pasas o piña picada (pasadas por harina)", c: 1, u: "taza" }
     ],
     pasos: [
-      { e: "🌀", t: "Licuar el maíz", d: "Licúa el maíz con la leche hasta obtener una mezcla espesa con algo de textura." },
-      { e: "🥣", t: "Completar la mezcla", d: "Agrega la harina, el azúcar y la sal. Mezcla bien." },
-      { e: "🧈", t: "Engrasar el budare", d: "Calienta el budare a fuego medio y úntalo con mantequilla." },
-      { e: "🔥", t: "Cocinar", d: "Vierte media taza de mezcla, extiéndela en círculo y voltea cuando los bordes estén dorados.", min: 8 },
-      { e: "🧀", t: "Rellenar y doblar", d: "Pon el queso sobre la cachapa caliente y dóblala por la mitad." }
+      { e: "🥚", t: "Batir huevos y azúcar", d: "Bate los huevos con el azúcar y agrega el aceite." },
+      { e: "🌾", t: "Agregar los secos", d: "Mezcla los ingredientes secos y agrégalos poco a poco a la preparación anterior." },
+      { e: "🥕", t: "Añadir la zanahoria", d: "Añade la zanahoria o el calabacín y mezcla bien. Por último, el ingrediente opcional (o 100 g de almendra molida)." },
+      { e: "🔥", t: "Hornear", d: "Pon la mezcla en un envase engrasado y hornea a 150–175 °C.", min: 40 }
+    ],
+    extras: [
+      { titulo: "Cubiertas", items: [
+        { e: "🍋", t: "Sencilla", d: "Jugo de 1 limón, agregando azúcar glas (nevazúcar) hasta que quede brillante." },
+        { e: "✨", t: "De lujo", d: "1 queso crema Philadelphia y el jugo de 1 limón (2 si el queso es grande), agregando azúcar glas hasta punto cremoso." }
+      ]}
     ],
     video: ""
   },
   {
-    id: "pabellon", titulo: "Pabellón criollo", categoria: "Platos fuertes", de: "Abuela", ejemplo: true,
-    plato: "🍛", color: "#d9c3a5", tiempo: 150, porciones: 6, dificultad: "Media",
-    descripcion: "Carne mechada, caraotas negras, arroz blanco y tajadas. El plato del domingo.",
-    nota: "La carne queda mejor si la mechas todavía tibia.",
+    id: "galletas", titulo: "Galletas base en rollos", categoria: "Dulces", de: "La familia",
+    plato: "🍪", color: "#ecdcc0", tiempoTexto: "45 min + congelar", dificultad: "Fácil",
+    descripcion: "Rollos de masa que se guardan en el congelador. Sacas uno, lo cortas en rodajas y tienes galletas recién horneadas en 15 minutos.",
+    nota: "La hoja dice “300°”. Lo tomamos como 300 °F, unos 150 °C.",
     ingredientes: [
-      { e: "🥩", n: "Falda de res", c: 1, u: "kg" },
-      { e: "🧅", n: "Cebolla", c: 1, u: "" },
-      { e: "🫑", n: "Pimentón rojo", c: 1, u: "" },
-      { e: "🧄", n: "Dientes de ajo", c: 3, u: "" },
-      { e: "🍅", n: "Tomates", c: 2, u: "" },
-      { e: "🌿", n: "Comino", c: 1, u: "cdta" },
-      { e: "🫘", n: "Caraotas negras cocidas", c: 2, u: "tazas" },
-      { e: "🍚", n: "Arroz blanco", c: 2, u: "tazas" },
-      { e: "🍌", n: "Plátanos maduros", c: 2, u: "" },
-      { e: "🫒", n: "Aceite", c: null, u: "al gusto" }
+      { e: "🧈", n: "Mantequilla", c: 300, u: "g" },
+      { e: "🥚", n: "Huevos", c: 2, u: "" },
+      { e: "🌾", n: "Harina leudante, más o menos (unas 5 tazas)", c: 0.75, u: "kg" },
+      { e: "🍬", n: "Azúcar", c: 1.5, u: "taza" },
+      { e: "🍶", n: "Vainilla", c: 1, u: "cdta" }
     ],
     pasos: [
-      { e: "🍲", t: "Hervir la carne", d: "Cocina la falda en agua con sal hasta que esté muy suave. Guarda un poco del caldo.", min: 90 },
-      { e: "🥩", t: "Mechar", d: "Deja entibiar y deshilacha la carne con dos tenedores o con las manos." },
-      { e: "🧅", t: "Hacer el sofrito", d: "Sofríe la cebolla, el pimentón y el ajo picados; agrega el tomate y el comino.", min: 10 },
-      { e: "🥘", t: "Guisar la carne", d: "Incorpora la carne mechada con un chorrito de caldo y cocina a fuego bajo.", min: 20 },
-      { e: "🫘", t: "Caraotas y arroz", d: "Calienta las caraotas con un poco de sofrito y prepara el arroz blanco.", min: 20 },
-      { e: "🍌", t: "Freír las tajadas", d: "Corta el plátano en diagonal y fríe hasta que esté dorado y caramelizado." },
-      { e: "🍽️", t: "Servir", d: "Arma el plato con el arroz, la carne, las caraotas y las tajadas a un lado." }
+      { e: "🧈", t: "Hacer la masa", d: "Suaviza la mantequilla y agrégale el azúcar. Luego los huevos y la vainilla, y por último la harina, hasta formar una masa suave y pegajosa." },
+      { e: "⏳", t: "Reposar y enfriar", d: "Deja reposar 5 minutos y luego refrigera media hora.", min: 35 },
+      { e: "🌀", t: "Formar los rollos", d: "Forma rollos de 20 a 30 cm de largo y 3 a 4 cm de grosor. Pásalos por la cubierta que quieras." },
+      { e: "🧊", t: "Congelar", d: "Congela los rollos sin envolver. Ya congelados, envuélvelos uno por uno y guárdalos en una bolsa cerrada." },
+      { e: "🍪", t: "Cortar y hornear", d: "Saca un rollo del congelador, espera unos 2 minutos, córtalo en rodajas y hornea a 150 °C.", min: 15 }
+    ],
+    extras: [
+      { titulo: "Cubiertas para los rollos", items: [
+        { e: "🟤", t: "Canela y azúcar", d: "1 taza de azúcar con 3 cucharadas de canela." },
+        { e: "🍫", t: "Chocolate rallado", d: "Ponlo sobre papel parafinado y rueda el rollo encima." },
+        { e: "🌈", t: "Azúcar de colores", d: "Azúcar granulada de colores." }
+      ]},
+      { titulo: "Galletas rellenas", items: [
+        { e: "🥄", t: "Con huequito", d: "Haz un huequito en cada galleta con el mango enharinado de una cuchara de madera. Rellena con mermelada, chocolate o granitos de azúcar de colores." }
+      ]}
     ],
     video: ""
   },
   {
-    id: "quesillo", titulo: "Quesillo", categoria: "Dulces", de: "Mamá", ejemplo: true,
-    plato: "🍮", color: "#ecd2a0", tiempo: 75, porciones: 8, dificultad: "Media",
-    descripcion: "Flan venezolano con sus huequitos, bañado en caramelo. Se hace un día antes.",
-    nota: "Los huequitos salen de licuar bien los huevos; no le tengas miedo a la licuadora.",
+    id: "rosbif", titulo: "Rosbif de res con hongos", categoria: "Platos fuertes", de: "La familia",
+    plato: "🥩", color: "#dcc4ac", porciones: 6, porcionesTexto: "6 a 8", tiempoTexto: "Adobo 1 h + fuego lento", dificultad: "Media",
+    descripcion: "Lomito o ganso de res adobado, dorado y cocinado a fuego lento, con salsa de vino blanco y champiñones.",
+    nota: "Al dorar la carne no la pinches, así conserva sus jugos.",
     ingredientes: [
-      { e: "🥫", n: "Leche condensada", c: 1, u: "lata" },
-      { e: "🥛", n: "Leche entera (misma lata)", c: 1, u: "lata" },
-      { e: "🥚", n: "Huevos", c: 5, u: "" },
-      { e: "🍶", n: "Vainilla", c: 1, u: "cdta" },
-      { e: "🍬", n: "Azúcar para el caramelo", c: 1, u: "taza" }
+      { g: "La carne", e: "🥩", n: "Lomito o ganso de res, limpio", c: 1, u: "kg" },
+      { g: "El adobo", e: "🧅", n: "Cebolla rallada", c: 1, u: "taza" },
+      { e: "🧄", n: "Ajo machacado", c: 2, u: "diente" },
+      { e: "⚫", n: "Pimienta negra recién molida", c: 0.5, u: "cdta" },
+      { e: "🧂", n: "Sal", c: 2, u: "cdta" },
+      { e: "🫒", n: "Aceite", c: 2, u: "cda" },
+      { e: "🍶", n: "Salsa inglesa (Worcestershire)", c: 1, u: "cdta" },
+      { g: "Para dorar y cocinar", e: "🫒", n: "Aceite", c: 1 / 3, u: "taza" },
+      { e: "🍲", n: "Consomé de carne", c: 1 / 3, u: "taza" },
+      { e: "🍷", n: "Vino blanco seco", c: 4, u: "cda" },
+      { g: "La salsa de hongos", e: "🍄", n: "Hongos frescos (champiñones)", c: 500, u: "g" },
+      { e: "🍋", n: "Limón (para el agua de lavar los hongos)", c: 1, u: "" },
+      { e: "🧈", n: "Mantequilla", c: 3, u: "cda" },
+      { e: "🧅", n: "Cebolla picadita", c: 2, u: "cda" },
+      { e: "🧄", n: "Ajo machacado", c: 1, u: "diente" },
+      { e: "🌱", n: "Cebollín picadito", c: 2, u: "cda" },
+      { e: "🌿", n: "Perejil picadito", c: 1, u: "cda" },
+      { e: "🧂", n: "Sal", c: 1 / 3, u: "cdta" }
     ],
     pasos: [
-      { e: "🍯", t: "Hacer el caramelo", d: "Derrite el azúcar en la quesillera a fuego medio hasta que esté ámbar y cubre el fondo y los lados.", min: 8 },
-      { e: "🌀", t: "Licuar", d: "Licúa la leche condensada, la leche, los huevos y la vainilla." },
-      { e: "🫗", t: "Verter", d: "Vierte la mezcla sobre el caramelo y tapa la quesillera." },
-      { e: "♨️", t: "Baño de María", d: "Cocina en baño de María a fuego bajo hasta que al insertar un palillo salga limpio.", min: 50 },
-      { e: "❄️", t: "Enfriar", d: "Deja enfriar y lleva a la nevera mínimo 4 horas." },
-      { e: "🍮", t: "Desmoldar", d: "Pasa un cuchillo por el borde y voltea sobre un plato hondo." }
+      { e: "🔪", t: "Limpiar la carne", d: "Limpia muy bien la carne, retirando grasa y nervios." },
+      { e: "🍄", t: "Preparar los hongos", d: "Corta el extremo del tallo. Lávalos muy bien y ponlos en agua con el jugo del limón. Córtalos verticalmente en tajaditas delgadas y déjalos escurrir." },
+      { e: "🧅", t: "Adobar la carne", d: "Mezcla la cebolla rallada, el ajo, la pimienta, la sal, el aceite y la salsa inglesa. Frota la carne y déjala reposar en un envase. Luego átala con pabilo en forma de cilindro, doblando la punta más delgada. Guarda el adobo que quede.", min: 60 },
+      { e: "🔥", t: "Dorar la carne", d: "En un caldero calienta el ⅓ de taza de aceite. Dora la carne sin el adobo, dándole vueltas con una cuchara de madera y sin pincharla, hasta que dore parejo." },
+      { e: "🍷", t: "Cocinar con vino", d: "Agrega el adobo reservado y revuelve 1 minuto dándole vuelta a la carne. Añade el consomé y el vino, y cocina a fuego lento, destapado, hasta que la salsa seque un poco." },
+      { e: "🧈", t: "Sofreír la base", d: "Mientras tanto, en otro caldero calienta la mantequilla y cocina la cebolla picadita, el ajo y el cebollín hasta que marchiten.", min: 4 },
+      { e: "🍄", t: "Cocinar los hongos", d: "Agrega los hongos y revuelve unos 2 minutos. Añade el perejil y la sal, y sigue cocinando hasta que se seque el agua que sueltan.", min: 2 },
+      { e: "🥘", t: "Unir hongos y carne", d: "Pasa los hongos con su salsa al caldero de la carne, revuelve bien y cocina a fuego lento.", min: 3 },
+      { e: "🍽️", t: "Cortar y servir", d: "Saca la carne, retira el pabilo, córtala en tajadas delgadas, colócala en una bandeja y báñala con la salsa de hongos." }
     ],
-    video: ""
-  },
-  {
-    id: "papelon", titulo: "Papelón con limón", categoria: "Bebidas", de: "Familia y amigos", ejemplo: true,
-    plato: "🍋", color: "#dfe6b8", tiempo: 20, porciones: 8, dificultad: "Fácil",
-    descripcion: "La bebida fría de la casa: papelón disuelto con limón recién exprimido y mucho hielo.",
-    nota: "Pruébalo antes de servir: cada papelón endulza distinto.",
-    ingredientes: [
-      { e: "🟫", n: "Papelón (panela)", c: 500, u: "g" },
-      { e: "💧", n: "Agua", c: 2, u: "litros" },
-      { e: "🍋", n: "Limones", c: 4, u: "" },
-      { e: "🧊", n: "Hielo", c: null, u: "al gusto" }
-    ],
-    pasos: [
-      { e: "🔪", t: "Rallar el papelón", d: "Ralla o pica el papelón para que se disuelva más rápido." },
-      { e: "💧", t: "Disolver", d: "Mezcla con el agua y revuelve hasta que no queden trozos. Puedes calentarlo a fuego bajo.", min: 10 },
-      { e: "🍋", t: "Agregar el limón", d: "Ya frío, añade el jugo de los limones y ajusta al gusto." },
-      { e: "🧊", t: "Servir", d: "Sirve en vasos con bastante hielo." }
+    extras: [
+      { titulo: "Consejos", items: [
+        { e: "🚫", t: "No pinchar la carne", d: "Al dorarla, dale vuelta con cuchara de madera para que conserve sus jugos." },
+        { e: "🧵", t: "Retirar el pabilo", d: "Quítalo antes de cortar las tajadas." }
+      ]}
     ],
     video: ""
   }
 ];
 
+const TRUCOS = [
+  { e: "🍓", t: "Frutas congeladas", d: "Se conservan mejor con limón y azúcar." },
+  { e: "🍝", t: "Pasta para congelar", d: "Cocínala 5 minutos, envásala y congélala. Al descongelarla, se termina de cocinar." },
+  { e: "❄️", t: "Masa de pan congelada", d: "Sácala del congelador en la noche y pásala a la nevera." }
+];
+
 const CATEGORIAS = ["Todas", ...new Set(RECETAS.map(r => r.categoria))];
-const ORIGENES = ["Mamá", "Abuela", "Familia y amigos"];
+const ORIGENES = [...new Set(RECETAS.map(r => r.de).filter(Boolean))];
 
 const state = { cat: "Todas", de: null, q: "", servings: {}, checks: {} };
 try { Object.assign(state.checks, JSON.parse(localStorage.getItem("memeyita-checks") || "{}")); } catch (e) {}
@@ -321,6 +374,17 @@ function fmt(n) {
   const w = best[0] === 1 ? whole + 1 : whole;
   if (Math.abs(frac - best[0]) > 0.09) return n.toFixed(1).replace(".", ",");
   return (w ? w : "") + best[1] || "0";
+}
+
+const tiempoDe = r => r.tiempoTexto || (r.tiempo ? tiempo(r.tiempo) : "");
+const porcDe = r => r.porcionesTexto || r.porciones || "";
+const PLURAL = { taza: "tazas", cda: "cdas", cdta: "cdtas", diente: "dientes", lata: "latas" };
+function cantidad(g, k) {
+  if (g.c == null) return esc(g.u);
+  const hi = Array.isArray(g.c) ? g.c[1] * k : g.c * k;
+  const num = Array.isArray(g.c) ? `${fmt(g.c[0] * k)} a ${fmt(g.c[1] * k)}` : fmt(g.c * k);
+  const u = g.u ? (hi > 1 && PLURAL[g.u] ? PLURAL[g.u] : g.u) : "";
+  return num + (u ? " " + esc(u) : "");
 }
 
 function ytEmbed(url) {
@@ -355,10 +419,10 @@ function renderHome() {
       <div class="tabs" role="group" aria-label="Categoría">
         ${CATEGORIAS.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${state.cat === c}">${esc(c)}</button>`).join("")}
       </div>
-      <div class="chips" role="group" aria-label="Receta de">
+      ${ORIGENES.length > 1 ? `<div class="chips" role="group" aria-label="Receta de">
         <span>Receta de:</span>
         ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(o)}</button>`).join("")}
-      </div>
+      </div>` : ""}
     </section>
     <section class="wrap grid">
       ${list.map(r => `
@@ -370,9 +434,13 @@ function renderHome() {
           </div>
           <h3>${esc(r.titulo)}</h3>
           <p>${esc(r.descripcion)}</p>
-          <div class="meta"><span>⏱ ${tiempo(r.tiempo)}</span><span>🍽 ${r.porciones} porciones</span><span>De ${esc(r.de)}</span></div>
+          <div class="meta">${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}${porcDe(r) ? `<span>🍽 ${porcDe(r)} porciones</span>` : ""}<span>${esc(r.categoria)}</span></div>
         </button>`).join("") || `<p class="empty">No hay recetas con esos filtros. Prueba con otra categoría o borra la búsqueda.</p>`}
-    </section>`;
+    </section>
+    ${TRUCOS.length ? `<section class="wrap trucos" aria-labelledby="h-trucos">
+      <h2 id="h-trucos">Trucos de la cocina</h2>
+      <div class="xgrid">${TRUCOS.map(x => `<div class="xcard"><span class="e" aria-hidden="true">${x.e}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p></div></div>`).join("")}</div>
+    </section>` : ""}`;
   document.getElementById("count").textContent = `${RECETAS.length} recetas`;
 
   const qi = document.getElementById("q");
@@ -388,8 +456,10 @@ function renderHome() {
 }
 
 function renderRecipe(r) {
-  const s = state.servings[r.id] || r.porciones;
-  const k = r.porciones ? s / r.porciones : 1;
+  const s = state.servings[r.id] || r.porciones || 1;
+  const k = r.porciones ? s / r.porciones : s;
+  const stepBy = r.porciones ? 1 : 0.5;
+  const sLabel = r.porciones ? `${s} porciones` : `Receta ×${fmt(s)}`;
   const ch = state.checks[r.id] || (state.checks[r.id] = { i: [], p: [] });
   const ready = ch.i.length;
 
@@ -403,12 +473,12 @@ function renderRecipe(r) {
           <h1>${esc(r.titulo)}</h1>
           <p class="desc">${esc(r.descripcion)}</p>
           <div class="facts">
-            <div class="fact"><b>Tiempo</b>${tiempo(r.tiempo)}</div>
-            <div class="fact"><b>Porciones</b>${r.porciones}</div>
-            <div class="fact"><b>Dificultad</b>${esc(r.dificultad)}</div>
-            <div class="fact"><b>Receta de</b>${esc(r.de)}</div>
+            ${tiempoDe(r) ? `<div class="fact"><b>Tiempo</b>${esc(tiempoDe(r))}</div>` : ""}
+            ${porcDe(r) ? `<div class="fact"><b>Porciones</b>${porcDe(r)}</div>` : ""}
+            ${r.dificultad ? `<div class="fact"><b>Dificultad</b>${esc(r.dificultad)}</div>` : ""}
+            ${r.de ? `<div class="fact"><b>Receta de</b>${esc(r.de)}</div>` : ""}
           </div>
-          ${r.nota ? `<p class="note">“${esc(r.nota)}”<small>Truco de ${esc(r.de === "Familia y amigos" ? "la familia" : r.de.toLowerCase())}</small></p>` : ""}
+          ${r.nota ? `<p class="note">${esc(r.nota)}<small>Nota de la receta</small></p>` : ""}
         </div>
         <div class="pic" style="background:${r.color}">${plato(r)}</div>
       </section>
@@ -416,19 +486,20 @@ function renderRecipe(r) {
       <section class="panel" aria-labelledby="h-ing">
         <div class="phead">
           <h2 id="h-ing">Ingredientes<span class="sub">${ready} de ${r.ingredientes.length} listos</span></h2>
-          <div class="servings" role="group" aria-label="Porciones">
-            <button id="minus" aria-label="Menos porciones">−</button>
-            <output aria-live="polite">${s} porciones</output>
-            <button id="plus" aria-label="Más porciones">+</button>
+          <div class="servings" role="group" aria-label="${r.porciones ? "Porciones" : "Tamaño de la receta"}">
+            <button id="minus" aria-label="Reducir">−</button>
+            <output aria-live="polite">${sLabel}</output>
+            <button id="plus" aria-label="Aumentar">+</button>
           </div>
         </div>
         <p class="hint">Toca cada ingrediente cuando lo tengas listo en la mesa.</p>
         <div class="ings">
           ${r.ingredientes.map((g, i) => `
+            ${g.g ? `<h3 class="grp">${esc(g.g)}</h3>` : ""}
             <button class="ing" data-i="${i}" aria-pressed="${ch.i.includes(i)}">
               <span class="tick" aria-hidden="true">✓</span>
               <span class="e" aria-hidden="true">${g.e}</span>
-              <span class="q">${g.c == null ? esc(g.u) : fmt(g.c * k) + (g.u ? " " + esc(g.u) : "")}</span>
+              <span class="q">${cantidad(g, k)}</span>
               <span class="n">${esc(g.n)}</span>
             </button>`).join("")}
         </div>
@@ -453,6 +524,12 @@ function renderRecipe(r) {
         </div>
       </section>
 
+      ${(r.extras || []).map((x, xi) => `
+      <section class="panel" aria-labelledby="h-x${xi}">
+        <div class="phead"><h2 id="h-x${xi}">${esc(x.titulo)}</h2></div>
+        <div class="xgrid">${x.items.map(it => `<div class="xcard"><span class="e" aria-hidden="true">${it.e}</span><div><h3>${esc(it.t)}</h3><p>${esc(it.d)}</p></div></div>`).join("")}</div>
+      </section>`).join("")}
+
       <section class="panel" aria-labelledby="h-video">
         <div class="video">
           ${ytEmbed(r.video)
@@ -468,13 +545,13 @@ function renderRecipe(r) {
         </div>
       </section>
 
-      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span><span>⏱ ${tiempo(r.tiempo)}</span></div>
+      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>
     </article>`;
   document.getElementById("count").textContent = r.titulo;
 
   document.getElementById("back").onclick = () => { location.hash = ""; };
-  document.getElementById("minus").onclick = () => { state.servings[r.id] = Math.max(1, s - 1); keep(() => renderRecipe(r)); };
-  document.getElementById("plus").onclick = () => { state.servings[r.id] = s + 1; keep(() => renderRecipe(r)); };
+  document.getElementById("minus").onclick = () => { state.servings[r.id] = Math.max(stepBy, s - stepBy); keep(() => renderRecipe(r)); };
+  document.getElementById("plus").onclick = () => { state.servings[r.id] = s + stepBy; keep(() => renderRecipe(r)); };
   app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderRecipe(r)); });
   app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderRecipe(r)); });
   app.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
