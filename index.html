@@ -60,6 +60,15 @@ img { max-width: 100%; }
 .badge.en { left: auto; right: 12px; background: #fff; color: var(--green); border: 1px solid var(--green-soft); }
 .badge.chef { background: var(--green); color: #fff; text-transform: none; letter-spacing: 0; }
 .sample.chef { border-radius: 10px; border-style: solid; background: var(--green-soft); border-color: var(--green-soft); color: var(--green); }
+.badge.pend { top: auto; bottom: 12px; left: 12px; background: #fbe4e1; color: #a1271c; text-transform: none; letter-spacing: 0; border: 1px solid #f0b9b2; }
+.chip.pend { color: #a1271c; border-color: #f0b9b2; background: #fdf1ef; }
+.chip.pend[aria-pressed="true"] { background: #a1271c; color: #fff; border-color: #a1271c; }
+.pendbox { background: #fdf1ef; border: 2px solid #e4877c; border-radius: 20px; padding: 18px 20px; }
+.pendbox h2 { font-family: var(--body); font-size: 1.05rem; font-weight: 600; color: #a1271c; margin-bottom: 8px; }
+.pendbox ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; color: #5e1a14; }
+.pendbox p { margin: 10px 0 0; font-size: .85rem; color: #8a3a31; }
+.ing.tbc { border: 2px dashed #e4877c; background: #fdf1ef; }
+.ing.tbc .q { color: #a1271c; }
 .langtags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
 .langtags .sample { margin: 0; }
 .sample.en { border-style: solid; border-color: var(--green); color: var(--green); }
@@ -248,7 +257,7 @@ const FOTOS_ASADO = {
 
 const RECETAS = [
   {
-    id: "pan", titulo: "Pan (masa básica)", categoria: "Panes", de: "La familia",
+    id: "pan", pendientes: ["¿A qué temperatura y por cuánto tiempo se hornea el pan?", "¿Cuánta sal lleva la masa?", "¿Cómo se llama el “pan de 2 tiras”? (no se lee bien en la hoja)"], titulo: "Pan (masa básica)", categoria: "Panes", de: "La familia",
     plato: "🍞", color: "#ead9b8", tiempoTexto: "1 h 15 min + horneado", dificultad: "Media",
     descripcion: "La masa de la casa. Sirve para panes salados y dulces, roscas de frutas, cachitos y pan de jamón.",
     nota: "La hoja original no indica la temperatura ni el tiempo de horneado, ni la cantidad de sal.",
@@ -290,7 +299,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "torta-zanahoria", titulo: "Torta de zanahoria o calabacín", categoria: "Dulces", de: "La familia",
+    id: "torta-zanahoria", pendientes: ["La hoja dice “300°”: ¿son 300 °F (unos 150 °C)?"], titulo: "Torta de zanahoria o calabacín", categoria: "Dulces", de: "La familia",
     plato: "🥕", color: "#f0d2a8", tiempoTexto: "40 min de horno", dificultad: "Fácil",
     descripcion: "Torta húmeda y especiada que funciona igual con zanahoria o con calabacín. Se puede congelar horneada o sin hornear.",
     nota: "La hoja dice “300°”. Lo tomamos como 300 °F, unos 150 °C, porque 300 °C es demasiado para un horno de casa.",
@@ -320,7 +329,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "galletas", titulo: "Galletas base en rollos", categoria: "Dulces", de: "La familia",
+    id: "galletas", pendientes: ["La hoja dice “300°”: ¿son 300 °F (unos 150 °C)?"], titulo: "Galletas base en rollos", categoria: "Dulces", de: "La familia",
     plato: "🍪", color: "#ecdcc0", tiempoTexto: "45 min + congelar", dificultad: "Fácil",
     descripcion: "Rollos de masa que se guardan en el congelador. Sacas uno, lo cortas en rodajas y tienes galletas recién horneadas en 15 minutos.",
     nota: "La hoja dice “300°”. Lo tomamos como 300 °F, unos 150 °C.",
@@ -395,7 +404,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "asado-negro", titulo: "Asado negro", categoria: "Platos fuertes", de: "Memeyita",
+    id: "asado-negro", pendientes: ["¿Cómo termina el mensaje de la olla de presión? Se corta en “alguna h…” (¿alguna hierba? ¿cuál?)", "¿Cuánto tiempo va en la olla de presión: 60 minutos o media hora?", "¿Qué cantidades de aliños usa en la maceración y en la olla?"], titulo: "Asado negro", categoria: "Platos fuertes", de: "Memeyita",
     plato: "🥩", color: "#d8bfa6", foto: FOTOS_ASADO[14], tiempoTexto: "1 noche + unas 3 h", dificultad: "Media",
     descripcion: "Muchacho macerado desde la noche anterior, sellado con azúcar morena o papelón y cocinado lento en su salsa hasta que queda blando y negrito.",
     nota: "Une los mensajes de Memeyita, paso a paso y con sus fotos, con las notas de su cuaderno. En la olla de presión, en los mensajes la deja unos 60 minutos y en el cuaderno dice media hora. Falta confirmar el final del mensaje de la olla de presión, que se corta en “alguna h…”.",
@@ -485,7 +494,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "hummus", titulo: "Crema de garbanzos (hummus)", categoria: "Cocina árabe", de: "La familia",
+    id: "hummus", pendientes: ["Falta la receta #2 (Sopa de granos), que explica cómo pelar los garbanzos"], titulo: "Crema de garbanzos (hummus)", categoria: "Cocina árabe", de: "La familia",
     plato: "🫘", color: "#ecdcb9", tiempoTexto: "Remojo de un día + 45 min", dificultad: "Fácil",
     descripcion: "Jummus B'tjine: garbanzos con crema de ajonjolí, ajo y limón. Se acompaña con pan árabe o kibbe.",
     nota: "La tarjeta dice que para pelar los garbanzos se vea la receta #2 (Sopa de granos).",
@@ -595,7 +604,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "bienmesabe", titulo: "Bienmesabe", categoria: "Dulces", de: "Armando Scannone", fuente: "scannone",
+    id: "bienmesabe", pendientes: ["Falta la receta del bizcochuelo (pan de Saboya) que va en las capas"], titulo: "Bienmesabe", categoria: "Dulces", de: "Armando Scannone", fuente: "scannone",
     plato: "🥥", color: "#efe6d0", porciones: 8, porcionesTexto: "8 a 10", tiempoTexto: "Unas 2 h + nevera", dificultad: "Media",
     descripcion: "Dulce colonial caraqueño: capas de crema de coco con yemas y bizcochuelo rociado con coñac, con canela por encima.",
     nota: "El bizcochuelo se prepara aparte: el libro remite a su propia receta de bizcochuelo o pan de Saboya.",
@@ -658,7 +667,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "pasticho", titulo: "Pasticho", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
+    id: "pasticho", pendientes: ["El PDF dice “12 kilos” de queso de mano: ¿es ½ kg?", "El PDF dice “1/12” de cucharadita de sal en la pasta: ¿cuánto es?"], titulo: "Pasticho", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
     plato: "🍝", color: "#efcfb5", porciones: 12, tiempoTexto: "Unas 3 h", dificultad: "Difícil",
     descripcion: "La lasaña venezolana: relleno de cochino con pasas, aceitunas y alcaparras, bechamel, queso de mano y parmesano.",
     nota: "Dos cantidades del PDF parecen errores de transcripción y están por confirmar: dice “12 kilos” de queso de mano (puse ½ kg) y “1/12” de cucharadita de sal en la pasta (puse ½ cdta). Si compras la pasta hecha, usa ¾ kg de láminas para lasaña y salta los pasos de la pasta.",
@@ -787,7 +796,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "hallacas-mama", titulo: "Hallacas de la tía Yía", categoria: "Platos fuertes", de: "Memeyita",
+    id: "hallacas-mama", pendientes: ["Revisar los adornos: la hoja está muy borrosa (sobre todo la primera línea, la del cucharón de guiso)", "¿Cómo se arman, amarran y hierven? ¿Cuánto tiempo?", "¿En qué paso van la zanahoria y el vino?", "Donde dice “¼” sin unidad (alcaparras, aceitunas, pasas), ¿es ¼ kg?"], titulo: "Hallacas de la tía Yía", categoria: "Platos fuertes", de: "Memeyita",
     plato: "🫔", color: "#dbe3c6", tiempoTexto: "2 días", dificultad: "Difícil",
     descripcion: "Las hallacas de la tía Yía, del cuaderno de mamá: guiso de res, cochino y pollo, masa de harina PAN con onoto y sus adornos. Para 20 hallacas y 10 bollos.",
     nota: "Del cuaderno de mamá. La hoja de los adornos está muy borrosa y algunas líneas son por confirmar. El cuaderno no explica cómo armar ni hervir las hallacas, ni en qué paso van la zanahoria y el vino. Donde dice “¼” sin unidad (alcaparras, aceitunas, pasas) seguramente es ¼ kg.",
@@ -843,7 +852,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "bollos-pelones", titulo: "Bollos pelones", categoria: "Platos fuertes", de: "Memeyita",
+    id: "bollos-pelones", pendientes: ["¿Cómo se cocinan los bollos una vez rellenos? (¿hervidos? ¿con salsa?)", "¿Qué cantidades lleva la masa y el guiso?"], titulo: "Bollos pelones", categoria: "Platos fuertes", de: "Memeyita",
     plato: "🧆", color: "#ecd9b4", dificultad: "Media",
     descripcion: "Bolitas de masa con comino y onoto, rellenas de un guiso de carne bien picadita.",
     nota: "Del cuaderno de mamá. No dice cómo se cocinan los bollos ya rellenos.",
@@ -891,7 +900,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "polenta", titulo: "Polenta", categoria: "Platos fuertes", de: "Memeyita",
+    id: "polenta", pendientes: ["¿Para cuántas personas es y de qué tamaño es el molde?"], titulo: "Polenta", categoria: "Platos fuertes", de: "Memeyita",
     plato: "🥧", color: "#f0dca6", porciones: 8, tiempoTexto: "Unas 2 h 30 min", dificultad: "Media",
     descripcion: "Pastel horneado de masa de maíz dulce, relleno de un guiso de cochino y pollo con aceitunas, pasas y alcaparras.",
     nota: "De una hoja suelta del cuaderno de mamá. No dice para cuántas personas es: las porciones son aproximadas.",
@@ -955,7 +964,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "labin", titulo: "Labin (yogur y queso de yogur)", categoria: "Cocina árabe", de: "Memeyita",
+    id: "labin", pendientes: ["¿Cuánto tiempo se deja cuajar el yogur?", "¿Cuánto tiempo se deja escurrir para el labin?"], titulo: "Labin (yogur y queso de yogur)", categoria: "Cocina árabe", de: "Memeyita",
     plato: "🥛", color: "#eef0ea", dificultad: "Fácil",
     descripcion: "Yogur casero blandito y, si se escurre, labin para untar con aceite y sal.",
     nota: "De una hoja suelta del cuaderno de mamá. No dice cuánto tiempo hay que dejarlo cuajar ni escurrir.",
@@ -1010,7 +1019,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "sopa-ajoporro", titulo: "Sopa de ajo porro", categoria: "Sopas", de: "Memeyita",
+    id: "sopa-ajoporro", pendientes: ["¿Qué cantidades lleva (ajo porro, mantequilla, harina, consomé)?"], titulo: "Sopa de ajo porro", categoria: "Sopas", de: "Memeyita",
     plato: "🥣", color: "#e3e8cf", dificultad: "Fácil",
     descripcion: "Sopa sencilla de ajo porro sofrito en mantequilla y harina, con consomé.",
     nota: "Del cuaderno de mamá, que no trae cantidades.",
@@ -1054,7 +1063,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "gazpacho", titulo: "Gazpacho", categoria: "Sopas", de: "Memeyita",
+    id: "gazpacho", pendientes: ["¿Se sirve frío? ¿Cuánto tiempo va a la nevera?", "¿Cuánto aceite y vinagre lleva?"], titulo: "Gazpacho", categoria: "Sopas", de: "Memeyita",
     plato: "🍅", color: "#f3c9b8", dificultad: "Fácil",
     descripcion: "Sopa fría de tomate y cebolla licuados, con ajo, vinagre y pepino.",
     nota: "De una hoja suelta del cuaderno de mamá. Solo dice que la cebolla y los tomates se trituran en la licuadora; los pasos siguientes son el orden lógico.",
@@ -1202,7 +1211,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "pasta-seca", titulo: "Galletas tipo pasta seca", categoria: "Dulces", de: "Memeyita",
+    id: "pasta-seca", pendientes: ["¿La vainilla es 1 cucharadita (como dice la lista) o 1 cucharada (como dice la preparación)?", "¿Lleva ralladura de limón, jugo, o las dos cosas?", "¿Qué temperatura es “media” en tu horno?"], titulo: "Galletas tipo pasta seca", categoria: "Dulces", de: "Memeyita",
     plato: "🍪", color: "#f3ddc3", dificultad: "Fácil",
     descripcion: "Galletas de mantequilla con limón y vainilla, decoradas con chispitas de colores.",
     nota: "Del cuaderno de mamá, anotada de TikTok de Isabel Otero (11-03). En la lista dice 1 cdta de vainilla y ralladura de limón, y en la preparación dice 1 cda de vainilla y 1 cda de jugo de limón.",
@@ -1318,7 +1327,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "pancakes", titulo: "Pancakes", categoria: "Desayunos", de: "Caroline", idioma: "en",
+    id: "pancakes", pendientes: ["How do you cook them? (pan, oil or butter, how long each side)", "What kind of syrup? (golden syrup, maple…)"], titulo: "Pancakes", categoria: "Desayunos", de: "Caroline", idioma: "en",
     plato: "🥞", color: "#f1dcae",
     descripcion: "Caroline's pancake batter with syrup and lemon, mixed by hand with a wooden spoon.",
     nota: "From Caroline's handwritten card. The card doesn't cover cooking the pancakes. On the card, the baking soda was corrected from tsp to tbs. Conversions: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 dsp (dessertspoon) ≈ 10 ml.",
@@ -1339,6 +1348,7 @@ const RECETAS = [
     ],
     tr: {
       titulo: "Panqueques (pancakes)",
+      pendientes: ["¿Cómo se cocinan? (sartén, aceite o mantequilla, cuánto tiempo por lado)", "¿Qué tipo de sirope? (golden syrup, de arce…)"],
       descripcion: "La mezcla de panqueques de Caroline con sirope y limón, batida a mano con cuchara de madera.",
       nota: "De la tarjeta escrita a mano por Caroline. La tarjeta no explica cómo cocinar los panqueques. En la tarjeta, el bicarbonato se corrigió de cucharadita a cucharada. Conversiones: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 cda de postre ≈ 10 ml.",
       ing: ["Harina leudante", "Azúcar extrafina (caster)", "Sirope", "Sal", "Huevos", "Jugo de limón", "Leche, añadida poco a poco", "Bicarbonato", "Crémor tártaro (al ras)", "Aceite de cocina"],
@@ -1414,7 +1424,7 @@ const REMEDIOS = [
     ]
   },
   {
-    id: "remedios-acne", titulo: "Remedios contra el acné", categoria: "Para la piel",
+    id: "remedios-acne", pendientes: ["La imagen está cortada: faltan 6 de los 10 remedios (pepino, zanahoria y otros)"], titulo: "Remedios contra el acné", categoria: "Para la piel",
     plato: "🍋", color: "#f1e6b4",
     descripcion: "Naranja, limón, ajo y tomate: cuatro ingredientes de la cocina que se usan sobre los granitos.",
     facts: [["Tipo", "Varios remedios"]],
@@ -1446,7 +1456,7 @@ const REMEDIOS = [
     ]
   },
   {
-    id: "miel-avena-leche", titulo: "Mascarilla de miel, avena y leche", categoria: "Para la piel",
+    id: "miel-avena-leche", pendientes: ["¿Cuánta miel, avena y leche lleva?"], titulo: "Mascarilla de miel, avena y leche", categoria: "Para la piel",
     plato: "🍯", color: "#f4e1c0",
     descripcion: "Mascarilla para eliminar las manchas de la piel.",
     facts: [["Frecuencia", "3 veces por semana"], ["Se deja", "10 min"]],
@@ -1463,7 +1473,7 @@ const REMEDIOS = [
     ]
   },
   {
-    id: "ojeras", titulo: "Crema para las ojeras", categoria: "Para la piel",
+    id: "ojeras", pendientes: ["¿Cuánta manzanilla y cuánto yogur lleva?"], titulo: "Crema para las ojeras", categoria: "Para la piel",
     plato: "🍵", color: "#e8dcef",
     descripcion: "Crema fría de manzanilla y yogur. El efecto aumenta cuando está fría.",
     facts: [["Refrigerar", "1 día"], ["Se deja", "20 min"]],
@@ -1779,6 +1789,7 @@ const REMEDIOS = [
    pasos: [título, texto, tiempo opcional]   extras: [título, [[título, texto], ...]] */
 const TR_EN = {
   "hallacas-mama": {
+    pendientes: ["Check the garnishes: the page is very faded (especially the first line, the ladle of stew)", "How are they assembled, tied and boiled? For how long?", "At which step do the carrot and wine go in?", "Where it says “¼” with no unit (capers, olives, raisins), is it ¼ kg?"],
     titulo: "Aunt Yía's hallacas", tiempoTexto: "2 days",
     descripcion: "Aunt Yía's hallacas, from mum's notebook: beef, pork and chicken stew, Harina PAN dough with annatto, and the garnishes. Makes 20 hallacas and 10 bollos.",
     nota: "From mum's notebook. The garnish page is very faded and some lines need confirming. The notebook doesn't explain how to assemble or boil the hallacas, or when the carrot and wine go in. Where it says “¼” with no unit (capers, olives, raisins) it's probably ¼ kg.",
@@ -1801,6 +1812,7 @@ const TR_EN = {
     ]]]
   },
   "bollos-pelones": {
+    pendientes: ["How are the bollos cooked once filled? (boiled? with a sauce?)", "How much dough and stew does it take?"],
     titulo: "Bollos pelones (stuffed corn dumplings)",
     descripcion: "Corn dough balls with cumin and annatto, stuffed with a finely chopped meat stew.",
     nota: "From mum's notebook. It doesn't say how to cook the filled bollos.",
@@ -1825,6 +1837,7 @@ const TR_EN = {
     ]
   },
   "polenta": {
+    pendientes: ["How many does it serve, and what size dish?"],
     titulo: "Polenta (corn pie)", tiempoTexto: "About 2 h 30 min",
     descripcion: "A baked pie of sweet corn dough filled with a pork and chicken stew with olives, raisins and capers.",
     nota: "From a loose page in mum's notebook. It doesn't say how many it serves: the servings are approximate.",
@@ -1851,6 +1864,7 @@ const TR_EN = {
     ]
   },
   "labin": {
+    pendientes: ["How long do you leave the yoghurt to set?", "How long do you leave it to drain for labneh?"],
     titulo: "Labneh (yoghurt and yoghurt cheese)",
     descripcion: "Soft homemade yoghurt and, once drained, labneh to spread with oil and salt.",
     nota: "From a loose page in mum's notebook. It doesn't say how long to leave it to set or drain.",
@@ -1876,6 +1890,7 @@ const TR_EN = {
     ]
   },
   "sopa-ajoporro": {
+    pendientes: ["What amounts does it take (leek, butter, flour, consommé)?"],
     titulo: "Leek soup",
     descripcion: "A simple soup of leek sautéed in butter and flour, with consommé.",
     nota: "From mum's notebook, which gives no amounts.",
@@ -1901,6 +1916,7 @@ const TR_EN = {
     ]
   },
   "gazpacho": {
+    pendientes: ["Is it served cold? How long in the fridge?", "How much oil and vinegar?"],
     titulo: "Gazpacho",
     descripcion: "Cold soup of blended tomato and onion, with garlic, vinegar and cucumber.",
     nota: "From a loose page in mum's notebook. It only says to blend the onion and tomatoes; the next steps follow the logical order.",
@@ -1980,6 +1996,7 @@ const TR_EN = {
     ]
   },
   "pasta-seca": {
+    pendientes: ["Is the vanilla 1 teaspoon (as in the list) or 1 tablespoon (as in the method)?", "Does it take lemon zest, juice, or both?", "What temperature is “medium” in your oven?"],
     titulo: "Butter cookies (pasta seca)",
     descripcion: "Butter cookies with lemon and vanilla, topped with coloured sprinkles.",
     nota: "From mum's notebook, taken from Isabel Otero's TikTok (11-03). The list says 1 tsp vanilla and lemon zest, while the method says 1 tbsp vanilla and 1 tbsp lemon juice.",
@@ -2055,6 +2072,7 @@ const TR_EN = {
     extras: [["Tip", [["Lots of little holes", "If you like your quesillo full of little holes, whisk the mixture hard before pouring it into the tin."]]]]
   },
   "bienmesabe": {
+    pendientes: ["The sponge cake (pan de Saboya) recipe for the layers is missing"],
     titulo: "Bienmesabe (coconut trifle)", tiempoTexto: "About 2 h + fridge", porcionesTexto: "8 to 10",
     descripcion: "A colonial Caracas dessert: layers of coconut and egg-yolk cream with sponge cake soaked in cognac, topped with cinnamon.",
     nota: "The sponge cake is made separately: the book refers to its own sponge cake (pan de Saboya) recipe.",
@@ -2087,6 +2105,7 @@ const TR_EN = {
     ]
   },
   "pasticho": {
+    pendientes: ["The PDF says “12 kilos” of queso de mano: is it ½ kg?", "The PDF says “1/12” teaspoon of salt in the pasta: how much is it?"],
     titulo: "Pasticho (Venezuelan lasagne)", tiempoTexto: "About 3 h",
     descripcion: "Venezuelan lasagne: pork filling with raisins, olives and capers, béchamel, queso de mano and parmesan.",
     nota: "Two amounts in the PDF look like transcription errors and still need confirming: it says “12 kilos” of queso de mano (I used ½ kg) and “1/12” teaspoon of salt in the pasta (I used ½ tsp). If you buy ready-made pasta, use ¾ kg of lasagne sheets and skip the pasta steps.",
@@ -2133,6 +2152,7 @@ const TR_EN = {
     ]
   },
   "pan": {
+    pendientes: ["What temperature and how long is the bread baked?", "How much salt goes in the dough?", "What's the name of the “two-strand bread”? (hard to read on the sheet)"],
     titulo: "Bread (basic dough)", tiempoTexto: "1 h 15 min + baking",
     descripcion: "The house dough. Use it for savoury and sweet breads, fruit rings, cachitos and pan de jamón.",
     nota: "The original sheet doesn't give the oven temperature, the baking time or the amount of salt.",
@@ -2163,6 +2183,7 @@ const TR_EN = {
     ]
   },
   "torta-zanahoria": {
+    pendientes: ["The sheet says “300°”: is that 300 °F (about 150 °C)?"],
     titulo: "Carrot or zucchini cake", tiempoTexto: "40 min baking",
     descripcion: "A moist, spiced cake that works just as well with carrot or zucchini. You can freeze it baked or unbaked.",
     nota: "The sheet says “300°”. We read it as 300 °F, about 150 °C, because 300 °C is far too hot for a home oven.",
@@ -2179,6 +2200,7 @@ const TR_EN = {
     ]]]
   },
   "galletas": {
+    pendientes: ["The sheet says “300°”: is that 300 °F (about 150 °C)?"],
     titulo: "Slice-and-bake cookie rolls", tiempoTexto: "45 min + freezing",
     descripcion: "Rolls of dough kept in the freezer. Take one out, slice it and you have fresh-baked cookies in 15 minutes.",
     nota: "The sheet says “300°”. We read it as 300 °F, about 150 °C.",
@@ -2223,6 +2245,7 @@ const TR_EN = {
     ]]]
   },
   "asado-negro": {
+    pendientes: ["How does the pressure-cooker message end? It's cut off at “alguna h…” (some herb? which one?)", "How long in the pressure cooker: 60 minutes or half an hour?", "How much of each seasoning goes in the marinade and the pot?"],
     titulo: "Asado negro (Venezuelan pot roast)", tiempoTexto: "1 night + about 3 h",
     descripcion: "Eye of round (muchacho) marinated overnight, seared with brown sugar or papelón and slow-cooked in its sauce until tender and dark.",
     nota: "Combines Memeyita's messages, step by step with her photos, with the notes in her notebook. In the messages she pressure-cooks it for about 60 minutes; the notebook says half an hour. The end of the pressure-cooker message, cut off at “some h…”, still needs confirming.",
@@ -2269,6 +2292,7 @@ const TR_EN = {
     ]
   },
   "hummus": {
+    pendientes: ["Recipe #2 (Grain soup), which explains how to peel the chickpeas, is missing"],
     titulo: "Chickpea dip (hummus)", tiempoTexto: "Overnight soak + 45 min",
     descripcion: "Jummus B'tjine: chickpeas with tahini, garlic and lemon. Serve with Arabic bread or kibbeh.",
     nota: "The card says to see recipe #2 (Grain soup) for how to peel the chickpeas.",
@@ -2333,6 +2357,7 @@ const TR_EN = {
     ]
   },
   "remedios-acne": {
+    pendientes: ["The image is cut off: 6 of the 10 remedies are missing (cucumber, carrot and others)"],
     titulo: "Home remedies for acne", descripcion: "Orange, lemon, garlic and tomato: four kitchen ingredients used on pimples.",
     facts: [["Type", "Several remedies"]],
     extras: [
@@ -2358,6 +2383,7 @@ const TR_EN = {
     ]
   },
   "miel-avena-leche": {
+    pendientes: ["How much honey, oats and milk does it take?"],
     titulo: "Honey, oat and milk mask", descripcion: "A mask to fade dark spots on the skin.",
     facts: [["How often", "3 times a week"], ["Leave on", "10 min"]],
     ing: ["Honey", "Oats", "Milk"],
@@ -2369,6 +2395,7 @@ const TR_EN = {
     ]
   },
   "ojeras": {
+    pendientes: ["How much chamomile and yoghurt does it take?"],
     titulo: "Under-eye cream for dark circles", descripcion: "A cold chamomile and yoghurt cream. It works better when it's cold.",
     facts: [["Chill", "1 day"], ["Leave on", "20 min"]],
     ing: ["Chamomile tea", "Yoghurt"],
@@ -2666,7 +2693,9 @@ const UI = {
     recetaFamilia: "🏡 Receta de familia",
     originalEn: "Original en inglés", traducidaDe: o => o === "en" ? "Traducida del inglés" : "Traducida del español",
     footer: "Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales. Los remedios caseros son sabiduría popular y no sustituyen la consulta médica.",
-    secciones: "Secciones", idioma: "Idioma"
+    secciones: "Secciones", idioma: "Idioma",
+    pendTitulo: "Falta por confirmar", pendSub: q => `Pregúntale a ${q} y avísanos para completarla.`,
+    porConfirmar: "Por confirmar", pendGen: "Si sabes la respuesta, avísanos para completarla.", soloPend: n => `⚠️ Por confirmar (${n})`
   },
   en: {
     recetas: "Recipes", remedios: "Remedies", todas: "All", recetaDe: "Recipe from:",
@@ -2690,7 +2719,9 @@ const UI = {
     recetaFamilia: "🏡 Family recipe",
     originalEn: "Original in English", traducidaDe: o => o === "en" ? "Translated from English" : "Translated from Spanish",
     footer: "Recipes from mum, grandma and everyone who has passed through our kitchen, transcribed from the original sheets. The home remedies are folk wisdom and are no substitute for seeing a doctor.",
-    secciones: "Sections", idioma: "Language"
+    secciones: "Sections", idioma: "Language",
+    pendTitulo: "Still to confirm", pendSub: q => `Ask ${q} and let us know so we can complete it.`,
+    porConfirmar: "To confirm", pendGen: "If you know the answer, let us know so we can complete it.", soloPend: n => `⚠️ To confirm (${n})`
   }
 };
 const t = k => UI[LANG][k];
@@ -2742,7 +2773,7 @@ function loc(r) {
   const tr = orig === "es" ? (typeof TR_EN !== "undefined" ? TR_EN[r.id] : null) : r.tr;
   if (!tr) return { ...r, _orig: orig, _tr: false };
   const o = { ...r, _orig: orig, _tr: true };
-  ["titulo", "descripcion", "nota", "aviso", "tiempoTexto", "porcionesTexto", "facts"].forEach(k => { if (tr[k] !== undefined) o[k] = tr[k]; });
+  ["titulo", "descripcion", "nota", "aviso", "tiempoTexto", "porcionesTexto", "facts", "pendientes"].forEach(k => { if (tr[k] !== undefined) o[k] = tr[k]; });
   if (r.ingredientes && tr.ing) o.ingredientes = r.ingredientes.map((g, i) => {
     const s = tr.ing[i]; if (!s) return g;
     const parts = s.split("::");
@@ -2767,7 +2798,7 @@ const SECCIONES = {
 const seccionDe = r => REMEDIOS.includes(r) ? "remedios" : "recetas";
 const ORIGENES = [...new Set(RECETAS.map(r => r.de).filter(Boolean))];
 
-const state = { recetas: { cat: "Todas", q: "" }, remedios: { cat: "Todas", q: "" }, de: null, servings: {}, checks: {} };
+const state = { recetas: { cat: "Todas", q: "", pend: false }, remedios: { cat: "Todas", q: "", pend: false }, de: null, servings: {}, checks: {} };
 try { Object.assign(state.checks, JSON.parse(localStorage.getItem("memeyita-checks") || "{}")); } catch (e) {}
 function saveChecks() { try { localStorage.setItem("memeyita-checks", JSON.stringify(state.checks)); } catch (e) {} }
 
@@ -2842,6 +2873,7 @@ function renderList(sec) {
   const list = S.items.map(loc).filter(r =>
     (st.cat === "Todas" || r.categoria === st.cat) &&
     (sec !== "recetas" || !state.de || r.de === state.de) &&
+    (!st.pend || (r.pendientes || []).length) &&
     (!q || norm(textoBusqueda(r)).includes(q))
   );
   const trucos = LANG === "en" ? TRUCOS.map((x, i) => ({ ...x, t: TRUCOS_EN[i][0], d: TRUCOS_EN[i][1] })) : TRUCOS;
@@ -2861,6 +2893,7 @@ function renderList(sec) {
       <div class="tabs" role="group">
         ${cats.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${st.cat === c}">${esc(lbl(c))}</button>`).join("")}
       </div>
+      ${S.items.some(r => (r.pendientes || []).length) ? `<div class="chips"><button class="chip pend" id="pendf" aria-pressed="${st.pend}">${t("soloPend")(S.items.filter(r => (r.pendientes || []).length).length)}</button></div>` : ""}
       ${sec === "recetas" && ORIGENES.length > 1 ? `<div class="chips" role="group">
         <span>${t("recetaDe")}</span>
         ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(lbl(o))}</button>`).join("")}
@@ -2874,6 +2907,7 @@ function renderList(sec) {
             ${r._orig === "en" ? `<span class="badge en">${t("originalEn")}</span>` : ""}
             ${fuenteDe(r) ? `<span class="badge chef">👨‍🍳 ${esc(fuenteDe(r).chef)}</span>` : ""}
             ${r.video ? `<span class="badge video">▶ Video</span>` : ""}
+            ${(r.pendientes || []).length ? `<span class="badge pend">⚠️ ${t("porConfirmar")}</span>` : ""}
           </div>
           <h3>${esc(r.titulo)}</h3>
           <p>${esc(r.descripcion)}</p>
@@ -2894,6 +2928,7 @@ function renderList(sec) {
   });
   app.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { st.cat = b.dataset.cat; renderList(sec); });
   app.querySelectorAll("[data-de]").forEach(b => b.onclick = () => { state.de = state.de === b.dataset.de ? null : b.dataset.de; renderList(sec); });
+  const pf = document.getElementById("pendf"); if (pf) pf.onclick = () => { st.pend = !st.pend; renderList(sec); };
   app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { location.hash = b.dataset.go; });
 }
 
@@ -2928,6 +2963,12 @@ function renderDetail(base) {
         <div class="pic" style="background:${r.color}">${plato(r)}</div>
       </section>
 
+      ${(r.pendientes || []).length ? `<section class="pendbox" aria-labelledby="h-pend">
+        <h2 id="h-pend">⚠️ ${t("pendTitulo")}</h2>
+        <ul>${r.pendientes.map(q => `<li>${esc(q)}</li>`).join("")}</ul>
+        <p>${["Memeyita", "Caroline"].includes(r.de) ? t("pendSub")(r.de) : t("pendGen")}</p>
+      </section>` : ""}
+
       ${aviso ? `<p class="aviso">${aviso}</p>` : ""}
 
       ${ings.length ? `
@@ -2944,7 +2985,7 @@ function renderDetail(base) {
         <div class="ings">
           ${ings.map((g, i) => `
             ${g.g ? `<h3 class="grp">${esc(g.g)}</h3>` : ""}
-            <button class="ing" data-i="${i}" aria-pressed="${ch.i.includes(i)}">
+            <button class="ing${g.u === "por confirmar" ? " tbc" : ""}" data-i="${i}" aria-pressed="${ch.i.includes(i)}">
               <span class="tick" aria-hidden="true">✓</span>
               <span class="e" aria-hidden="true">${g.e}</span>
               <span class="q">${cantidad(g, k)}</span>
