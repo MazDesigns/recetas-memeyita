@@ -535,7 +535,7 @@ const RECETAS = [
     id: "cheesecake", titulo: "Cheesecake", categoria: "Dulces", de: "Caroline", idioma: "en",
     plato: "🍰", color: "#f3e3c3",
     descripcion: "A digestive biscuit base with a filling of condensed milk, Philadelphia cream cheese, cream and lemon.",
-    nota: "From Caroline's handwritten card. The card doesn't say whether to chill or bake it, or for how long. Conversions: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
+    nota: "From Caroline's handwritten card. You need a lot of juice: use 3 whole lemons. Conversions: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
     ingredientes: [
       { g: "The base", e: "🧈", n: "Butter", c: 2, u: "oz" },
       { e: "🍪", n: "Digestive biscuits", c: 10, u: "" },
@@ -543,22 +543,24 @@ const RECETAS = [
       { g: "The filling", e: "🥫", n: "Condensed milk (1 can)", c: 397, u: "g" },
       { e: "🧀", n: "Philadelphia cream cheese", c: 6, u: "oz" },
       { e: "🥛", n: "Single cream", c: 5, u: "fl oz" },
-      { e: "🍋", n: "Lemon juice (the card says “×3”)", c: 3, u: "" }
+      { e: "🍋", n: "Lemons, juiced", c: 3, u: "" }
     ],
     pasos: [
       { e: "🧈", t: "Make the base", d: "Melt the butter, mix it with the crushed biscuits and the sugar, and press into the tin." },
       { e: "🥣", t: "Make the filling", d: "Mix the condensed milk, the cream cheese and the cream." },
-      { e: "🍋", t: "Add the lemon", d: "Then add the lemon juice." }
+      { e: "🍋", t: "Add the lemon", d: "Then add the juice of the 3 lemons." },
+      { e: "❄️", t: "Chill", d: "Put it in the fridge until it sets.", tt: "About 2 h" }
     ],
     tr: {
       titulo: "Cheesecake",
       descripcion: "Base de galletas digestive con un relleno de leche condensada, queso crema Philadelphia, crema y limón.",
-      nota: "De la tarjeta escrita a mano por Caroline. La tarjeta no dice si se refrigera o se hornea, ni por cuánto tiempo. Conversiones: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
-      ing: ["La base::Mantequilla", "Galletas digestive", "Azúcar demerara", "El relleno::Leche condensada (1 lata)", "Queso crema Philadelphia", "Crema de leche ligera (single cream)", "Jugo de limón (la tarjeta dice “×3”)"],
+      nota: "De la tarjeta escrita a mano por Caroline. Se necesita bastante jugo: usa 3 limones enteros. Conversiones: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
+      ing: ["La base::Mantequilla", "Galletas digestive", "Azúcar demerara", "El relleno::Leche condensada (1 lata)", "Queso crema Philadelphia", "Crema de leche ligera (single cream)", "Limones, exprimidos"],
       pasos: [
         ["Hacer la base", "Derrite la mantequilla, mézclala con las galletas trituradas y el azúcar, y presiónala en el molde."],
         ["Hacer el relleno", "Mezcla la leche condensada, el queso crema y la crema."],
-        ["Añadir el limón", "Después añade el jugo de limón."]
+        ["Añadir el limón", "Después añade el jugo de los 3 limones."],
+        ["Refrigerar", "Llévalo a la nevera hasta que cuaje.", "Unas 2 h"]
       ]
     },
     video: ""
@@ -566,8 +568,8 @@ const RECETAS = [
   {
     id: "pancakes", titulo: "Pancakes", categoria: "Desayunos", de: "Caroline", idioma: "en",
     plato: "🥞", color: "#f1dcae",
-    descripcion: "Caroline's pancake batter, with syrup, lemon and a smooth, thin mix.",
-    nota: "From Caroline's handwritten card, which only lists the ingredients: the cooking method isn't written. On the card, the baking soda was corrected from tsp to tbs. Conversions: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 dsp (dessertspoon) ≈ 10 ml.",
+    descripcion: "Caroline's pancake batter with syrup and lemon, mixed by hand with a wooden spoon.",
+    nota: "From Caroline's handwritten card. The card doesn't cover cooking the pancakes. On the card, the baking soda was corrected from tsp to tbs. Conversions: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 dsp (dessertspoon) ≈ 10 ml.",
     ingredientes: [
       { e: "🌾", n: "Self-raising flour", c: 1, u: "lb" },
       { e: "🍬", n: "Caster sugar", c: 4, u: "oz" },
@@ -575,20 +577,20 @@ const RECETAS = [
       { e: "🧂", n: "Salt", c: 1, u: "pizca" },
       { e: "🥚", n: "Eggs", c: 2, u: "" },
       { e: "🍋", n: "Lemon juice", c: 1, u: "dsp" },
-      { e: "🥛", n: "Milk, to mix smooth and thin", c: null, u: "sin medida" },
+      { e: "🥛", n: "Milk, added gradually", c: null, u: "sin medida" },
       { e: "🥄", n: "Baking soda", c: 1, u: "cda" },
       { e: "🥄", n: "Cream of tartar (level)", c: 2, u: "cda" },
       { e: "🫒", n: "Cooking oil", c: 2, u: "cda" }
     ],
     pasos: [
-      { e: "🥣", t: "Mix the batter", d: "Mix the ingredients, adding milk until the batter is smooth and thin." }
+      { e: "🥄", t: "Mix the batter", d: "Mix the ingredients by hand with a wooden spoon, adding the milk gradually until the batter is thick enough." }
     ],
     tr: {
       titulo: "Panqueques (pancakes)",
-      descripcion: "La mezcla de panqueques de Caroline, con sirope, limón y una masa suave y ligera.",
-      nota: "De la tarjeta escrita a mano por Caroline, que solo trae los ingredientes: no dice cómo se cocinan. En la tarjeta, el bicarbonato se corrigió de cucharadita a cucharada. Conversiones: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 cda de postre ≈ 10 ml.",
-      ing: ["Harina leudante", "Azúcar extrafina (caster)", "Sirope", "Sal", "Huevos", "Jugo de limón", "Leche, hasta que la mezcla quede suave y ligera", "Bicarbonato", "Crémor tártaro (al ras)", "Aceite de cocina"],
-      pasos: [["Hacer la mezcla", "Mezcla los ingredientes, agregando leche hasta que la masa quede suave y ligera."]]
+      descripcion: "La mezcla de panqueques de Caroline con sirope y limón, batida a mano con cuchara de madera.",
+      nota: "De la tarjeta escrita a mano por Caroline. La tarjeta no explica cómo cocinar los panqueques. En la tarjeta, el bicarbonato se corrigió de cucharadita a cucharada. Conversiones: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 cda de postre ≈ 10 ml.",
+      ing: ["Harina leudante", "Azúcar extrafina (caster)", "Sirope", "Sal", "Huevos", "Jugo de limón", "Leche, añadida poco a poco", "Bicarbonato", "Crémor tártaro (al ras)", "Aceite de cocina"],
+      pasos: [["Hacer la mezcla", "Mezcla los ingredientes a mano con una cuchara de madera, añadiendo la leche poco a poco hasta que la masa tenga el espesor justo."]]
     },
     video: ""
   }
