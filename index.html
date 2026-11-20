@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f1e7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Memeyita">
 <title>Recetas de Memeyita</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,17 +43,22 @@ button { font: inherit; color: inherit; cursor: pointer; }
 :focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 8px; }
 img { max-width: 100%; }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left)); padding-right: max(20px, env(safe-area-inset-right)); }
 
 /* Barra superior */
-.top { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 5; }
+.top { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 5; padding-top: env(safe-area-inset-top); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
 .brand { font-family: var(--display); font-size: 1.35rem; color: var(--green); text-decoration: none; font-weight: 600; }
 .brand small { display: block; font-family: var(--body); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-.count { font-size: .85rem; color: var(--muted); }
+.sections { display: flex; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; }
+.sections a { text-decoration: none; color: var(--muted); font-size: .9rem; padding: 6px 14px; border-radius: 999px; }
+.sections a[aria-current="page"] { background: var(--green); color: #fff; }
+.aviso { margin: 0 0 8px; padding: 12px 16px; background: #fbf3d6; border: 1px solid #ecdfae; border-radius: 14px; font-size: .9rem; color: #5b5434; }
+.recipe .aviso { margin: 0; }
+.xcard p.solo { color: var(--ink); font-size: .98rem; }
 
 /* Inicio */
-.hero { padding: 48px 0 28px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: end; }
+.hero { padding-top: 48px; padding-bottom: 28px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: end; }
 .hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); color: var(--green); font-weight: 400; }
 .hero h1 em { font-style: italic; font-weight: 600; }
 .hero p { color: var(--muted); max-width: 46ch; margin: 14px 0 0; font-size: 1.05rem; }
@@ -57,7 +66,7 @@ img { max-width: 100%; }
 .search input { border: 0; background: transparent; font: inherit; flex: 1; min-width: 0; color: var(--ink); outline: none; }
 .search:focus-within { border-color: var(--green); }
 
-.filters { display: flex; flex-direction: column; gap: 14px; padding: 8px 0 24px; }
+.filters { display: flex; flex-direction: column; gap: 14px; padding-top: 8px; padding-bottom: 24px; }
 .tabs { display: flex; gap: 22px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 .tab { background: none; border: 0; padding: 8px 0 12px; font-family: var(--display); font-size: 1.35rem; color: #a9a593; border-bottom: 3px solid transparent; margin-bottom: -1px; }
 .tab[aria-pressed="true"] { color: var(--ink); border-color: var(--green); }
@@ -85,7 +94,7 @@ img { max-width: 100%; }
 .plate img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
 /* Receta */
-.recipe { padding: 20px 0 64px; display: flex; flex-direction: column; gap: 22px; }
+.recipe { padding-top: 20px; padding-bottom: 64px; display: flex; flex-direction: column; gap: 22px; }
 .back { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: .9rem; align-self: flex-start; }
 .rhead { background: var(--card); border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
 .rhead h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); color: var(--green); }
@@ -151,7 +160,7 @@ img { max-width: 100%; }
 .trucos { padding-bottom: 48px; display: flex; flex-direction: column; gap: 16px; }
 .trucos h2 { font-size: 1.6rem; color: var(--green); }
 
-footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .85rem; }
+footer { border-top: 1px solid var(--line); padding-top: 24px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); color: var(--muted); font-size: .85rem; }
 
 @media (max-width: 760px) {
   .hero, .rhead, .video { grid-template-columns: 1fr; }
@@ -163,6 +172,12 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
   .step .time { grid-column: 2; justify-self: start; }
   .panel { padding: 18px; }
   .tags { border-radius: 18px; }
+  .brand { font-size: 1.12rem; white-space: nowrap; }
+  .brand small { font-size: .62rem; }
+  .sections a { padding: 6px 11px; font-size: .85rem; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; gap: 18px; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { font-size: 1.15rem; white-space: nowrap; flex: none; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -172,14 +187,14 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--m
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#">Recetas de Memeyita<small>Cocina de familia</small></a>
-    <span class="count" id="count"></span>
+    <nav class="sections" aria-label="Secciones"><a href="#" data-sec="recetas">Recetas</a><a href="#remedios" data-sec="remedios">Remedios</a></nav>
   </div>
 </header>
 
 <main id="app"></main>
 
 <footer>
-  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales.</div>
+  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales. Los remedios caseros son sabiduría popular y no sustituyen la consulta médica.</div>
 </footer>
 
 <script>
@@ -353,10 +368,259 @@ const TRUCOS = [
   { e: "❄️", t: "Masa de pan congelada", d: "Sácala del congelador en la noche y pásala a la nevera." }
 ];
 
-const CATEGORIAS = ["Todas", ...new Set(RECETAS.map(r => r.categoria))];
+/* REMEDIOS CASEROS: mismo formato que las recetas.
+   - facts: datos de la cabecera, como [["Frecuencia", "1 vez a la semana"]]
+   - extras: listas de usos (items con e = ícono y d = texto) */
+const AVISO_SALUD = "Son remedios de la sabiduría popular, recopilados de imágenes compartidas en familia. No sustituyen la consulta médica.";
+const REMEDIOS = [
+  {
+    id: "mascarilla-acne", titulo: "Mascarilla para el acné", categoria: "Para la piel",
+    plato: "🥕", color: "#f3d3cf",
+    descripcion: "Mascarilla de té verde, zanahoria, miel y piña.",
+    facts: [["Frecuencia", "1 vez a la semana"], ["Se deja", "15 a 20 min"]],
+    ingredientes: [
+      { e: "🍵", n: "Té verde", c: 1, u: "cda" },
+      { e: "🥕", n: "Zanahorias medianas", c: 2, u: "" },
+      { e: "🍯", n: "Miel", c: 2, u: "cda" },
+      { e: "🍍", n: "Piña fresca", c: 1, u: "rodaja" }
+    ],
+    pasos: [
+      { e: "🍵", t: "Preparar el té", d: "Con la cucharada de té prepara una infusión y déjala enfriar." },
+      { e: "🥕", t: "Hervir las zanahorias", d: "Hiérvelas para poder hacer puré." },
+      { e: "🍯", t: "Calentar la miel", d: "Calienta un poquito la miel, en el microondas o a baño María." },
+      { e: "🌀", t: "Mezclar", d: "Mezcla el té colado con la miel, la zanahoria y la piña. Pásalo por la batidora hasta obtener una mezcla uniforme." },
+      { e: "🧖‍♀️", t: "Aplicar", d: "Extiende la pasta por la cara y déjala actuar. Es mejor acostarse, así la mascarilla no se cae.", tt: "15 a 20 min" },
+      { e: "💧", t: "Aclarar", d: "Aclara primero con agua tibia y luego con agua fría." },
+      { e: "🧺", t: "Secar", d: "Sécala con una toalla y listo." }
+    ]
+  },
+  {
+    id: "puntos-negros", titulo: "Mascarilla para puntos negros", categoria: "Para la piel",
+    plato: "🍊", color: "#f6dcc4",
+    descripcion: "Pasta de jugo de naranja y bicarbonato para los puntos negros de la cara y la nariz.",
+    facts: [["Se deja", "15 min"]],
+    ingredientes: [
+      { e: "🍊", n: "Jugo de naranja", c: 1, u: "cda" },
+      { e: "🧂", n: "Bicarbonato de sodio", c: 1, u: "cda" }
+    ],
+    pasos: [
+      { e: "🥣", t: "Hacer la pasta", d: "Mezcla una cucharada de cada ingrediente hasta formar una pasta." },
+      { e: "👆", t: "Aplicar", d: "Aplícala en la zona deseada." },
+      { e: "⏳", t: "Dejar actuar", d: "Déjala sobre la piel.", min: 15 },
+      { e: "🔄", t: "Exfoliar", d: "Haz movimientos circulares con la yema de los dedos para exfoliar." },
+      { e: "💧", t: "Enjuagar", d: "Enjuaga el rostro únicamente con agua." }
+    ]
+  },
+  {
+    id: "avena-limon", titulo: "Mascarilla de avena y limón", categoria: "Para la piel",
+    plato: "🥣", color: "#e3e8c9",
+    descripcion: "Para eliminar las manchas de la cara.",
+    facts: [["Frecuencia", "2 veces por semana"], ["Se deja", "20 min"]],
+    ingredientes: [
+      { e: "🥣", n: "Avena molida", c: 1, u: "cda" },
+      { e: "🍋", n: "Jugo de limón", c: 0.5, u: "limón" }
+    ],
+    pasos: [
+      { e: "🌀", t: "Mezclar", d: "Integra muy bien los ingredientes." },
+      { e: "👆", t: "Aplicar", d: "Aplica la mezcla sobre las manchas." },
+      { e: "⏳", t: "Dejar actuar", d: "Déjala sobre la piel.", min: 20 },
+      { e: "💧", t: "Lavar", d: "Lava con agua tibia." }
+    ]
+  },
+  {
+    id: "remedios-acne", titulo: "Remedios contra el acné", categoria: "Para la piel",
+    plato: "🍋", color: "#f1e6b4",
+    descripcion: "Naranja, limón, ajo y tomate: cuatro ingredientes de la cocina que se usan sobre los granitos.",
+    facts: [["Tipo", "Varios remedios"]],
+    extras: [
+      { titulo: "Remedios", items: [
+        { e: "🍊", t: "Naranja", d: "Astringente y limpiadora, ideal para la piel grasa. Machaca una cáscara y mézclala con agua. Aplica el tónico en las lesiones antes de ir a dormir." },
+        { e: "🍋", t: "Limón", d: "Astringente y antibacteriano. Remoja un algodón en el jugo y aplícalo sobre la zona afectada. Déjalo actuar durante la noche." },
+        { e: "🧄", t: "Ajo", d: "Contiene azufre, un potente bactericida. Frota ajo rebanado sobre los granitos para desinflamarlos." },
+        { e: "🍅", t: "Tomate", d: "Tiene licopeno, un antioxidante. Haz una pasta de tomate y aplícala como mascarilla facial." }
+      ]},
+      { titulo: "Para tener en cuenta", items: [
+        { e: "⚠️", t: "No revientes los granitos", d: "Si rompes las lesiones, puedes infectar otras capas de la piel y provocar más inflamación y cicatrices." }
+      ]}
+    ]
+  },
+  {
+    id: "cedron", titulo: "Cedrón", categoria: "Hierbas medicinales", plato: "🌿", color: "#dbe6c8",
+    descripcion: "Hierba relajante, conocida para los nervios y los cólicos.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "😌", d: "Beneficioso para tratar el insomnio y trastornos nerviosos, como la ansiedad." },
+      { e: "🤲", d: "Se usa para dolores cólicos de tipo biliar, renal, intestinal o menstrual." },
+      { e: "💨", d: "Favorece la expulsión de gases." },
+      { e: "🛌", d: "Produce relajación." },
+      { e: "🧊", d: "Disminuye la inflamación." }
+    ]}]
+  },
+  {
+    id: "romero", titulo: "Romero", categoria: "Hierbas medicinales", plato: "🌱", color: "#d6e2cf",
+    descripcion: "Hierba aromática usada para los gases, los dolores y el apetito.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "💨", d: "Elimina los gases." },
+      { e: "💆", d: "Alivia dolores del cuerpo." },
+      { e: "🧠", d: "Es útil para el Alzheimer y la hipertensión." },
+      { e: "💅", d: "Para los que se comen las uñas." },
+      { e: "🍽️", d: "Mejora el apetito y la anemia." },
+      { e: "😌", d: "Reduce la ansiedad." }
+    ]}]
+  },
+  {
+    id: "jazmin", titulo: "Jazmín", categoria: "Hierbas medicinales", plato: "🌼", color: "#eee8d2",
+    descripcion: "Flor de aroma relajante, usada para el sueño y los dolores de cabeza.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🌙", d: "Su aroma es muy relajante y somnífero." },
+      { e: "🤕", d: "Trata los dolores de cabeza y la tos." },
+      { e: "❤️", d: "Es un excelente sedante, promueve el flujo sanguíneo y la presión arterial." },
+      { e: "🌤️", d: "Es antidepresivo." },
+      { e: "🩹", d: "Antiséptico para heridas." }
+    ]}]
+  },
+  {
+    id: "hierbabuena", titulo: "Hierbabuena", categoria: "Hierbas medicinales", plato: "🍃", color: "#d3e9cf",
+    descripcion: "Hoja fresca usada para el estrés, el sueño y la garganta.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🩸", d: "Estimula la circulación." },
+      { e: "🧠", d: "Relaja al cerebro." },
+      { e: "😌", d: "Alivia el estrés." },
+      { e: "🌙", d: "Combate el insomnio." },
+      { e: "⚡", d: "Aporta muchas vitaminas y da energía." },
+      { e: "🫁", d: "Evita el asma y el dolor de garganta." }
+    ]}]
+  },
+  {
+    id: "oregano", titulo: "Orégano", categoria: "Hierbas medicinales", plato: "🌿", color: "#dde3c4",
+    descripcion: "Mucho más que un condimento según la tradición popular.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🤲", d: "Regula los cólicos y la hipertensión." },
+      { e: "❤️", d: "Reduce el colesterol." },
+      { e: "🦠", d: "Elimina bacterias y parásitos." },
+      { e: "🦴", d: "Previene los dolores reumáticos." },
+      { e: "🛡️", d: "Combate las infecciones." },
+      { e: "🫁", d: "Alivia la bronquitis y la picazón." }
+    ]}]
+  },
+  {
+    id: "hinojo", titulo: "Hinojo", categoria: "Hierbas medicinales", plato: "🥬", color: "#e2ebcf",
+    descripcion: "Se consume por lo general en ensaladas.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "❤️", d: "Combate la hipertensión arterial." },
+      { e: "🩸", d: "Elimina la anemia." },
+      { e: "🫁", d: "Repara trastornos respiratorios." },
+      { e: "🍽️", d: "Beneficia la buena digestión." },
+      { e: "🤲", d: "Para los dolores menstruales." }
+    ]}]
+  },
+  {
+    id: "botoncillo", titulo: "Botoncillo", categoria: "Hierbas medicinales", plato: "🌼", color: "#f0ddb8",
+    descripcion: "Planta de flores pequeñas, usada para los catarros y el estómago.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🤧", d: "Es muy útil para los catarros." },
+      { e: "🤲", d: "Elimina dolores estomacales." },
+      { e: "🩹", d: "Tiene propiedades cicatrizantes y antiinflamatorias." },
+      { e: "🍵", d: "La infusión de sus hojas sirve para aliviar dolencias hepáticas." }
+    ]}]
+  },
+  {
+    id: "hoja-santa", titulo: "Hoja santa", categoria: "Hierbas medicinales", plato: "🍃", color: "#d6e6c4",
+    descripcion: "Hoja grande que se toma en infusión para el sueño y el estómago.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🌙", d: "En infusión ayuda a conciliar el sueño y es un relajante natural." },
+      { e: "🤲", d: "Ayuda a desinflamar, para aliviar dolores de estómago, falta de apetito y estreñimiento." },
+      { e: "🩸", d: "Ayuda a purificar la sangre." },
+      { e: "🫁", d: "Ayuda al asma, la laringitis y el reumatismo." }
+    ]}]
+  },
+  {
+    id: "hojas-aguacate", titulo: "Hojas de aguacate", categoria: "Hierbas medicinales", plato: "🥑", color: "#dbe5c2",
+    descripcion: "Las hojas del árbol de aguacate, en infusión.",
+    extras: [{ titulo: "Para qué se usa", items: [
+      { e: "🤲", d: "Poderosas contra malestares estomacales." },
+      { e: "🫁", d: "Para combatir la tos." },
+      { e: "🩹", d: "Para los moretones o hematomas." },
+      { e: "🍵", d: "Una infusión de hojas de aguacate en ayunas es lo más recomendado por la sabiduría popular para deshacerse de las lombrices." }
+    ]}]
+  },
+  {
+    id: "agua-arroz", titulo: "Fertilizante de agua de arroz", categoria: "Para las plantas",
+    plato: "🍚", color: "#e6eadb",
+    descripcion: "Abono casero para regar las hojas de las plantas.",
+    facts: [["Frecuencia", "Hasta 2 veces por semana"]],
+    ingredientes: [
+      { e: "💧", n: "Agua", c: 4, u: "taza" },
+      { e: "🍚", n: "Arroz", c: 2, u: "taza" }
+    ],
+    pasos: [
+      { e: "🍲", t: "Hervir", d: "En una olla, hierve el agua con el arroz. Retira del fuego y deja reposar.", min: 15 },
+      { e: "🫗", t: "Colar", d: "Cuela para obtener el agua de arroz. Guárdala en un recipiente y deja que se entibie." },
+      { e: "🧴", t: "Pasar al atomizador", d: "Echa el agua en un atomizador para humedecer y regar las hojas de las plantas." },
+      { e: "🌱", t: "Usar", d: "Úsalo hasta dos veces por semana y verás cómo tus plantas crecen más rápido." }
+    ],
+    extras: [{ titulo: "Beneficios", items: [
+      { e: "🌱", d: "Estimula las raíces de las plantas de interior." },
+      { e: "🧺", d: "Funciona como abono." },
+      { e: "🦠", d: "Genera bacterias beneficiosas del suelo." },
+      { e: "🍃", d: "Promueve la nutrición de tus plantas." },
+      { e: "🐛", d: "Previene la aparición de plagas." }
+    ]}]
+  },
+  {
+    id: "cafe-plantas", titulo: "Café en las plantas", categoria: "Para las plantas", plato: "☕", color: "#e2d2bf",
+    descripcion: "Usos de la borra de café en el jardín.",
+    extras: [{ titulo: "Para qué sirve", items: [
+      { e: "💧", d: "Excelente absorbente de humedad y antihongos." },
+      { e: "🌱", d: "Sirve de abono, ya que aumenta los niveles de nitrógeno en la tierra." },
+      { e: "🐌", d: "Hace la función de pesticida para babosas, larvas, caracoles y algunos insectos masticadores." },
+      { e: "🪱", d: "Ayuda a mejorar el suelo y es alimento para las lombrices, que son buenas para la tierra." },
+      { e: "🌸", d: "Contribuye a los microorganismos que potencian el crecimiento de las plantas." }
+    ]}]
+  },
+  {
+    id: "canela-plantas", titulo: "Canela en polvo en las plantas", categoria: "Para las plantas", plato: "🌷", color: "#ead3c6",
+    descripcion: "Beneficios de la canela en polvo en el jardín y la huerta.",
+    extras: [{ titulo: "Para qué sirve", items: [
+      { e: "🍄", t: "Elimina hongos", d: "Sus compuestos antimicóticos y desinfectantes protegen a las plantas de los hongos." },
+      { e: "🌿", t: "Esquejes", d: "Aplica canela en el tallo antes de plantarlos y así crecerán sanos y fuertes." },
+      { e: "🥬", t: "Protege los vegetales", d: "Úsala como fertilizante para evitar enfermedades en los vegetales comestibles." },
+      { e: "🐜", t: "Controla plagas", d: "Mantiene alejados a los mosquitos y hormigas que dañan las plantas." },
+      { e: "✂️", t: "Cura heridas", d: "Después de una poda, la planta puede sufrir cortes. Haz una capa protectora con canela." }
+    ]}]
+  },
+  {
+    id: "vinagre-plantas", titulo: "Vinagre en las plantas", categoria: "Para las plantas", plato: "🧴", color: "#dde6e4",
+    descripcion: "Beneficios del vinagre en el jardín.",
+    extras: [{ titulo: "Para qué sirve", items: [
+      { e: "🌱", d: "Aporta hierro y ayuda al crecimiento de las plantas." },
+      { e: "🍄", d: "Acaba con los hongos que afectan tus plantas." },
+      { e: "🧰", d: "Para limpiar herramientas de jardinería." },
+      { e: "🌾", d: "Evita que crezcan malas hierbas alrededor de tus plantas." },
+      { e: "🪰", d: "Sirve para eliminar las moscas en el jardín." },
+      { e: "🐶", d: "Repelente natural para que las mascotas no hagan pipí en el jardín." },
+      { e: "🐜", d: "Aleja a las hormigas del jardín." }
+    ]}]
+  }
+];
+
+const SECCIONES = {
+  recetas: {
+    items: RECETAS, href: "#", volver: "← Todas las recetas", palabra: "recetas",
+    titulo: `Lo que se cocina <em>en casa</em>, guardado para siempre.`,
+    intro: "Las recetas de mamá, de la abuela y las que hemos ido sumando en el camino, paso a paso y con cada ingrediente a la vista.",
+    buscar: "Busca una receta o un ingrediente"
+  },
+  remedios: {
+    items: REMEDIOS, href: "#remedios", volver: "← Todos los remedios", palabra: "remedios",
+    titulo: `Remedios <em>caseros</em> que se pasan de mano en mano.`,
+    intro: "Mascarillas, hierbas y trucos para las plantas que hemos ido guardando en familia.",
+    buscar: "Busca un remedio o una hierba"
+  }
+};
+const seccionDe = r => REMEDIOS.includes(r) ? "remedios" : "recetas";
 const ORIGENES = [...new Set(RECETAS.map(r => r.de).filter(Boolean))];
 
-const state = { cat: "Todas", de: null, q: "", servings: {}, checks: {} };
+const state = { recetas: { cat: "Todas", q: "" }, remedios: { cat: "Todas", q: "" }, de: null, servings: {}, checks: {} };
 try { Object.assign(state.checks, JSON.parse(localStorage.getItem("memeyita-checks") || "{}")); } catch (e) {}
 function saveChecks() { try { localStorage.setItem("memeyita-checks", JSON.stringify(state.checks)); } catch (e) {} }
 
@@ -378,7 +642,7 @@ function fmt(n) {
 
 const tiempoDe = r => r.tiempoTexto || (r.tiempo ? tiempo(r.tiempo) : "");
 const porcDe = r => r.porcionesTexto || r.porciones || "";
-const PLURAL = { taza: "tazas", cda: "cdas", cdta: "cdtas", diente: "dientes", lata: "latas" };
+const PLURAL = { taza: "tazas", cda: "cdas", cdta: "cdtas", diente: "dientes", lata: "latas", rodaja: "rodajas", limón: "limones" };
 function cantidad(g, k) {
   if (g.c == null) return esc(g.u);
   const hi = Array.isArray(g.c) ? g.c[1] * k : g.c * k;
@@ -397,29 +661,52 @@ function plato(r) {
   return `<div class="plate">${r.foto ? `<img src="${esc(r.foto)}" alt="${esc(r.titulo)}">` : `<span aria-hidden="true">${r.plato}</span>`}</div>`;
 }
 
-function renderHome() {
-  const q = norm(state.q);
-  const list = RECETAS.filter(r =>
-    (state.cat === "Todas" || r.categoria === state.cat) &&
-    (!state.de || r.de === state.de) &&
-    (!q || norm(r.titulo + " " + r.descripcion + " " + r.ingredientes.map(i => i.n).join(" ")).includes(q))
+const xcards = items => `<div class="xgrid">${items.map(it => `<div class="xcard"><span class="e" aria-hidden="true">${it.e}</span><div>${it.t ? `<h3>${esc(it.t)}</h3>` : ""}${it.d ? `<p${it.t ? "" : ' class="solo"'}>${esc(it.d)}</p>` : ""}</div></div>`).join("")}</div>`;
+
+function avisoDe(r) {
+  if (r.categoria === "Para la piel") return AVISO_SALUD + " Prueba primero en una zona pequeña de la piel, y evita el sol después de usar limón o naranja en la cara.";
+  if (r.categoria === "Hierbas medicinales") return AVISO_SALUD + " Si estás embarazada, tomas medicamentos o tienes alguna condición de salud, consulta antes de usarlas.";
+  return "";
+}
+
+function setNav(sec) {
+  document.querySelectorAll(".sections a").forEach(a => {
+    if (a.dataset.sec === sec) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+}
+
+function textoBusqueda(r) {
+  return [r.titulo, r.descripcion, r.categoria,
+    ...(r.ingredientes || []).map(i => i.n),
+    ...(r.extras || []).flatMap(x => x.items.map(it => (it.t || "") + " " + (it.d || "")))].join(" ");
+}
+
+function renderList(sec) {
+  const S = SECCIONES[sec], st = state[sec];
+  const cats = ["Todas", ...new Set(S.items.map(r => r.categoria))];
+  const q = norm(st.q);
+  const list = S.items.filter(r =>
+    (st.cat === "Todas" || r.categoria === st.cat) &&
+    (sec !== "recetas" || !state.de || r.de === state.de) &&
+    (!q || norm(textoBusqueda(r)).includes(q))
   );
   app.innerHTML = `
     <section class="wrap hero">
       <div>
-        <h1>Lo que se cocina <em>en casa</em>, guardado para siempre.</h1>
-        <p>Las recetas de mamá, de la abuela y las que hemos ido sumando en el camino, paso a paso y con fotos de cada ingrediente.</p>
+        <h1>${S.titulo}</h1>
+        <p>${S.intro}</p>
       </div>
       <label class="search" for="q">
         <span aria-hidden="true">🔎</span>
-        <input id="q" type="search" placeholder="Busca una receta o un ingrediente" value="${esc(state.q)}">
+        <input id="q" type="search" placeholder="${S.buscar}" value="${esc(st.q)}">
       </label>
     </section>
+    ${sec === "remedios" ? `<div class="wrap"><p class="aviso">${AVISO_SALUD}</p></div>` : ""}
     <section class="wrap filters" aria-label="Filtros">
       <div class="tabs" role="group" aria-label="Categoría">
-        ${CATEGORIAS.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${state.cat === c}">${esc(c)}</button>`).join("")}
+        ${cats.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${st.cat === c}">${esc(c)}</button>`).join("")}
       </div>
-      ${ORIGENES.length > 1 ? `<div class="chips" role="group" aria-label="Receta de">
+      ${sec === "recetas" && ORIGENES.length > 1 ? `<div class="chips" role="group" aria-label="Receta de">
         <span>Receta de:</span>
         ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(o)}</button>`).join("")}
       </div>` : ""}
@@ -429,72 +716,74 @@ function renderHome() {
         <button class="card" data-go="${r.id}">
           <div class="pic" style="background:${r.color}">
             ${plato(r)}
-            ${r.ejemplo ? `<span class="badge">Ejemplo</span>` : ""}
             ${r.video ? `<span class="badge video">▶ Video</span>` : ""}
           </div>
           <h3>${esc(r.titulo)}</h3>
           <p>${esc(r.descripcion)}</p>
-          <div class="meta">${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}${porcDe(r) ? `<span>🍽 ${porcDe(r)} porciones</span>` : ""}<span>${esc(r.categoria)}</span></div>
-        </button>`).join("") || `<p class="empty">No hay recetas con esos filtros. Prueba con otra categoría o borra la búsqueda.</p>`}
+          <div class="meta">${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}${porcDe(r) ? `<span>🍽 ${porcDe(r)} porciones</span>` : ""}${r.facts && r.facts[0] ? `<span>${esc(r.facts[0][1])}</span>` : ""}<span>${esc(r.categoria)}</span></div>
+        </button>`).join("") || `<p class="empty">No encontramos ${S.palabra} con esos filtros. Prueba con otra categoría o borra la búsqueda.</p>`}
     </section>
-    ${TRUCOS.length ? `<section class="wrap trucos" aria-labelledby="h-trucos">
+    ${sec === "recetas" && TRUCOS.length ? `<section class="wrap trucos" aria-labelledby="h-trucos">
       <h2 id="h-trucos">Trucos de la cocina</h2>
-      <div class="xgrid">${TRUCOS.map(x => `<div class="xcard"><span class="e" aria-hidden="true">${x.e}</span><div><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p></div></div>`).join("")}</div>
+      ${xcards(TRUCOS)}
     </section>` : ""}`;
-  document.getElementById("count").textContent = `${RECETAS.length} recetas`;
+  setNav(sec);
 
-  const qi = document.getElementById("q");
-  qi.addEventListener("input", e => {
-    state.q = e.target.value;
+  document.getElementById("q").addEventListener("input", e => {
+    st.q = e.target.value;
     const pos = e.target.selectionStart;
-    renderHome();
+    renderList(sec);
     const n = document.getElementById("q"); n.focus(); n.setSelectionRange(pos, pos);
   });
-  app.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { state.cat = b.dataset.cat; renderHome(); });
-  app.querySelectorAll("[data-de]").forEach(b => b.onclick = () => { state.de = state.de === b.dataset.de ? null : b.dataset.de; renderHome(); });
+  app.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { st.cat = b.dataset.cat; renderList(sec); });
+  app.querySelectorAll("[data-de]").forEach(b => b.onclick = () => { state.de = state.de === b.dataset.de ? null : b.dataset.de; renderList(sec); });
   app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { location.hash = b.dataset.go; });
 }
 
-function renderRecipe(r) {
+function renderDetail(r) {
+  const sec = seccionDe(r), S = SECCIONES[sec], esReceta = sec === "recetas";
+  const ings = r.ingredientes || [], pasos = r.pasos || [];
   const s = state.servings[r.id] || r.porciones || 1;
-  const k = r.porciones ? s / r.porciones : s;
+  const k = !esReceta ? 1 : (r.porciones ? s / r.porciones : s);
   const stepBy = r.porciones ? 1 : 0.5;
   const sLabel = r.porciones ? `${s} porciones` : `Receta ×${fmt(s)}`;
   const ch = state.checks[r.id] || (state.checks[r.id] = { i: [], p: [] });
-  const ready = ch.i.length;
+  const facts = r.facts || [
+    ["Tiempo", tiempoDe(r)], ["Porciones", porcDe(r)], ["Dificultad", r.dificultad], ["Receta de", r.de]
+  ];
+  const aviso = avisoDe(r);
 
   app.innerHTML = `
     <article class="wrap recipe">
-      <button class="back" id="back">← Todas las recetas</button>
+      <button class="back" id="back">${S.volver}</button>
 
       <section class="rhead">
         <div>
-          ${r.ejemplo ? `<span class="sample">Receta de ejemplo</span>` : ""}
           <h1>${esc(r.titulo)}</h1>
           <p class="desc">${esc(r.descripcion)}</p>
           <div class="facts">
-            ${tiempoDe(r) ? `<div class="fact"><b>Tiempo</b>${esc(tiempoDe(r))}</div>` : ""}
-            ${porcDe(r) ? `<div class="fact"><b>Porciones</b>${porcDe(r)}</div>` : ""}
-            ${r.dificultad ? `<div class="fact"><b>Dificultad</b>${esc(r.dificultad)}</div>` : ""}
-            ${r.de ? `<div class="fact"><b>Receta de</b>${esc(r.de)}</div>` : ""}
+            ${facts.filter(f => f[1]).map(f => `<div class="fact"><b>${esc(f[0])}</b>${esc(f[1])}</div>`).join("")}
           </div>
           ${r.nota ? `<p class="note">${esc(r.nota)}<small>Nota de la receta</small></p>` : ""}
         </div>
         <div class="pic" style="background:${r.color}">${plato(r)}</div>
       </section>
 
+      ${aviso ? `<p class="aviso">${aviso}</p>` : ""}
+
+      ${ings.length ? `
       <section class="panel" aria-labelledby="h-ing">
         <div class="phead">
-          <h2 id="h-ing">Ingredientes<span class="sub">${ready} de ${r.ingredientes.length} listos</span></h2>
-          <div class="servings" role="group" aria-label="${r.porciones ? "Porciones" : "Tamaño de la receta"}">
+          <h2 id="h-ing">Ingredientes<span class="sub">${ch.i.length} de ${ings.length} listos</span></h2>
+          ${esReceta ? `<div class="servings" role="group" aria-label="${r.porciones ? "Porciones" : "Tamaño de la receta"}">
             <button id="minus" aria-label="Reducir">−</button>
             <output aria-live="polite">${sLabel}</output>
             <button id="plus" aria-label="Aumentar">+</button>
-          </div>
+          </div>` : ""}
         </div>
-        <p class="hint">Toca cada ingrediente cuando lo tengas listo en la mesa.</p>
+        <p class="hint">Toca cada ingrediente cuando lo tengas listo.</p>
         <div class="ings">
-          ${r.ingredientes.map((g, i) => `
+          ${ings.map((g, i) => `
             ${g.g ? `<h3 class="grp">${esc(g.g)}</h3>` : ""}
             <button class="ing" data-i="${i}" aria-pressed="${ch.i.includes(i)}">
               <span class="tick" aria-hidden="true">✓</span>
@@ -503,33 +792,38 @@ function renderRecipe(r) {
               <span class="n">${esc(g.n)}</span>
             </button>`).join("")}
         </div>
-      </section>
+      </section>` : ""}
 
+      ${pasos.length ? `
       <section class="panel" aria-labelledby="h-pasos">
-        <div class="phead"><h2 id="h-pasos">Pasos<span class="sub">${ch.p.length} de ${r.pasos.length} hechos</span></h2></div>
+        <div class="phead"><h2 id="h-pasos">Pasos<span class="sub">${ch.p.length} de ${pasos.length} hechos</span></h2></div>
         <nav class="map" aria-label="Resumen de pasos">
-          ${r.pasos.map((p, i) => `
+          ${pasos.map((p, i) => `
             <button data-jump="${i}" class="${ch.p.includes(i) ? "done" : ""}">
               <span class="dot"><i>${i + 1}</i><span aria-hidden="true">${p.e}</span></span>
               ${esc(p.t)}
             </button>`).join("")}
         </nav>
         <div class="steps">
-          ${r.pasos.map((p, i) => `
+          ${pasos.map((p, i) => {
+            const t = p.tt || (p.min ? tiempo(p.min) : "");
+            return `
             <button class="step" id="paso-${i}" data-p="${i}" aria-pressed="${ch.p.includes(i)}">
               <span class="num"><span aria-hidden="true">${p.e}</span><i>${i + 1}</i></span>
               <span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p></span>
-              ${p.min ? `<span class="time">⏱ ${tiempo(p.min)}</span>` : "<span></span>"}
-            </button>`).join("")}
+              ${t ? `<span class="time">⏱ ${esc(t)}</span>` : "<span></span>"}
+            </button>`;
+          }).join("")}
         </div>
-      </section>
+      </section>` : ""}
 
       ${(r.extras || []).map((x, xi) => `
       <section class="panel" aria-labelledby="h-x${xi}">
         <div class="phead"><h2 id="h-x${xi}">${esc(x.titulo)}</h2></div>
-        <div class="xgrid">${x.items.map(it => `<div class="xcard"><span class="e" aria-hidden="true">${it.e}</span><div><h3>${esc(it.t)}</h3><p>${esc(it.d)}</p></div></div>`).join("")}</div>
+        ${xcards(x.items)}
       </section>`).join("")}
 
+      ${esReceta ? `
       <section class="panel" aria-labelledby="h-video">
         <div class="video">
           ${ytEmbed(r.video)
@@ -545,27 +839,29 @@ function renderRecipe(r) {
         </div>
       </section>
 
-      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>
+      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>` : ""}
     </article>`;
-  document.getElementById("count").textContent = r.titulo;
+  setNav(sec);
 
-  document.getElementById("back").onclick = () => { location.hash = ""; };
-  document.getElementById("minus").onclick = () => { state.servings[r.id] = Math.max(stepBy, s - stepBy); keep(() => renderRecipe(r)); };
-  document.getElementById("plus").onclick = () => { state.servings[r.id] = s + stepBy; keep(() => renderRecipe(r)); };
-  app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderRecipe(r)); });
-  app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderRecipe(r)); });
+  document.getElementById("back").onclick = () => { location.hash = S.href === "#" ? "" : S.href.slice(1); };
+  const minus = document.getElementById("minus"), plus = document.getElementById("plus");
+  if (minus) minus.onclick = () => { state.servings[r.id] = Math.max(stepBy, s - stepBy); keep(() => renderDetail(r)); };
+  if (plus) plus.onclick = () => { state.servings[r.id] = s + stepBy; keep(() => renderDetail(r)); };
+  app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderDetail(r)); });
+  app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderDetail(r)); });
   app.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
     document.getElementById("paso-" + b.dataset.jump).scrollIntoView({ behavior: "smooth", block: "center" });
   });
 }
 
 function toggle(arr, v) { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); saveChecks(); }
-function keep(fn) { const y = window.scrollY; const id = document.activeElement && document.activeElement.id; const di = document.activeElement && (document.activeElement.dataset.i ?? document.activeElement.dataset.p); fn(); window.scrollTo(0, y); }
+function keep(fn) { const y = window.scrollY; fn(); window.scrollTo(0, y); }
 
 function route() {
   const id = location.hash.slice(1);
-  const r = RECETAS.find(x => x.id === id);
-  if (r) { renderRecipe(r); window.scrollTo(0, 0); } else renderHome();
+  if (id === "remedios") { renderList("remedios"); window.scrollTo(0, 0); return; }
+  const r = RECETAS.find(x => x.id === id) || REMEDIOS.find(x => x.id === id);
+  if (r) { renderDetail(r); window.scrollTo(0, 0); } else renderList("recetas");
 }
 window.addEventListener("hashchange", route);
 route();
