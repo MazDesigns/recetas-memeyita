@@ -53,6 +53,14 @@ img { max-width: 100%; }
 .sections { display: flex; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; }
 .sections a { text-decoration: none; color: var(--muted); font-size: .9rem; padding: 6px 14px; border-radius: 999px; }
 .sections a[aria-current="page"] { background: var(--green); color: #fff; }
+.right { display: flex; align-items: center; gap: 8px; }
+.lang { display: flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+.lang button { border: 0; background: none; font-size: .78rem; font-weight: 600; letter-spacing: .04em; padding: 5px 9px; border-radius: 999px; color: var(--muted); }
+.lang button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
+.badge.en { left: auto; right: 12px; background: #fff; color: var(--green); border: 1px solid var(--green-soft); }
+.langtags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.langtags .sample { margin: 0; }
+.sample.en { border-style: solid; border-color: var(--green); color: var(--green); }
 .aviso { margin: 0 0 8px; padding: 12px 16px; background: #fbf3d6; border: 1px solid #ecdfae; border-radius: 14px; font-size: .9rem; color: #5b5434; }
 .recipe .aviso { margin: 0; }
 .xcard p.solo { color: var(--ink); font-size: .98rem; }
@@ -176,6 +184,8 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; padding-bottom: c
   .step .time { grid-column: 2; justify-self: start; }
   .panel { padding: 18px; }
   .tags { border-radius: 18px; }
+  .top .wrap { flex-wrap: wrap; height: auto; padding-top: 10px; padding-bottom: 10px; row-gap: 8px; }
+  .right { width: 100%; justify-content: space-between; }
   .brand { font-size: 1.12rem; white-space: nowrap; }
   .brand small { font-size: .62rem; }
   .sections a { padding: 6px 11px; font-size: .85rem; }
@@ -191,14 +201,14 @@ footer { border-top: 1px solid var(--line); padding-top: 24px; padding-bottom: c
 <header class="top">
   <div class="wrap">
     <a class="brand" href="#">Recetas de Memeyita<small>Cocina de familia</small></a>
-    <nav class="sections" aria-label="Secciones"><a href="#" data-sec="recetas">Recetas</a><a href="#remedios" data-sec="remedios">Remedios</a></nav>
+    <div class="right"><nav class="sections" aria-label="Secciones"><a href="#" data-sec="recetas">Recetas</a><a href="#remedios" data-sec="remedios">Remedios</a></nav><div class="lang" role="group" aria-label="Idioma"><button data-lang="es" aria-pressed="true">ES</button><button data-lang="en" aria-pressed="false">EN</button></div></div>
   </div>
 </header>
 
 <main id="app"></main>
 
 <footer>
-  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales. Los remedios caseros son sabiduría popular y no sustituyen la consulta médica.</div>
+  <div class="wrap" id="pie"></div>
 </footer>
 
 <script>
@@ -519,6 +529,67 @@ const RECETAS = [
       { e: "🌀", t: "Mezclar con las berenjenas", d: "Vierte la crema sobre las berenjenas picaditas y revuelve hasta que quede bien mezclado." },
       { e: "🌿", t: "Adornar y servir", d: "Adorna con perejil bien picadito o, si prefieres, con ají picante en polvo. Al servir, vierte un chorrito de aceite de oliva por encima." }
     ],
+    video: ""
+  },
+  {
+    id: "cheesecake", titulo: "Cheesecake", categoria: "Dulces", de: "Caroline", idioma: "en",
+    plato: "🍰", color: "#f3e3c3",
+    descripcion: "A digestive biscuit base with a filling of condensed milk, Philadelphia cream cheese, cream and lemon.",
+    nota: "From Caroline's handwritten card. The card doesn't say whether to chill or bake it, or for how long. Conversions: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
+    ingredientes: [
+      { g: "The base", e: "🧈", n: "Butter", c: 2, u: "oz" },
+      { e: "🍪", n: "Digestive biscuits", c: 10, u: "" },
+      { e: "🟫", n: "Demerara sugar", c: 1, u: "oz" },
+      { g: "The filling", e: "🥫", n: "Condensed milk (1 can)", c: 397, u: "g" },
+      { e: "🧀", n: "Philadelphia cream cheese", c: 6, u: "oz" },
+      { e: "🥛", n: "Single cream", c: 5, u: "fl oz" },
+      { e: "🍋", n: "Lemon juice (the card says “×3”)", c: 3, u: "" }
+    ],
+    pasos: [
+      { e: "🧈", t: "Make the base", d: "Melt the butter, mix it with the crushed biscuits and the sugar, and press into the tin." },
+      { e: "🥣", t: "Make the filling", d: "Mix the condensed milk, the cream cheese and the cream." },
+      { e: "🍋", t: "Add the lemon", d: "Then add the lemon juice." }
+    ],
+    tr: {
+      titulo: "Cheesecake",
+      descripcion: "Base de galletas digestive con un relleno de leche condensada, queso crema Philadelphia, crema y limón.",
+      nota: "De la tarjeta escrita a mano por Caroline. La tarjeta no dice si se refrigera o se hornea, ni por cuánto tiempo. Conversiones: 1 oz ≈ 28 g, 5 fl oz ≈ 150 ml.",
+      ing: ["La base::Mantequilla", "Galletas digestive", "Azúcar demerara", "El relleno::Leche condensada (1 lata)", "Queso crema Philadelphia", "Crema de leche ligera (single cream)", "Jugo de limón (la tarjeta dice “×3”)"],
+      pasos: [
+        ["Hacer la base", "Derrite la mantequilla, mézclala con las galletas trituradas y el azúcar, y presiónala en el molde."],
+        ["Hacer el relleno", "Mezcla la leche condensada, el queso crema y la crema."],
+        ["Añadir el limón", "Después añade el jugo de limón."]
+      ]
+    },
+    video: ""
+  },
+  {
+    id: "pancakes", titulo: "Pancakes", categoria: "Desayunos", de: "Caroline", idioma: "en",
+    plato: "🥞", color: "#f1dcae",
+    descripcion: "Caroline's pancake batter, with syrup, lemon and a smooth, thin mix.",
+    nota: "From Caroline's handwritten card, which only lists the ingredients: the cooking method isn't written. On the card, the baking soda was corrected from tsp to tbs. Conversions: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 dsp (dessertspoon) ≈ 10 ml.",
+    ingredientes: [
+      { e: "🌾", n: "Self-raising flour", c: 1, u: "lb" },
+      { e: "🍬", n: "Caster sugar", c: 4, u: "oz" },
+      { e: "🍯", n: "Syrup", c: 1, u: "dsp" },
+      { e: "🧂", n: "Salt", c: 1, u: "pizca" },
+      { e: "🥚", n: "Eggs", c: 2, u: "" },
+      { e: "🍋", n: "Lemon juice", c: 1, u: "dsp" },
+      { e: "🥛", n: "Milk, to mix smooth and thin", c: null, u: "sin medida" },
+      { e: "🥄", n: "Baking soda", c: 1, u: "cda" },
+      { e: "🥄", n: "Cream of tartar (level)", c: 2, u: "cda" },
+      { e: "🫒", n: "Cooking oil", c: 2, u: "cda" }
+    ],
+    pasos: [
+      { e: "🥣", t: "Mix the batter", d: "Mix the ingredients, adding milk until the batter is smooth and thin." }
+    ],
+    tr: {
+      titulo: "Panqueques (pancakes)",
+      descripcion: "La mezcla de panqueques de Caroline, con sirope, limón y una masa suave y ligera.",
+      nota: "De la tarjeta escrita a mano por Caroline, que solo trae los ingredientes: no dice cómo se cocinan. En la tarjeta, el bicarbonato se corrigió de cucharadita a cucharada. Conversiones: 1 lb ≈ 450 g, 4 oz ≈ 115 g, 1 cda de postre ≈ 10 ml.",
+      ing: ["Harina leudante", "Azúcar extrafina (caster)", "Sirope", "Sal", "Huevos", "Jugo de limón", "Leche, hasta que la mezcla quede suave y ligera", "Bicarbonato", "Crémor tártaro (al ras)", "Aceite de cocina"],
+      pasos: [["Hacer la mezcla", "Mezcla los ingredientes, agregando leche hasta que la masa quede suave y ligera."]]
+    },
     video: ""
   }
 ];
@@ -949,19 +1020,632 @@ const REMEDIOS = [
   }
 ];
 
-const SECCIONES = {
-  recetas: {
-    items: RECETAS, href: "#", volver: "← Todas las recetas", palabra: "recetas",
-    titulo: `Lo que se cocina <em>en casa</em>, guardado para siempre.`,
-    intro: "Las recetas de mamá, de la abuela y las que hemos ido sumando en el camino, paso a paso y con cada ingrediente a la vista.",
-    buscar: "Busca una receta o un ingrediente"
+/* TRADUCCIONES AL INGLÉS de las recetas y remedios escritos en español.
+   ing: nombres en el mismo orden ("Grupo::Nombre" cuando empieza un grupo)
+   pasos: [título, texto, tiempo opcional]   extras: [título, [[título, texto], ...]] */
+const TR_EN = {
+  "pan": {
+    titulo: "Bread (basic dough)", tiempoTexto: "1 h 15 min + baking",
+    descripcion: "The house dough. Use it for savoury and sweet breads, fruit rings, cachitos and pan de jamón.",
+    nota: "The original sheet doesn't give the oven temperature, the baking time or the amount of salt.",
+    ing: ["Flour", "Butter", "Oil", "Fresh yeast (compressed)", "Sugar", "Warm water", "Milk", "Eggs", "Salt"],
+    pasos: [
+      ["Activate the yeast", "Dissolve the yeast in the warm water with the 2 tablespoons of sugar. Cover and let it rest."],
+      ["Beat the base", "Separately, beat the butter with the oil, the sugar and the eggs. Add the salt, the milk and the yeast water."],
+      ["Add the flour", "Keep adding flour while you beat, until the dough sticks to the mixer. Then knead by hand until soft and slightly sticky."],
+      ["Let it rise", "Covered, in a greased container, somewhere warm."],
+      ["Shape the breads", "Divide the dough and shape the breads. You can freeze them already shaped, or freeze the divided dough in containers."]
+    ],
+    extras: [
+      ["Tips", [
+        ["To glaze the bread", "Thick papelón (unrefined cane sugar) syrup with a beaten egg, or just milk."],
+        ["To thaw the dough", "Take it out of the freezer at night and move it to the fridge."]
+      ]],
+      ["Shapes and variations", [
+        ["Croissant", "Roll out the dough, add a tablespoon of butter, fold and chill for ½ hour. Repeat 3 times. Finally cut into triangles, roll up and bend into a crescent."],
+        ["Cinnamon bread", "Roll out a rectangle and cover it with cinnamon and sugar. Fold, roll out again and add another layer. Fold in 4, cover with more cinnamon and sugar and brush with milk."],
+        ["Garlic bread", "Butter with crushed garlic."],
+        ["Spice bread", "Cloves or allspice, cinnamon, walnuts, raisins and sugar."],
+        ["Crineja (braided bread)", "Braid 3 strands. Brush with egg and papelón, or with milk and egg."],
+        ["Two-strand bread", "Twist 2 strands and fill with butter or jam. (The name is hard to read on the original sheet.)"],
+        ["Calzone", "Filled with salami, tomato, mozzarella and ham."],
+        ["Ring (rosca)", "Filled with cinnamon and sugar, jam, grated chocolate or candied fruit. Roll up and close into a ring."],
+        ["Country bread", "With a cross cut on top."]
+      ]]
+    ]
   },
-  remedios: {
-    items: REMEDIOS, href: "#remedios", volver: "← Todos los remedios", palabra: "remedios",
-    titulo: `Remedios <em>caseros</em> que se pasan de mano en mano.`,
-    intro: "Mascarillas, hierbas y trucos para las plantas que hemos ido guardando en familia.",
-    buscar: "Busca un remedio o una hierba"
+  "torta-zanahoria": {
+    titulo: "Carrot or zucchini cake", tiempoTexto: "40 min baking",
+    descripcion: "A moist, spiced cake that works just as well with carrot or zucchini. You can freeze it baked or unbaked.",
+    nota: "The sheet says “300°”. We read it as 300 °F, about 150 °C, because 300 °C is far too hot for a home oven.",
+    ing: ["Finely grated carrot or zucchini", "Plain flour", "Oil", "Eggs", "Sugar", "Cinnamon", "Cloves or allspice", "Bicarb soda", "Optional: walnuts, raisins or chopped pineapple (dusted in flour)"],
+    pasos: [
+      ["Beat eggs and sugar", "Beat the eggs with the sugar and add the oil."],
+      ["Add the dry ingredients", "Mix the dry ingredients and add them little by little to the egg mixture."],
+      ["Add the carrot", "Add the carrot or zucchini and mix well. Finally, add the optional ingredient (or 100 g of almond meal)."],
+      ["Bake", "Pour into a greased tin and bake at 150–175 °C."]
+    ],
+    extras: [["Icings", [
+      ["Simple", "Juice of 1 lemon, adding icing sugar until it turns glossy."],
+      ["Deluxe", "1 Philadelphia cream cheese and the juice of 1 lemon (2 if the cheese is large), adding icing sugar until creamy."]
+    ]]]
+  },
+  "galletas": {
+    titulo: "Slice-and-bake cookie rolls", tiempoTexto: "45 min + freezing",
+    descripcion: "Rolls of dough kept in the freezer. Take one out, slice it and you have fresh-baked cookies in 15 minutes.",
+    nota: "The sheet says “300°”. We read it as 300 °F, about 150 °C.",
+    ing: ["Butter", "Eggs", "Self-raising flour, roughly (about 5 cups)", "Sugar", "Vanilla"],
+    pasos: [
+      ["Make the dough", "Soften the butter and add the sugar. Then the eggs and vanilla, and finally the flour, until you have a soft, sticky dough."],
+      ["Rest and chill", "Let it rest 5 minutes, then refrigerate for half an hour."],
+      ["Shape the rolls", "Shape rolls 20 to 30 cm long and 3 to 4 cm thick. Roll them in the coating you like."],
+      ["Freeze", "Freeze the rolls unwrapped. Once frozen, wrap them one by one and keep them in a sealed bag."],
+      ["Slice and bake", "Take a roll out of the freezer, wait about 2 minutes, slice it into rounds and bake at 150 °C."]
+    ],
+    extras: [
+      ["Coatings for the rolls", [
+        ["Cinnamon sugar", "1 cup of sugar with 3 tablespoons of cinnamon."],
+        ["Grated chocolate", "Spread it on baking paper and roll the log over it."],
+        ["Coloured sugar", "Coloured granulated sugar."]
+      ]],
+      ["Filled cookies", [
+        ["Thumbprint", "Make a small hole in each cookie with the floured handle of a wooden spoon. Fill with jam, chocolate or coloured sprinkles."]
+      ]]
+    ]
+  },
+  "rosbif": {
+    titulo: "Roast beef with mushrooms", tiempoTexto: "1 h marinade + slow cooking", porcionesTexto: "6 to 8",
+    descripcion: "Beef tenderloin or round, marinated, browned and slow-cooked, with a white wine and mushroom sauce.",
+    nota: "Don't pierce the meat while browning it, so it keeps its juices.",
+    ing: ["The meat::Beef tenderloin or round (lomito or ganso), trimmed", "The marinade::Grated onion", "Crushed garlic", "Freshly ground black pepper", "Salt", "Oil", "Worcestershire sauce", "For browning and cooking::Oil", "Beef consommé", "Dry white wine", "The mushroom sauce::Fresh mushrooms", "Lemon (for the mushroom washing water)", "Butter", "Finely chopped onion", "Crushed garlic", "Finely chopped spring onion", "Finely chopped parsley", "Salt"],
+    pasos: [
+      ["Trim the meat", "Clean the meat very well, removing fat and sinew."],
+      ["Prepare the mushrooms", "Cut off the end of the stems. Wash them very well and put them in water with the lemon juice. Slice them thinly lengthwise and leave them to drain."],
+      ["Marinate the meat", "Mix the grated onion, garlic, pepper, salt, oil and Worcestershire sauce. Rub it over the meat and let it rest in a container. Then tie it with kitchen twine into a cylinder, folding the thinner end under. Keep the leftover marinade."],
+      ["Brown the meat", "In a heavy pot heat the ⅓ cup of oil. Brown the meat without the marinade, turning it with a wooden spoon and without piercing it, until evenly browned.", "7 to 8 min"],
+      ["Cook with wine", "Add the reserved marinade and stir for 1 minute, turning the meat. Add the consommé and wine and cook over low heat, uncovered, until the sauce reduces a little.", "10 to 15 min"],
+      ["Sauté the base", "Meanwhile, in another pot melt the butter and cook the chopped onion, garlic and spring onion until soft."],
+      ["Cook the mushrooms", "Add the mushrooms and stir for about 2 minutes. Add the parsley and salt and keep cooking until the liquid they release evaporates."],
+      ["Combine", "Add the mushrooms and their sauce to the meat pot, stir well and cook over low heat."],
+      ["Slice and serve", "Take out the meat, remove the twine, cut it into thin slices, arrange on a platter and cover with the mushroom sauce."]
+    ],
+    extras: [["Tips", [
+      ["Don't pierce the meat", "When browning, turn it with a wooden spoon so it keeps its juices."],
+      ["Remove the twine", "Take it off before slicing."]
+    ]]]
+  },
+  "asado-negro": {
+    titulo: "Asado negro", tiempoTexto: "1 night + about 3 h",
+    descripcion: "Eye of round (muchacho) marinated overnight, seared with brown sugar or papelón and slow-cooked in its sauce until tender.",
+    nota: "Transcribed from Memeyita's messages, step by step with her photos. Still to confirm: the name of the recipe, the marinade ingredients and the end of the pressure-cooker step, which is cut off in the message.",
+    ing: ["The meat::Eye of round (muchacho)", "The marinade::Marinade ingredients", "For searing::Oil", "Brown sugar or papelón (unrefined cane sugar)", "For the pressure cooker::Water", "Onion", "Capsicum", "Garlic", "Ají dulce (sweet pepper)", "“Some h…” (the message is cut off)"],
+    pasos: [
+      ["Marinate overnight", "Leave the two pieces of muchacho marinating overnight, so you can start cooking them early.", "Overnight"],
+      ["Sear the meat", "Sear the meat in oil with brown sugar or papelón, turning it until it is browned and dark on all sides."],
+      ["Pressure cooker", "Cook the meat in the pressure cooker with water, onion, capsicum, garlic, ají dulce and some h… (the message is cut off here).", "About 60 min"],
+      ["Take out the meat", "Take the meat out of the pot and leave it ready to slice."],
+      ["Keep the broth", "The broth left in the pot is ready."],
+      ["Make the sauce", "Combine the broth with the marinade ingredients."],
+      ["Slice the meat", "Cut the meat into slices."],
+      ["Into the pot with the sauce", "Place the slices in the pot (caldero) and add the sauce to start cooking."],
+      ["Cook covered", "First cook it covered, so it cooks faster."],
+      ["Cook until tender", "Keep cooking over medium heat for at least 2 hours, or until the meat is tender.", "2 h or more"]
+    ]
+  },
+  "rosbif-cebolla": {
+    titulo: "Roast beef with onion", tiempoTexto: "15 min marinade + about 20 min",
+    descripcion: "Beef tenderloin or round, marinated, browned in the pot and served in slices with fried onion and its sauce with cloves and allspice.",
+    nota: "From the recipe book. Steps 4 to 6 are on the next page (p. 432), just before the roast beef with mushrooms. The meat should stay pink inside.",
+    ing: ["The meat::Beef tenderloin or round, trimmed", "The marinade::Finely grated onion", "Crushed garlic", "Oil", "Freshly ground black pepper", "Salt", "Worcestershire sauce", "For cooking::Oil", "Butter", "Onion rings (1 medium onion)", "Whole cloves", "Allspice berries", "Beef consommé"],
+    pasos: [
+      ["Marinate the meat", "Make a marinade with the grated onion, garlic, the tablespoon of oil, pepper, salt and Worcestershire sauce. Rub it over the meat and leave it to marinate.", "10 to 15 min"],
+      ["Heat the pot", "In a large pot heat the ¼ cup of oil and the tablespoon of butter."],
+      ["Fry the onion", "Add the onion rings and fry until soft. Take them out and set aside."],
+      ["Brown the meat", "Add the meat to the pot and fry for 3 minutes until browned. Turn it with a wooden spoon and fry 3 more minutes. Repeat without piercing it until evenly browned.", "about 9 min"],
+      ["Cook with the marinade", "Lower the heat and add the marinade, cloves, allspice and consommé. Cook over low heat. The meat should stay pink inside."],
+      ["Slice and serve", "Cut it into thin slices and serve with the fried onion and the sauce, with the cloves and allspice removed."]
+    ]
+  },
+  "crema-pimentones": {
+    titulo: "Arabic roasted capsicum dip", tiempoTexto: "A few hours resting + 15 min",
+    descripcion: "A rich dip of roasted capsicums with walnuts, for scooping with warm naan or pita bread.",
+    nota: "It shouldn't be very smooth. If it's too thick, add more oil until it's silky.",
+    ing: ["Roasted capsicums", "Onion", "Garlic", "Breadcrumbs", "Shelled walnuts", "Syrian pepper or cumin", "Extra virgin olive oil", "Chopped parsley", "Salt"],
+    pasos: [
+      ["Cut and mix", "Cut the capsicums into strips. Chop the onion and garlic and mix everything in a bowl with a generous amount of oil."],
+      ["Marinate in the fridge", "Leave it to marinate in the fridge.", "A few hours"],
+      ["Blend with the walnuts", "Blend the capsicums, adding the walnuts little by little."],
+      ["Add the rest", "Add the breadcrumbs, pepper, chopped parsley and salt, and blend again."],
+      ["Adjust the texture", "If it's too thick, add more oil until it's silky."],
+      ["Serve", "Serve with warm naan or pita bread."]
+    ]
+  },
+  "hummus": {
+    titulo: "Chickpea dip (hummus)", tiempoTexto: "Overnight soak + 45 min",
+    descripcion: "Jummus B'tjine: chickpeas with tahini, garlic and lemon. Serve with Arabic bread or kibbeh.",
+    nota: "The card says to see recipe #2 (Grain soup) for how to peel the chickpeas.",
+    ing: ["The chickpeas::Chickpeas", "Bicarb soda (for soaking)", "Salt (for soaking)", "Water (for the pressure cooker)", "The dip::Tahini", "Crushed garlic", "Lemon", "Salt", "To serve::Parsley", "Sweet paprika (optional)", "Olive oil"],
+    pasos: [
+      ["Soak the day before", "Soak the chickpeas with a little bicarb soda and a tablespoon of salt.", "From the day before"],
+      ["Pressure-cook", "Cook them in the pressure cooker with the two cups of water."],
+      ["Rinse", "Once they're soft, rinse them under water to cool them."],
+      ["Blend", "Blend them with a little of the cooking water, together with the crushed garlic, tahini, lemon and salt. It should be a thick dip."],
+      ["Serve", "Garnish with parsley sprigs or paprika, and pour olive oil over the top. Serve with Arabic bread or kibbeh."]
+    ]
+  },
+  "baba-ganoush": {
+    titulo: "Eggplant dip (baba ganoush)", tiempoTexto: "About 40 min",
+    descripcion: "Baba Gannuy: flame-roasted eggplant with tahini, garlic and lemon.",
+    nota: "Roast the eggplants with the stem on: that's where you hold them so you don't burn your fingers.",
+    ing: ["Large eggplants (dark ones are best, they have few seeds)", "Tahini", "Garlic", "Lemon juice", "Salt", "Finely chopped parsley", "Olive oil", "Ground chilli (optional)"],
+    pasos: [
+      ["Roast over the flame", "Roast the eggplants directly over the flame, stem on, turning them until the skin is charred. That makes them easy to peel."],
+      ["Peel and chop", "Peel them while still warm and cut them into small pieces."],
+      ["Crush the garlic", "Crush the garlic well with the salt until creamy."],
+      ["Make the sauce", "Add the tahini, mixing well, and then the lemon."],
+      ["Mix with the eggplant", "Pour the sauce over the chopped eggplant and stir until well combined."],
+      ["Garnish and serve", "Garnish with finely chopped parsley or, if you prefer, with chilli powder. To serve, drizzle a little olive oil on top."]
+    ]
+  },
+  "mascarilla-acne": {
+    titulo: "Acne face mask", descripcion: "A mask of green tea, carrot, honey and pineapple.",
+    facts: [["How often", "Once a week"], ["Leave on", "15 to 20 min"]],
+    ing: ["Green tea", "Medium carrots", "Honey", "Fresh pineapple"],
+    pasos: [
+      ["Make the tea", "Use the tablespoon of tea to make an infusion and let it cool."],
+      ["Boil the carrots", "Boil them so you can mash them."],
+      ["Warm the honey", "Warm the honey a little, in the microwave or in a water bath."],
+      ["Mix", "Mix the strained tea with the honey, carrot and pineapple. Blend until smooth."],
+      ["Apply", "Spread the paste over your face and leave it on. It's best to lie down so the mask doesn't slide off.", "15 to 20 min"],
+      ["Rinse", "Rinse first with warm water and then with cold water."],
+      ["Dry", "Pat dry with a towel and you're done."]
+    ]
+  },
+  "puntos-negros": {
+    titulo: "Blackhead mask", descripcion: "A paste of orange juice and bicarb soda for blackheads on the face and nose.",
+    facts: [["Leave on", "15 min"]],
+    ing: ["Orange juice", "Bicarb soda"],
+    pasos: [
+      ["Make the paste", "Mix a tablespoon of each ingredient into a paste."],
+      ["Apply", "Apply it where needed."],
+      ["Leave on", "Leave it on the skin."],
+      ["Exfoliate", "Massage in circles with your fingertips to exfoliate."],
+      ["Rinse", "Rinse your face with water only."]
+    ]
+  },
+  "avena-limon": {
+    titulo: "Oat and lemon mask", descripcion: "To fade dark spots on the face.",
+    facts: [["How often", "Twice a week"], ["Leave on", "20 min"]],
+    ing: ["Ground oats", "Lemon juice"],
+    pasos: [
+      ["Mix", "Combine the ingredients very well."],
+      ["Apply", "Apply the mixture to the dark spots."],
+      ["Leave on", "Leave it on the skin."],
+      ["Wash", "Wash off with warm water."]
+    ]
+  },
+  "remedios-acne": {
+    titulo: "Home remedies for acne", descripcion: "Orange, lemon, garlic and tomato: four kitchen ingredients used on pimples.",
+    facts: [["Type", "Several remedies"]],
+    extras: [
+      ["Remedies", [
+        ["Orange", "Astringent and cleansing, ideal for oily skin. Crush a peel and mix it with water. Dab the toner on the spots before bed."],
+        ["Lemon", "Astringent and antibacterial. Soak a cotton pad in the juice and apply it to the affected area. Leave it on overnight."],
+        ["Garlic", "Contains sulphur, a strong antibacterial. Rub sliced garlic on pimples to reduce swelling."],
+        ["Tomato", "Contains lycopene, an antioxidant. Make a tomato paste and apply it as a face mask."]
+      ]],
+      ["Keep in mind", [
+        ["Don't pop pimples", "Breaking the spots can infect deeper layers of the skin and cause more swelling and scarring."]
+      ]]
+    ]
+  },
+  "mascarilla-avena": {
+    titulo: "Oat face mask", descripcion: "Because oats are drying, they help absorb oil from the skin.",
+    facts: [["Leave on", "15 min"]],
+    ing: ["Oats", "Water"],
+    pasos: [
+      ["Mix", "Mix the oats with the water until thick."],
+      ["Cover your face", "Cover your face with the mixture."],
+      ["Rinse", "Rinse with cold water."]
+    ]
+  },
+  "miel-avena-leche": {
+    titulo: "Honey, oat and milk mask", descripcion: "A mask to fade dark spots on the skin.",
+    facts: [["How often", "3 times a week"], ["Leave on", "10 min"]],
+    ing: ["Honey", "Oats", "Milk"],
+    pasos: [
+      ["Mix", "Put the 3 ingredients in a bowl and make a smooth mixture."],
+      ["Massage in", "Wash your face thoroughly. Then, with your fingertips and massaging in circles, apply the mixture to your face."],
+      ["Rest and remove", "Leave it on, then rinse off with plenty of warm water."],
+      ["Repeat", "Repeat 3 times a week."]
+    ]
+  },
+  "ojeras": {
+    titulo: "Under-eye cream for dark circles", descripcion: "A cold chamomile and yoghurt cream. It works better when it's cold.",
+    facts: [["Chill", "1 day"], ["Leave on", "20 min"]],
+    ing: ["Chamomile tea", "Yoghurt"],
+    pasos: [
+      ["Make the tea", "Brew the chamomile tea."],
+      ["Add the yoghurt", "Add the yoghurt to the tea and mix well."],
+      ["Chill", "Put it in the fridge. This cream works better when it's cold.", "1 day"],
+      ["Apply", "Apply under the eyes and leave it on."],
+      ["Remove", "Rinse off with cold water."]
+    ]
+  },
+  "gel-limpieza": {
+    titulo: "Facial cleansing gel", descripcion: "Homemade cleanser for normal skin.",
+    facts: [["Makes", "About 250 ml"], ["For", "Normal skin"]],
+    ing: ["Soap base", "Organic aloe vera juice, preservative-free", "Almond oil", "Yellow clay", "Ylang Ylang III essential oil", "Organic Litsea Cubeba essential oil"],
+    pasos: [
+      ["Clean your tools", "Make sure you clean and disinfect all your utensils before you start."],
+      ["Mix and whisk", "With everything ready, mix all the ingredients in a bowl and whisk until there are no lumps."],
+      ["Bottle it", "Pour it into a container and your facial cleansing gel is ready."]
+    ]
+  },
+  "cuidados-noche": {
+    titulo: "Night-time skin care", descripcion: "Five steps to look after your skin before bed.",
+    facts: [["When", "Every night"]],
+    extras: [["The routine", [
+      ["Cleanse", "Remove make-up and the dirt built up during the day."],
+      ["Eye make-up remover", "Use a remover that protects the eye area."],
+      ["Toner", "Toner refreshes the skin while restoring its natural pH."],
+      ["Exfoliate", "Exfoliating removes dead skin cells. Do it once or twice a week."],
+      ["Moisturise", "Use moisturising creams to nourish and renew the skin."]
+    ]]]
+  },
+  "cedron": {
+    titulo: "Lemon verbena (cedrón)", descripcion: "A calming herb, known for nerves and cramps.",
+    extras: [["What it's used for", [
+      [, "Helpful for insomnia and nervous conditions such as anxiety."],
+      [, "Used for colicky pain: biliary, kidney, intestinal or menstrual."],
+      [, "Helps release gas."],
+      [, "Relaxing."],
+      [, "Reduces inflammation."]
+    ]]]
+  },
+  "romero": {
+    titulo: "Rosemary", descripcion: "An aromatic herb used for gas, aches and appetite.",
+    extras: [["What it's used for", [
+      [, "Relieves gas."],
+      [, "Eases body aches."],
+      [, "Said to help with Alzheimer's and high blood pressure."],
+      [, "For people who bite their nails."],
+      [, "Improves appetite and anaemia."],
+      [, "Reduces anxiety."]
+    ]]]
+  },
+  "jazmin": {
+    titulo: "Jasmine", descripcion: "A flower with a calming scent, used for sleep and headaches.",
+    extras: [["What it's used for", [
+      [, "Its scent is very relaxing and helps you sleep."],
+      [, "Treats headaches and coughs."],
+      [, "An excellent sedative; promotes blood flow and blood pressure."],
+      [, "Antidepressant."],
+      [, "Antiseptic for wounds."]
+    ]]]
+  },
+  "hierbabuena": {
+    titulo: "Spearmint (hierbabuena)", descripcion: "A fresh leaf used for stress, sleep and sore throats.",
+    extras: [["What it's used for", [
+      [, "Stimulates circulation."],
+      [, "Relaxes the mind."],
+      [, "Relieves stress."],
+      [, "Fights insomnia."],
+      [, "Provides plenty of vitamins and energy."],
+      [, "Prevents asthma and sore throat."]
+    ]]]
+  },
+  "oregano": {
+    titulo: "Oregano", descripcion: "Much more than a seasoning, according to folk tradition.",
+    extras: [["What it's used for", [
+      [, "Regulates cramps and high blood pressure."],
+      [, "Lowers cholesterol."],
+      [, "Gets rid of bacteria and parasites."],
+      [, "Prevents rheumatic pain."],
+      [, "Fights infections."],
+      [, "Relieves bronchitis and itching."]
+    ]]]
+  },
+  "hinojo": {
+    titulo: "Fennel", descripcion: "Usually eaten in salads.",
+    extras: [["What it's used for", [
+      [, "Fights high blood pressure."],
+      [, "Gets rid of anaemia."],
+      [, "Helps with breathing problems."],
+      [, "Good for digestion."],
+      [, "For menstrual pain."]
+    ]]]
+  },
+  "botoncillo": {
+    titulo: "Botoncillo", descripcion: "A plant with small flowers, used for colds and the stomach.",
+    extras: [["What it's used for", [
+      [, "Very useful for colds."],
+      [, "Relieves stomach aches."],
+      [, "Has healing and anti-inflammatory properties."],
+      [, "A tea made from its leaves eases liver complaints."]
+    ]]]
+  },
+  "hoja-santa": {
+    titulo: "Hoja santa", descripcion: "A large leaf taken as a tea for sleep and the stomach.",
+    extras: [["What it's used for", [
+      [, "As a tea it helps you fall asleep and is a natural relaxant."],
+      [, "Reduces inflammation; eases stomach aches, poor appetite and constipation."],
+      [, "Helps purify the blood."],
+      [, "Helps with asthma, laryngitis and rheumatism."]
+    ]]]
+  },
+  "hojas-aguacate": {
+    titulo: "Avocado leaves", descripcion: "Leaves of the avocado tree, taken as a tea.",
+    extras: [["What it's used for", [
+      [, "Powerful against upset stomachs."],
+      [, "To fight a cough."],
+      [, "For bruises."],
+      [, "Folk wisdom recommends avocado-leaf tea on an empty stomach to get rid of worms."]
+    ]]]
+  },
+  "tomillo": {
+    titulo: "Thyme", descripcion: "An aromatic herb used for coughs, memory and hair.",
+    extras: [["What it's used for", [
+      [, "Eases coughs and flu."],
+      [, "Improves memory."],
+      [, "Fights bad breath."],
+      [, "Regulates menstrual cycles."],
+      [, "Good for healing wounds."],
+      [, "Fights dandruff and improves hair."]
+    ]]]
+  },
+  "albahaca": {
+    titulo: "Basil", descripcion: "A kitchen herb also used for stress and digestion.",
+    extras: [["What it's used for", [
+      [, "Prevents bad breath and stress."],
+      [, "Fights acne and hair loss."],
+      [, "Lowers cholesterol."],
+      [, "Prevents constipation."],
+      [, "Clears phlegm from the airways."],
+      [, "Anti-inflammatory."]
+    ]]]
+  },
+  "boldo": {
+    titulo: "Boldo", descripcion: "Taken as a tea for digestion and the liver.",
+    extras: [["What it's used for", [
+      [, "Boldo tea is very useful for constipation."],
+      [, "Helps release gas."],
+      [, "Lowers the risk of gallstones and cleanses the liver."],
+      [, "Helps with insomnia."]
+    ]]]
+  },
+  "yanten": {
+    titulo: "Plantain leaf (yantén)", descripcion: "Its leaves are used as a tea.",
+    extras: [["What it's used for", [
+      [, "Quickly cures colds and flu."],
+      [, "As a tea, for diarrhoea."],
+      [, "To heal wounds and stop bleeding."],
+      [, "For fever."],
+      [, "For cold sores, inflammation and mouth ulcers."]
+    ]]]
+  },
+  "una-de-gato": {
+    titulo: "Cat's claw (uña de gato)", descripcion: "An ancient plant from Peru.",
+    aviso: "There is no evidence that cat's claw treats tumours or prevents cancer: for either, see a doctor.",
+    extras: [["What it's used for", [
+      [, "For joint pain."],
+      [, "For breathing problems."],
+      [, "For ulcers and some infections."],
+      [, "Said to treat tumours and help prevent cancer in smokers."]
+    ]]]
+  },
+  "suelda": {
+    titulo: "Comfrey (suelda)", descripcion: "A plant with purple flowers, known for bruises and broken bones.",
+    aviso: "Comfrey must not be taken by mouth: it can damage the liver. Traditionally it is only used externally, on unbroken skin.",
+    extras: [["What it's used for", [
+      [, "Helps bones knit after fractures or knocks."],
+      [, "Helps reduce varicose veins."],
+      [, "Treats haemorrhoids."],
+      [, "Anti-inflammatory and a source of vitamin B12, which helps relieve pain."]
+    ]]]
+  },
+  "agua-arroz": {
+    titulo: "Rice water fertiliser", descripcion: "A homemade fertiliser for misting plant leaves.",
+    facts: [["How often", "Up to twice a week"]],
+    ing: ["Water", "Rice"],
+    pasos: [
+      ["Boil", "In a pot, boil the water with the rice. Take it off the heat and let it sit."],
+      ["Strain", "Strain to collect the rice water. Keep it in a container and let it cool to lukewarm."],
+      ["Fill a spray bottle", "Pour the water into a spray bottle to mist and water the leaves."],
+      ["Use", "Use it up to twice a week and watch your plants grow faster."]
+    ],
+    extras: [["Benefits", [
+      [, "Stimulates the roots of indoor plants."],
+      [, "Works as a fertiliser."],
+      [, "Builds good bacteria in the soil."],
+      [, "Nourishes your plants."],
+      [, "Prevents pests."]
+    ]]]
+  },
+  "cafe-plantas": {
+    titulo: "Coffee for plants", descripcion: "Uses for coffee grounds in the garden.",
+    extras: [["What it's good for", [
+      [, "Great at absorbing moisture and fighting fungus."],
+      [, "Works as fertiliser, as it raises nitrogen levels in the soil."],
+      [, "Acts as a pesticide against slugs, larvae, snails and some chewing insects."],
+      [, "Improves the soil and feeds earthworms, which are good for it."],
+      [, "Supports the microorganisms that boost plant growth."]
+    ]]]
+  },
+  "canela-plantas": {
+    titulo: "Ground cinnamon for plants", descripcion: "Benefits of ground cinnamon in the garden and veggie patch.",
+    extras: [["What it's good for", [
+      ["Kills fungus", "Its antifungal and disinfecting compounds protect plants from fungus."],
+      ["Cuttings", "Dust cinnamon on the stem before planting and they'll grow strong and healthy."],
+      ["Protects vegetables", "Use it as a fertiliser to prevent disease in edible plants."],
+      ["Pest control", "Keeps away the mosquitoes and ants that damage plants."],
+      ["Heals wounds", "After pruning, plants can have cuts. Cover them with a protective layer of cinnamon."]
+    ]]]
+  },
+  "vinagre-plantas": {
+    titulo: "Vinegar for plants", descripcion: "Benefits of vinegar in the garden.",
+    extras: [["What it's good for", [
+      [, "Provides iron and helps plants grow."],
+      [, "Gets rid of fungus on your plants."],
+      [, "For cleaning garden tools."],
+      [, "Stops weeds growing around your plants."],
+      [, "Gets rid of flies in the garden."],
+      [, "A natural repellent so pets don't pee in the garden."],
+      [, "Keeps ants out of the garden."]
+    ]]]
+  },
+  "cascara-huevo": {
+    titulo: "Eggshell tea for plants", descripcion: "A remedy to fight pests and fertilise, because eggshells are rich in calcium.",
+    facts: [["Rest", "24 h"], ["Keeps", "About 3 months"]],
+    ing: ["Water", "Eggshells"],
+    pasos: [
+      ["Put in water", "Put the eggshells in the water."],
+      ["Boil", "Bring to the boil."],
+      ["Rest and use", "Let the mixture rest, then add it to your plants.", "24 h"]
+    ],
+    extras: [
+      ["What it's good for", [
+        [, "Fights pests."],
+        [, "Works as fertiliser, since it's rich in calcium."],
+        [, "Strengthens roots."],
+        [, "Protects your plants from disease."]
+      ]],
+      ["Tip", [["Store it", "This tea keeps for about 3 months. You can store it in a spray bottle."]]]
+    ]
+  },
+  "yogur-plantas": {
+    titulo: "Yoghurt for plants", descripcion: "Benefits of yoghurt in the garden.",
+    extras: [["What it's good for", [
+      [, "Sprayed on the leaves, it protects against disease and pests."],
+      [, "Add it to compost for an ingredient that's good for plants."],
+      [, "A great natural fertiliser, adding nitrogen and phosphorus to the soil."],
+      [, "Use it to grow moss and give it that special green."],
+      [, "Nourishes plants and helps them grow."]
+    ]]]
   }
+};
+
+const TRUCOS_EN = [
+  ["Frozen fruit", "Keeps better with lemon and sugar."],
+  ["Pasta for the freezer", "Cook it for 5 minutes, pack it and freeze it. It finishes cooking when you reheat it."],
+  ["Frozen bread dough", "Take it out of the freezer at night and move it to the fridge."]
+];
+
+/* ===== IDIOMA ===== */
+let LANG = "es";
+try { LANG = localStorage.getItem("memeyita-lang") === "en" ? "en" : "es"; } catch (e) {}
+
+const UI = {
+  es: {
+    recetas: "Recetas", remedios: "Remedios", todas: "Todas", recetaDe: "Receta de:",
+    heroRecetas: `Lo que se cocina <em>en casa</em>, guardado para siempre.`,
+    introRecetas: "Las recetas de mamá, de la abuela y las que hemos ido sumando en el camino, paso a paso y con cada ingrediente a la vista.",
+    buscarRecetas: "Busca una receta o un ingrediente",
+    heroRemedios: `Remedios <em>caseros</em> que se pasan de mano en mano.`,
+    introRemedios: "Mascarillas, hierbas y trucos para las plantas que hemos ido guardando en familia.",
+    buscarRemedios: "Busca un remedio o una hierba",
+    vacio: p => `No encontramos ${p} con esos filtros. Prueba con otra categoría o borra la búsqueda.`,
+    palabraRecetas: "recetas", palabraRemedios: "remedios",
+    trucos: "Trucos de la cocina", volverRecetas: "← Todas las recetas", volverRemedios: "← Todos los remedios",
+    tiempo: "Tiempo", porciones: "Porciones", dificultad: "Dificultad", notaReceta: "Nota de la receta",
+    ingredientes: "Ingredientes", listos: (a, b) => `${a} de ${b} listos`, hint: "Toca cada ingrediente cuando lo tengas listo.",
+    nPorciones: n => `${n} porciones`, recetaX: x => `Receta ×${x}`, tamano: "Tamaño de la receta",
+    reducir: "Reducir", aumentar: "Aumentar",
+    pasos: "Pasos", hechos: (a, b) => `${a} de ${b} hechos`, resumenPasos: "Resumen de pasos", fotoPaso: t => `Foto del paso: ${t}`,
+    video: "Míralo en video", videoSi: "Prepárala conmigo paso a paso.",
+    videoNo: "Todavía no hemos grabado esta receta. Cuando la preparemos en casa, el video aparecerá aquí.",
+    videoProx: "Video próximamente", videoDisp: "Video disponible", verVideo: "▶ Ver el video",
+    recetaFamilia: "🏡 Receta de familia",
+    originalEn: "Original en inglés", traducidaDe: o => o === "en" ? "Traducida del inglés" : "Traducida del español",
+    footer: "Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina, transcritas de las hojas originales. Los remedios caseros son sabiduría popular y no sustituyen la consulta médica.",
+    secciones: "Secciones", idioma: "Idioma"
+  },
+  en: {
+    recetas: "Recipes", remedios: "Remedies", todas: "All", recetaDe: "Recipe from:",
+    heroRecetas: `What we cook <em>at home</em>, kept forever.`,
+    introRecetas: "Recipes from mum, from grandma and the ones we've picked up along the way, step by step with every ingredient in view.",
+    buscarRecetas: "Search a recipe or an ingredient",
+    heroRemedios: `<em>Home</em> remedies passed from hand to hand.`,
+    introRemedios: "Face masks, herbs and garden tricks we've collected as a family.",
+    buscarRemedios: "Search a remedy or a herb",
+    vacio: p => `No ${p} match those filters. Try another category or clear the search.`,
+    palabraRecetas: "recipes", palabraRemedios: "remedies",
+    trucos: "Kitchen tips", volverRecetas: "← All recipes", volverRemedios: "← All remedies",
+    tiempo: "Time", porciones: "Serves", dificultad: "Difficulty", notaReceta: "Recipe note",
+    ingredientes: "Ingredients", listos: (a, b) => `${a} of ${b} ready`, hint: "Tap each ingredient once you have it ready.",
+    nPorciones: n => `Serves ${n}`, recetaX: x => `Recipe ×${x}`, tamano: "Recipe size",
+    reducir: "Less", aumentar: "More",
+    pasos: "Steps", hechos: (a, b) => `${a} of ${b} done`, resumenPasos: "Steps overview", fotoPaso: t => `Step photo: ${t}`,
+    video: "Watch the video", videoSi: "Cook it with me step by step.",
+    videoNo: "We haven't filmed this recipe yet. When we make it at home, the video will appear here.",
+    videoProx: "Video coming soon", videoDisp: "Video available", verVideo: "▶ Watch the video",
+    recetaFamilia: "🏡 Family recipe",
+    originalEn: "Original in English", traducidaDe: o => o === "en" ? "Translated from English" : "Translated from Spanish",
+    footer: "Recipes from mum, grandma and everyone who has passed through our kitchen, transcribed from the original sheets. The home remedies are folk wisdom and are no substitute for seeing a doctor.",
+    secciones: "Sections", idioma: "Language"
+  }
+};
+const t = k => UI[LANG][k];
+
+const LABELS = {
+  "Todas": "All", "Panes": "Breads", "Dulces": "Sweets", "Platos fuertes": "Mains", "Cocina árabe": "Middle Eastern", "Desayunos": "Breakfast",
+  "Para la piel": "Skin care", "Hierbas medicinales": "Medicinal herbs", "Para las plantas": "For the garden",
+  "La familia": "Family", "Suegra": "My mother-in-law", "Fácil": "Easy", "Media": "Medium", "Difícil": "Hard",
+  "Frecuencia": "How often", "Se deja": "Leave on"
+};
+const LABELS_ES = { "Suegra": "Mi suegra" };
+const lbl = s => LANG === "en" ? (LABELS[s] || s) : (LABELS_ES[s] || s);
+
+/* Unidades: clave → [singular ES, plural ES, singular EN, plural EN] */
+const UNIDADES = {
+  taza: ["taza", "tazas", "cup", "cups"], cda: ["cda", "cdas", "tbsp", "tbsp"], cdta: ["cdta", "cdtas", "tsp", "tsp"],
+  diente: ["diente", "dientes", "clove", "cloves"], lata: ["lata", "latas", "can", "cans"], rodaja: ["rodaja", "rodajas", "slice", "slices"],
+  "limón": ["limón", "limones", "lemon", "lemons"], gotas: ["gota", "gotas", "drop", "drops"], trozos: ["trozo", "trozos", "piece", "pieces"],
+  cabeza: ["cabeza", "cabezas", "head", "heads"],
+  dsp: ["cda de postre", "cdas de postre", "dsp", "dsp"], pizca: ["pizca", "pizcas", "pinch", "pinches"], ramita: ["ramita", "ramitas", "sprig", "sprigs"],
+  "al gusto": ["al gusto", "al gusto", "to taste", "to taste"], "sin medida": ["sin medida", "sin medida", "no amount given", "no amount given"],
+  "por confirmar": ["por confirmar", "por confirmar", "to confirm", "to confirm"], "un poco": ["un poco", "un poco", "a little", "a little"]
+};
+const unidad = (u, plural) => {
+  const m = UNIDADES[u]; if (!m) return u;
+  return m[(LANG === "en" ? 2 : 0) + (plural ? 1 : 0)];
+};
+
+const AVISO_SALUD_EN = "These are folk remedies, collected from images shared within the family. They are no substitute for seeing a doctor.";
+const AVISOS = {
+  es: { salud: AVISO_SALUD, piel: " Prueba primero en una zona pequeña de la piel, y evita el sol después de usar limón o naranja en la cara.", hierbas: " Si estás embarazada, tomas medicamentos o tienes alguna condición de salud, consulta antes de usarlas." },
+  en: { salud: AVISO_SALUD_EN, piel: " Patch-test on a small area of skin first, and avoid the sun after putting lemon or orange on your face.", hierbas: " If you're pregnant, take medication or have a health condition, check with a doctor before using them." }
+};
+
+/* Devuelve la receta en el idioma activo. Las recetas en español traen su inglés en TR_EN;
+   las que son originalmente en inglés (idioma: "en") traen su español en r.tr. */
+function loc(r) {
+  const orig = r.idioma || "es";
+  if (LANG === orig) return { ...r, _orig: orig, _tr: false };
+  const tr = orig === "es" ? (typeof TR_EN !== "undefined" ? TR_EN[r.id] : null) : r.tr;
+  if (!tr) return { ...r, _orig: orig, _tr: false };
+  const o = { ...r, _orig: orig, _tr: true };
+  ["titulo", "descripcion", "nota", "aviso", "tiempoTexto", "porcionesTexto", "facts"].forEach(k => { if (tr[k] !== undefined) o[k] = tr[k]; });
+  if (r.ingredientes && tr.ing) o.ingredientes = r.ingredientes.map((g, i) => {
+    const s = tr.ing[i]; if (!s) return g;
+    const parts = s.split("::");
+    return parts.length > 1 ? { ...g, g: parts[0], n: parts[1] } : { ...g, n: s };
+  });
+  if (r.pasos && tr.pasos) o.pasos = r.pasos.map((p, i) => {
+    const q = tr.pasos[i]; if (!q) return p;
+    return { ...p, t: q[0], d: q[1], tt: q[2] !== undefined ? q[2] : (p.tt ? undefined : p.tt) };
+  });
+  if (r.extras && tr.extras) o.extras = r.extras.map((x, j) => {
+    const y = tr.extras[j]; if (!y) return x;
+    return { titulo: y[0], items: x.items.map((it, k) => ({ ...it, t: it.t ? (y[1][k] && y[1][k][0]) || it.t : undefined, d: (y[1][k] && y[1][k][1]) || it.d })) };
+  });
+  return o;
+}
+
+/* ===== APP ===== */
+const SECCIONES = {
+  recetas: { items: RECETAS, href: "#", hero: "heroRecetas", intro: "introRecetas", buscar: "buscarRecetas", volver: "volverRecetas", palabra: "palabraRecetas" },
+  remedios: { items: REMEDIOS, href: "#remedios", hero: "heroRemedios", intro: "introRemedios", buscar: "buscarRemedios", volver: "volverRemedios", palabra: "palabraRemedios" }
 };
 const seccionDe = r => REMEDIOS.includes(r) ? "remedios" : "recetas";
 const ORIGENES = [...new Set(RECETAS.map(r => r.de).filter(Boolean))];
@@ -982,18 +1666,17 @@ function fmt(n) {
   for (const f of fr) if (Math.abs(frac - f[0]) < Math.abs(frac - best[0])) best = f;
   if (n >= 20) return String(Math.round(n));
   const w = best[0] === 1 ? whole + 1 : whole;
-  if (Math.abs(frac - best[0]) > 0.09) return n.toFixed(1).replace(".", ",");
+  if (Math.abs(frac - best[0]) > 0.09) return LANG === "en" ? n.toFixed(1) : n.toFixed(1).replace(".", ",");
   return (w ? w : "") + best[1] || "0";
 }
 
 const tiempoDe = r => r.tiempoTexto || (r.tiempo ? tiempo(r.tiempo) : "");
 const porcDe = r => r.porcionesTexto || r.porciones || "";
-const PLURAL = { cabeza: "cabezas", ramita: "ramitas", taza: "tazas", cda: "cdas", cdta: "cdtas", diente: "dientes", lata: "latas", rodaja: "rodajas", limón: "limones" };
 function cantidad(g, k) {
-  if (g.c == null) return esc(g.u);
+  if (g.c == null) return esc(unidad(g.u, false));
   const hi = Array.isArray(g.c) ? g.c[1] * k : g.c * k;
-  const num = Array.isArray(g.c) ? `${fmt(g.c[0] * k)} a ${fmt(g.c[1] * k)}` : fmt(g.c * k);
-  const u = g.u ? (hi > 1 && PLURAL[g.u] ? PLURAL[g.u] : g.u) : "";
+  const num = Array.isArray(g.c) ? `${fmt(g.c[0] * k)} ${LANG === "en" ? "to" : "a"} ${fmt(g.c[1] * k)}` : fmt(g.c * k);
+  const u = g.u ? unidad(g.u, hi > 1) : "";
   return num + (u ? " " + esc(u) : "");
 }
 
@@ -1010,20 +1693,27 @@ function plato(r) {
 const xcards = items => `<div class="xgrid">${items.map(it => `<div class="xcard"><span class="e" aria-hidden="true">${it.e}</span><div>${it.t ? `<h3>${esc(it.t)}</h3>` : ""}${it.d ? `<p${it.t ? "" : ' class="solo"'}>${esc(it.d)}</p>` : ""}</div></div>`).join("")}</div>`;
 
 function avisoDe(r) {
+  const A = AVISOS[LANG];
   let a = "";
-  if (r.categoria === "Para la piel") a = AVISO_SALUD + " Prueba primero en una zona pequeña de la piel, y evita el sol después de usar limón o naranja en la cara.";
-  if (r.categoria === "Hierbas medicinales") a = AVISO_SALUD + " Si estás embarazada, tomas medicamentos o tienes alguna condición de salud, consulta antes de usarlas.";
+  if (r.categoria === "Para la piel") a = A.salud + A.piel;
+  if (r.categoria === "Hierbas medicinales") a = A.salud + A.hierbas;
   return r.aviso ? (a ? a + " " : "") + "<strong>" + esc(r.aviso) + "</strong>" : a;
 }
 
-function setNav(sec) {
+function renderChrome(sec) {
+  document.documentElement.lang = LANG;
   document.querySelectorAll(".sections a").forEach(a => {
+    a.textContent = t(a.dataset.sec);
     if (a.dataset.sec === sec) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
   });
+  document.querySelector(".sections").setAttribute("aria-label", t("secciones"));
+  document.querySelector(".lang").setAttribute("aria-label", t("idioma"));
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang === LANG));
+  document.getElementById("pie").textContent = t("footer");
 }
 
 function textoBusqueda(r) {
-  return [r.titulo, r.descripcion, r.categoria,
+  return [r.titulo, r.descripcion, lbl(r.categoria),
     ...(r.ingredientes || []).map(i => i.n),
     ...(r.extras || []).flatMap(x => x.items.map(it => (it.t || "") + " " + (it.d || "")))].join(" ");
 }
@@ -1032,30 +1722,31 @@ function renderList(sec) {
   const S = SECCIONES[sec], st = state[sec];
   const cats = ["Todas", ...new Set(S.items.map(r => r.categoria))];
   const q = norm(st.q);
-  const list = S.items.filter(r =>
+  const list = S.items.map(loc).filter(r =>
     (st.cat === "Todas" || r.categoria === st.cat) &&
     (sec !== "recetas" || !state.de || r.de === state.de) &&
     (!q || norm(textoBusqueda(r)).includes(q))
   );
+  const trucos = LANG === "en" ? TRUCOS.map((x, i) => ({ ...x, t: TRUCOS_EN[i][0], d: TRUCOS_EN[i][1] })) : TRUCOS;
   app.innerHTML = `
     <section class="wrap hero">
       <div>
-        <h1>${S.titulo}</h1>
-        <p>${S.intro}</p>
+        <h1>${t(S.hero)}</h1>
+        <p>${t(S.intro)}</p>
       </div>
       <label class="search" for="q">
         <span aria-hidden="true">🔎</span>
-        <input id="q" type="search" placeholder="${S.buscar}" value="${esc(st.q)}">
+        <input id="q" type="search" placeholder="${t(S.buscar)}" value="${esc(st.q)}">
       </label>
     </section>
-    ${sec === "remedios" ? `<div class="wrap"><p class="aviso">${AVISO_SALUD}</p></div>` : ""}
+    ${sec === "remedios" ? `<div class="wrap"><p class="aviso">${AVISOS[LANG].salud}</p></div>` : ""}
     <section class="wrap filters" aria-label="Filtros">
-      <div class="tabs" role="group" aria-label="Categoría">
-        ${cats.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${st.cat === c}">${esc(c)}</button>`).join("")}
+      <div class="tabs" role="group">
+        ${cats.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${st.cat === c}">${esc(lbl(c))}</button>`).join("")}
       </div>
-      ${sec === "recetas" && ORIGENES.length > 1 ? `<div class="chips" role="group" aria-label="Receta de">
-        <span>Receta de:</span>
-        ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(o)}</button>`).join("")}
+      ${sec === "recetas" && ORIGENES.length > 1 ? `<div class="chips" role="group">
+        <span>${t("recetaDe")}</span>
+        ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(lbl(o))}</button>`).join("")}
       </div>` : ""}
     </section>
     <section class="wrap grid">
@@ -1063,18 +1754,19 @@ function renderList(sec) {
         <button class="card" data-go="${r.id}">
           <div class="pic" style="background:${r.color}">
             ${plato(r)}
+            ${r._orig === "en" ? `<span class="badge en">${t("originalEn")}</span>` : ""}
             ${r.video ? `<span class="badge video">▶ Video</span>` : ""}
           </div>
           <h3>${esc(r.titulo)}</h3>
           <p>${esc(r.descripcion)}</p>
-          <div class="meta">${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}${porcDe(r) ? `<span>🍽 ${porcDe(r)} porciones</span>` : ""}${r.facts && r.facts[0] ? `<span>${esc(r.facts[0][1])}</span>` : ""}<span>${esc(r.categoria)}</span></div>
-        </button>`).join("") || `<p class="empty">No encontramos ${S.palabra} con esos filtros. Prueba con otra categoría o borra la búsqueda.</p>`}
+          <div class="meta">${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}${porcDe(r) ? `<span>🍽 ${esc(t("nPorciones")(porcDe(r)))}</span>` : ""}${r.facts && r.facts[0] ? `<span>${esc(r.facts[0][1])}</span>` : ""}<span>${esc(lbl(r.categoria))}</span></div>
+        </button>`).join("") || `<p class="empty">${t("vacio")(t(S.palabra))}</p>`}
     </section>
-    ${sec === "recetas" && TRUCOS.length ? `<section class="wrap trucos" aria-labelledby="h-trucos">
-      <h2 id="h-trucos">Trucos de la cocina</h2>
-      ${xcards(TRUCOS)}
+    ${sec === "recetas" && trucos.length ? `<section class="wrap trucos" aria-labelledby="h-trucos">
+      <h2 id="h-trucos">${t("trucos")}</h2>
+      ${xcards(trucos)}
     </section>` : ""}`;
-  setNav(sec);
+  renderChrome(sec);
 
   document.getElementById("q").addEventListener("input", e => {
     st.q = e.target.value;
@@ -1087,31 +1779,33 @@ function renderList(sec) {
   app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { location.hash = b.dataset.go; });
 }
 
-function renderDetail(r) {
-  const sec = seccionDe(r), S = SECCIONES[sec], esReceta = sec === "recetas";
+function renderDetail(base) {
+  const r = loc(base);
+  const sec = seccionDe(base), S = SECCIONES[sec], esReceta = sec === "recetas";
   const ings = r.ingredientes || [], pasos = r.pasos || [];
   const s = state.servings[r.id] || r.porciones || 1;
   const k = !esReceta ? 1 : (r.porciones ? s / r.porciones : s);
   const stepBy = r.porciones ? 1 : 0.5;
-  const sLabel = r.porciones ? `${s} porciones` : `Receta ×${fmt(s)}`;
+  const sLabel = r.porciones ? t("nPorciones")(s) : t("recetaX")(fmt(s));
   const ch = state.checks[r.id] || (state.checks[r.id] = { i: [], p: [] });
-  const facts = r.facts || [
-    ["Tiempo", tiempoDe(r)], ["Porciones", porcDe(r)], ["Dificultad", r.dificultad], ["Receta de", r.de]
-  ];
+  const facts = (r.facts || [
+    [t("tiempo"), tiempoDe(r)], [t("porciones"), porcDe(r)], [t("dificultad"), r.dificultad && lbl(r.dificultad)], [t("recetaDe").replace(":", ""), r.de && lbl(r.de)]
+  ]).map(f => [lbl(f[0]), f[1]]);
   const aviso = avisoDe(r);
 
   app.innerHTML = `
     <article class="wrap recipe">
-      <button class="back" id="back">${S.volver}</button>
+      <button class="back" id="back">${t(S.volver)}</button>
 
       <section class="rhead">
         <div>
+          ${r._orig === "en" || r._tr ? `<div class="langtags">${r._orig === "en" ? `<span class="sample en">${t("originalEn")}</span>` : ""}${r._tr ? `<span class="sample">${t("traducidaDe")(r._orig)}</span>` : ""}</div>` : ""}
           <h1>${esc(r.titulo)}</h1>
           <p class="desc">${esc(r.descripcion)}</p>
           <div class="facts">
             ${facts.filter(f => f[1]).map(f => `<div class="fact"><b>${esc(f[0])}</b>${esc(f[1])}</div>`).join("")}
           </div>
-          ${r.nota ? `<p class="note">${esc(r.nota)}<small>Nota de la receta</small></p>` : ""}
+          ${r.nota ? `<p class="note">${esc(r.nota)}<small>${t("notaReceta")}</small></p>` : ""}
         </div>
         <div class="pic" style="background:${r.color}">${plato(r)}</div>
       </section>
@@ -1121,14 +1815,14 @@ function renderDetail(r) {
       ${ings.length ? `
       <section class="panel" aria-labelledby="h-ing">
         <div class="phead">
-          <h2 id="h-ing">Ingredientes<span class="sub">${ch.i.length} de ${ings.length} listos</span></h2>
-          ${esReceta ? `<div class="servings" role="group" aria-label="${r.porciones ? "Porciones" : "Tamaño de la receta"}">
-            <button id="minus" aria-label="Reducir">−</button>
+          <h2 id="h-ing">${t("ingredientes")}<span class="sub">${t("listos")(ch.i.length, ings.length)}</span></h2>
+          ${esReceta ? `<div class="servings" role="group" aria-label="${r.porciones ? t("porciones") : t("tamano")}">
+            <button id="minus" aria-label="${t("reducir")}">−</button>
             <output aria-live="polite">${sLabel}</output>
-            <button id="plus" aria-label="Aumentar">+</button>
+            <button id="plus" aria-label="${t("aumentar")}">+</button>
           </div>` : ""}
         </div>
-        <p class="hint">Toca cada ingrediente cuando lo tengas listo.</p>
+        <p class="hint">${t("hint")}</p>
         <div class="ings">
           ${ings.map((g, i) => `
             ${g.g ? `<h3 class="grp">${esc(g.g)}</h3>` : ""}
@@ -1143,8 +1837,8 @@ function renderDetail(r) {
 
       ${pasos.length ? `
       <section class="panel" aria-labelledby="h-pasos">
-        <div class="phead"><h2 id="h-pasos">Pasos<span class="sub">${ch.p.length} de ${pasos.length} hechos</span></h2></div>
-        <nav class="map" aria-label="Resumen de pasos">
+        <div class="phead"><h2 id="h-pasos">${t("pasos")}<span class="sub">${t("hechos")(ch.p.length, pasos.length)}</span></h2></div>
+        <nav class="map" aria-label="${t("resumenPasos")}">
           ${pasos.map((p, i) => `
             <button data-jump="${i}" class="${ch.p.includes(i) ? "done" : ""}">
               <span class="dot"><i>${i + 1}</i><span aria-hidden="true">${p.e}</span></span>
@@ -1153,12 +1847,12 @@ function renderDetail(r) {
         </nav>
         <div class="steps">
           ${pasos.map((p, i) => {
-            const t = p.tt || (p.min ? tiempo(p.min) : "");
+            const tt = p.tt || (p.min ? tiempo(p.min) : "");
             return `
             <button class="step" id="paso-${i}" data-p="${i}" aria-pressed="${ch.p.includes(i)}">
               <span class="num"><span aria-hidden="true">${p.e}</span><i>${i + 1}</i></span>
-              <span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>${(p.fotos || []).length ? `<span class="sfotos">${p.fotos.map(f => `<img src="${f}" alt="Foto del paso: ${esc(p.t)}" loading="lazy">`).join("")}</span>` : ""}</span>
-              ${t ? `<span class="time">⏱ ${esc(t)}</span>` : "<span></span>"}
+              <span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>${(p.fotos || []).length ? `<span class="sfotos">${p.fotos.map(f => `<img src="${f}" alt="${esc(t("fotoPaso")(p.t))}" loading="lazy">`).join("")}</span>` : ""}</span>
+              ${tt ? `<span class="time">⏱ ${esc(tt)}</span>` : "<span></span>"}
             </button>`;
           }).join("")}
         </div>
@@ -1175,27 +1869,25 @@ function renderDetail(r) {
         <div class="video">
           ${ytEmbed(r.video)
             ? `<iframe class="vbox" style="border:0;padding:0;width:100%" src="${ytEmbed(r.video)}" title="Video: ${esc(r.titulo)}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-            : `<div class="vbox"><div><div class="play" aria-hidden="true">▶</div>${r.video ? "Video disponible" : "Video próximamente"}</div></div>`}
+            : `<div class="vbox"><div><div class="play" aria-hidden="true">▶</div>${r.video ? t("videoDisp") : t("videoProx")}</div></div>`}
           <div>
-            <h2 id="h-video" style="font-size:1.6rem">Míralo en video</h2>
-            <p style="color:var(--muted);max-width:42ch">${r.video
-              ? "Prepárala conmigo paso a paso."
-              : "Todavía no hemos grabado esta receta. Cuando la preparemos en casa, el video aparecerá aquí."}</p>
-            ${r.video ? `<a class="btn" href="${esc(r.video)}" target="_blank" rel="noopener">▶ Ver el video</a>` : ""}
+            <h2 id="h-video" style="font-size:1.6rem">${t("video")}</h2>
+            <p style="color:var(--muted);max-width:42ch">${r.video ? t("videoSi") : t("videoNo")}</p>
+            ${r.video ? `<a class="btn" href="${esc(r.video)}" target="_blank" rel="noopener">${t("verVideo")}</a>` : ""}
           </div>
         </div>
       </section>
 
-      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>` : ""}
+      <div class="tags"><span>${t("recetaFamilia")}</span><span>🍽 ${esc(lbl(r.categoria))}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>` : ""}
     </article>`;
-  setNav(sec);
+  renderChrome(sec);
 
   document.getElementById("back").onclick = () => { location.hash = S.href === "#" ? "" : S.href.slice(1); };
   const minus = document.getElementById("minus"), plus = document.getElementById("plus");
-  if (minus) minus.onclick = () => { state.servings[r.id] = Math.max(stepBy, s - stepBy); keep(() => renderDetail(r)); };
-  if (plus) plus.onclick = () => { state.servings[r.id] = s + stepBy; keep(() => renderDetail(r)); };
-  app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderDetail(r)); });
-  app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderDetail(r)); });
+  if (minus) minus.onclick = () => { state.servings[r.id] = Math.max(stepBy, s - stepBy); keep(() => renderDetail(base)); };
+  if (plus) plus.onclick = () => { state.servings[r.id] = s + stepBy; keep(() => renderDetail(base)); };
+  app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderDetail(base)); });
+  app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderDetail(base)); });
   app.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
     document.getElementById("paso-" + b.dataset.jump).scrollIntoView({ behavior: "smooth", block: "center" });
   });
@@ -1204,13 +1896,18 @@ function renderDetail(r) {
 function toggle(arr, v) { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); saveChecks(); }
 function keep(fn) { const y = window.scrollY; fn(); window.scrollTo(0, y); }
 
-function route() {
+function route(resetScroll = true) {
   const id = location.hash.slice(1);
-  if (id === "remedios") { renderList("remedios"); window.scrollTo(0, 0); return; }
+  if (id === "remedios") { renderList("remedios"); if (resetScroll) window.scrollTo(0, 0); return; }
   const r = RECETAS.find(x => x.id === id) || REMEDIOS.find(x => x.id === id);
-  if (r) { renderDetail(r); window.scrollTo(0, 0); } else renderList("recetas");
+  if (r) { renderDetail(r); if (resetScroll) window.scrollTo(0, 0); } else renderList("recetas");
 }
-window.addEventListener("hashchange", route);
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => {
+  LANG = b.dataset.lang;
+  try { localStorage.setItem("memeyita-lang", LANG); } catch (e) {}
+  keep(() => route(false));
+});
+window.addEventListener("hashchange", () => route());
 route();
 </script>
 </body>
