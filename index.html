@@ -58,6 +58,8 @@ img { max-width: 100%; }
 .lang button { border: 0; background: none; font-size: .78rem; font-weight: 600; letter-spacing: .04em; padding: 5px 9px; border-radius: 999px; color: var(--muted); }
 .lang button[aria-pressed="true"] { background: var(--lime); color: var(--ink); }
 .badge.en { left: auto; right: 12px; background: #fff; color: var(--green); border: 1px solid var(--green-soft); }
+.badge.chef { background: var(--green); color: #fff; text-transform: none; letter-spacing: 0; }
+.sample.chef { border-radius: 10px; border-style: solid; background: var(--green-soft); border-color: var(--green-soft); color: var(--green); }
 .langtags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
 .langtags .sample { margin: 0; }
 .sample.en { border-style: solid; border-color: var(--green); color: var(--green); }
@@ -349,7 +351,7 @@ const RECETAS = [
     video: ""
   },
   {
-    id: "rosbif", titulo: "Rosbif de res con hongos", categoria: "Platos fuertes", de: "La familia",
+    id: "rosbif", titulo: "Rosbif de res con hongos", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
     plato: "🥩", color: "#dcc4ac", porciones: 6, porcionesTexto: "6 a 8", tiempoTexto: "Adobo 1 h + fuego lento", dificultad: "Media",
     descripcion: "Lomito o ganso de res adobado, dorado y cocinado a fuego lento, con salsa de vino blanco y champiñones.",
     nota: "Al dorar la carne no la pinches, así conserva sus jugos.",
@@ -395,11 +397,13 @@ const RECETAS = [
   {
     id: "asado-negro", titulo: "Asado negro", categoria: "Platos fuertes", de: "Memeyita",
     plato: "🥩", color: "#d8bfa6", foto: FOTOS_ASADO[14], tiempoTexto: "1 noche + unas 3 h", dificultad: "Media",
-    descripcion: "Muchacho macerado desde la noche anterior, sellado con azúcar morena o papelón y cocinado lento en su salsa hasta que queda blando.",
-    nota: "Transcrita de los mensajes de Memeyita, paso a paso y con sus fotos. Falta confirmar el nombre de la receta, los ingredientes de la maceración y el final del paso de la olla de presión, que se corta en el mensaje.",
+    descripcion: "Muchacho macerado desde la noche anterior, sellado con azúcar morena o papelón y cocinado lento en su salsa hasta que queda blando y negrito.",
+    nota: "Une los mensajes de Memeyita, paso a paso y con sus fotos, con las notas de su cuaderno. En la olla de presión, en los mensajes la deja unos 60 minutos y en el cuaderno dice media hora. Falta confirmar el final del mensaje de la olla de presión, que se corta en “alguna h…”.",
     ingredientes: [
       { g: "La carne", e: "🥩", n: "Muchacho", c: 2, u: "trozos" },
-      { g: "La maceración", e: "🥣", n: "Ingredientes de la maceración", c: null, u: "por confirmar" },
+      { g: "La maceración", e: "🌿", n: "Comino", c: null, u: "al gusto" },
+      { e: "⚫", n: "Pimienta", c: null, u: "al gusto" },
+      { e: "🧄", n: "Ajo", c: null, u: "al gusto" },
       { g: "Para sellar", e: "🫒", n: "Aceite", c: null, u: "sin medida" },
       { e: "🟫", n: "Azúcar morena o papelón", c: null, u: "sin medida" },
       { g: "Para la olla de presión", e: "💧", n: "Agua", c: null, u: "sin medida" },
@@ -407,27 +411,28 @@ const RECETAS = [
       { e: "🫑", n: "Pimentón", c: null, u: "sin medida" },
       { e: "🧄", n: "Ajo", c: null, u: "sin medida" },
       { e: "🌶️", n: "Ají dulce", c: null, u: "sin medida" },
-      { e: "🌿", n: "“Alguna h…” (el mensaje se corta)", c: null, u: "por confirmar" }
+      { e: "🌿", n: "“Alguna h…” (el mensaje se corta)", c: null, u: "por confirmar" },
+      { g: "Para terminar", e: "🍶", n: "Salsa inglesa (opcional)", c: null, u: "al gusto" }
     ],
     pasos: [
-      { e: "🌙", t: "Macerar desde la noche anterior", d: "Deja los dos trozos de muchacho macerando toda la noche, para comenzar a prepararlos bien temprano.", tt: "Toda la noche", fotos: [FOTOS_ASADO[1]] },
-      { e: "🔥", t: "Sellar la carne", d: "Sella la carne en aceite con azúcar morena o papelón, dándole vuelta hasta que quede dorada y oscura por todos lados.", fotos: [FOTOS_ASADO[2], FOTOS_ASADO[3]] },
-      { e: "♨️", t: "Olla de presión", d: "Cocina la carne en la olla de presión con agua, cebolla, pimentón, ajo, ají dulce y alguna h… (el mensaje se corta aquí).", tt: "60 min aprox.", fotos: [FOTOS_ASADO[4], FOTOS_ASADO[5]] },
+      { e: "🌙", t: "Macerar desde la noche anterior", d: "Adoba los dos trozos de muchacho con comino y pimienta, macéralos bien con el ajo y déjalos así toda la noche, para empezar a cocinarlos bien temprano.", tt: "Toda la noche", fotos: [FOTOS_ASADO[1]] },
+      { e: "🔥", t: "Sellar la carne", d: "Sella la carne en aceite con azúcar morena o papelón, dándole vuelta hasta que quede doradita y oscura por todos lados.", fotos: [FOTOS_ASADO[2], FOTOS_ASADO[3]] },
+      { e: "♨️", t: "Olla de presión", d: "Cocina la carne en la olla de presión con agua, cebolla, pimentón, ajo, ají dulce y alguna h… (el mensaje se corta aquí).", tt: "30 a 60 min", fotos: [FOTOS_ASADO[4], FOTOS_ASADO[5]] },
       { e: "🍖", t: "Sacar la carne", d: "Saca la carne de la olla y déjala lista para picar.", fotos: [FOTOS_ASADO[6], FOTOS_ASADO[9]] },
       { e: "🍲", t: "Reservar el caldo", d: "El caldo que queda en la olla ya está listo.", fotos: [FOTOS_ASADO[7]] },
-      { e: "🥣", t: "Preparar la salsa", d: "Une el caldo con los ingredientes de la maceración.", fotos: [FOTOS_ASADO[8]] },
-      { e: "🔪", t: "Picar la carne", d: "Corta la carne en rebanadas.", fotos: [FOTOS_ASADO[10]] },
-      { e: "🥘", t: "Al caldero con la salsa", d: "Coloca las rebanadas en el caldero y agrégales la salsa para comenzar la cocción.", fotos: [FOTOS_ASADO[11], FOTOS_ASADO[12]] },
+      { e: "🌀", t: "Hacer la salsa", d: "Licúa el caldo con todos los aliños de la maceración hasta tener una salsa.", fotos: [FOTOS_ASADO[8]] },
+      { e: "🔪", t: "Picar en ruedas", d: "Corta la carne en ruedas con un cuchillo.", fotos: [FOTOS_ASADO[10]] },
+      { e: "🥘", t: "Al caldero con la salsa", d: "Coloca las ruedas en el caldero y agrégales la salsa para comenzar la cocción.", fotos: [FOTOS_ASADO[11], FOTOS_ASADO[12]] },
       { e: "🫕", t: "Cocinar tapado", d: "Primero cocina tapado, para que se cocine más rápido.", fotos: [FOTOS_ASADO[13]] },
-      { e: "✅", t: "Cocinar hasta que esté blanda", d: "Sigue cocinando a fuego medio al menos 2 horas, o hasta que la carne esté blanda.", tt: "2 h o más", fotos: [FOTOS_ASADO[14]] }
+      { e: "✅", t: "Cocinar hasta que esté negrita", d: "Sigue cocinando a fuego medio al menos 2 horas, hasta que la carne esté blanda y la salsa se ponga negrita. Si quieres, añade un chorrito de salsa inglesa.", tt: "2 h o más", fotos: [FOTOS_ASADO[14]] }
     ],
     video: ""
   },
   {
-    id: "rosbif-cebolla", titulo: "Rosbif de res con cebolla", categoria: "Platos fuertes", de: "La familia",
+    id: "rosbif-cebolla", titulo: "Rosbif de res con cebolla", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
     plato: "🥩", color: "#e0c7ad", porciones: 6, tiempoTexto: "Adobo 15 min + unos 20 min", dificultad: "Media",
     descripcion: "Lomito o ganso de res adobado, dorado en el caldero y servido en tajadas con cebolla frita y su salsa con clavos y pimienta dulce.",
-    nota: "Del libro de recetas. Los pasos 4 a 6 están en la página siguiente (pág. 432), justo antes del rosbif con hongos. La carne debe quedar roja en el interior.",
+    nota: "Del libro de Armando Scannone. Los pasos 4 a 6 están en la página siguiente (pág. 432), justo antes del rosbif con hongos. La carne debe quedar roja en el interior.",
     ingredientes: [
       { g: "La carne", e: "🥩", n: "Lomito o ganso de res, ya limpio", c: 1, u: "kg" },
       { g: "El adobo", e: "🧅", n: "Cebolla rallada finamente", c: 0.5, u: "taza" },
@@ -528,6 +533,753 @@ const RECETAS = [
       { e: "🥄", t: "Hacer la crema", d: "Añade la crema de ajonjolí mezclando bien, y después el limón." },
       { e: "🌀", t: "Mezclar con las berenjenas", d: "Vierte la crema sobre las berenjenas picaditas y revuelve hasta que quede bien mezclado." },
       { e: "🌿", t: "Adornar y servir", d: "Adorna con perejil bien picadito o, si prefieres, con ají picante en polvo. Al servir, vierte un chorrito de aceite de oliva por encima." }
+    ],
+    video: ""
+  },
+  {
+    id: "pisca-andina", titulo: "Pisca andina", categoria: "Sopas", de: "Armando Scannone", fuente: "scannone",
+    plato: "🥣", color: "#e9dcc0", porciones: 4, tiempoTexto: "Unos 30 min", dificultad: "Fácil",
+    descripcion: "El caldo del desayuno andino: consomé con papa, cilantro y un huevo escalfado en cada plato.",
+    nota: "Hay que echar los huevos rápido y separados para que se cocinen parejo. Deben quedar más bien duros que blandos.",
+    ingredientes: [
+      { e: "🧅", n: "Cebolla triturada", c: 2, u: "cda" },
+      { e: "🍅", n: "Tomate triturado, sin piel ni semillas", c: 2, u: "cda" },
+      { e: "🧈", n: "Mantequilla", c: 1, u: "cda" },
+      { e: "🧄", n: "Ajo entero", c: 1, u: "diente" },
+      { e: "🍲", n: "Consomé de carne", c: 5, u: "taza" },
+      { e: "🧂", n: "Sal, si hace falta", c: null, u: "al gusto" },
+      { e: "⚪", n: "Pimienta blanca molida", c: 1, u: "pizca" },
+      { e: "🍶", n: "Salsa inglesa Worcestershire", c: 0.5, u: "cdta" },
+      { e: "🌿", n: "Ramas de cilantro", c: [6, 8], u: "" },
+      { e: "🥔", n: "Papa mediana en cubitos (½ taza)", c: 1, u: "" },
+      { e: "🥚", n: "Huevos", c: 4, u: "" },
+      { e: "🌿", n: "Cilantro picadito", c: 1, u: "cda" }
+    ],
+    pasos: [
+      { e: "🍳", t: "Hacer el sofrito", d: "En una sartén cocina la mantequilla con la cebolla, el tomate y el ajo hasta que se seque y quede un sofrito. Saca el ajo.", min: 5 },
+      { e: "🍲", t: "Sazonar el consomé", d: "Pon el consomé en una olla con el sofrito, la sal si hace falta, la pimienta, la salsa inglesa y las ramas de cilantro. Llévalo a hervir." },
+      { e: "🥔", t: "Cocinar la papa", d: "Agrega la papa y cocina a fuego medio hasta que esté blanda pero todavía firme. Saca las ramas de cilantro." },
+      { e: "🥚", t: "Escalfar los huevos", d: "Con el consomé hirviendo, echa los huevos uno a uno con ayuda de una tacita, cada uno en un punto distinto de la superficie para que no se junten.", tt: "4 a 5 min" },
+      { e: "🥣", t: "Servir", d: "Retira del fuego y sirve un huevo en cada plato o taza. Espolvorea cilantro picadito y sirve enseguida." }
+    ],
+    video: ""
+  },
+  {
+    id: "quesillo", titulo: "Quesillo de leche", categoria: "Dulces", de: "Armando Scannone", fuente: "scannone",
+    plato: "🍮", color: "#ecd2a0", porciones: 12, porcionesTexto: "12 a 14", tiempoTexto: "2 h + 1 noche en la nevera", dificultad: "Media",
+    descripcion: "El quesillo clásico, horneado en baño de María en un molde con caramelo y desmoldado al día siguiente.",
+    nota: "El libro dice horno a “400 grados”: son unos 200 °C. El molde es de unos 18 cm de diámetro y 10 cm de alto.",
+    ingredientes: [
+      { g: "El caramelo", e: "🍬", n: "Azúcar", c: 1, u: "taza" },
+      { e: "💧", n: "Agua", c: 0.25, u: "taza" },
+      { g: "El baño de María", e: "🍋", n: "Limón", c: 1, u: "" },
+      { g: "La mezcla", e: "🥚", n: "Huevos", c: 12, u: "" },
+      { e: "🍋", n: "Ralladura de limón", c: 0.5, u: "cda" },
+      { e: "🥛", n: "Leche", c: 4, u: "taza" },
+      { e: "🍬", n: "Azúcar", c: 0.5, u: "kg" },
+      { e: "🍶", n: "Esencia de vainilla", c: 0.5, u: "cdta" }
+    ],
+    pasos: [
+      { e: "🔥", t: "Precalentar el horno", d: "Pon el horno a 200 °C (400 °F)." },
+      { e: "🍯", t: "Hacer el caramelo", d: "En el mismo molde, hierve el azúcar con el agua hasta que quede un caramelo oscuro, sin que se queme. Fuera del fuego, gira el molde para cubrir las paredes y déjalo enfriar.", tt: "6 a 8 min" },
+      { e: "♨️", t: "Preparar el baño de María", d: "Mete al horno una bandeja más grande que el molde con unos 5 cm de agua y el limón, que evita que la bandeja se ponga negra. Deja que el agua se caliente." },
+      { e: "🥚", t: "Hacer la mezcla", d: "Bate un poco los huevos con la ralladura de limón usando un batidor de alambre. Agrega la leche, el azúcar y la vainilla, y sigue batiendo hasta que todo quede integrado." },
+      { e: "🫗", t: "Hornear tapado", d: "Vierte la mezcla en el molde con caramelo, tápalo con papel de aluminio y hornéalo dentro del baño de María.", min: 55 },
+      { e: "🔥", t: "Hornear destapado", d: "Quita el papel y sigue horneando hasta que una aguja salga seca. Después déjalo 30 minutos dentro del horno apagado.", min: 25 },
+      { e: "❄️", t: "Enfriar", d: "Déjalo enfriar y guárdalo en la nevera hasta el día siguiente.", tt: "Hasta el día siguiente" },
+      { e: "🍮", t: "Desmoldar", d: "Sácalo de la nevera media hora antes y desmóldalo en una bandeja con borde. Si queda caramelo pegado al molde, caliéntalo un momento al fuego y viértelo por encima." }
+    ],
+    extras: [{ titulo: "Consejo", items: [
+      { e: "🫧", t: "Con muchos agujeritos", d: "Si te gusta el quesillo con muchos huequitos, bate la mezcla con fuerza con el batidor antes de verterla en el molde." }
+    ]}],
+    video: ""
+  },
+  {
+    id: "bienmesabe", titulo: "Bienmesabe", categoria: "Dulces", de: "Armando Scannone", fuente: "scannone",
+    plato: "🥥", color: "#efe6d0", porciones: 8, porcionesTexto: "8 a 10", tiempoTexto: "Unas 2 h + nevera", dificultad: "Media",
+    descripcion: "Dulce colonial caraqueño: capas de crema de coco con yemas y bizcochuelo rociado con coñac, con canela por encima.",
+    nota: "El bizcochuelo se prepara aparte: el libro remite a su propia receta de bizcochuelo o pan de Saboya.",
+    ingredientes: [
+      { g: "La crema de coco", e: "🥥", n: "Cocos grandes (500–600 g de pulpa cada uno), o 3 a 3½ tazas de leche de coco", c: [2, 3], u: "" },
+      { e: "💧", n: "Agua caliente (para sacar la leche)", c: 2, u: "taza" },
+      { e: "🥚", n: "Yemas de huevo", c: 18, u: "" },
+      { e: "🧂", n: "Sal", c: 0.25, u: "cdta" },
+      { g: "El almíbar", e: "💧", n: "Agua", c: 1, u: "taza" },
+      { e: "🍬", n: "Azúcar", c: 3.5, u: "taza" },
+      { g: "Para armar", e: "🍰", n: "Bizcochuelo", c: 0.5, u: "kg" },
+      { e: "🥃", n: "Coñac", c: 4, u: "cda" },
+      { e: "💧", n: "Agua", c: 4, u: "cda" },
+      { e: "🟤", n: "Canela molida", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🥥", t: "Rallar el coco", d: "Saca la pulpa de los cocos y rállala por el lado grueso del rallo. Salen unas 6 tazas." },
+      { e: "🌀", t: "Sacar la leche de coco", d: "Tritura la pulpa por partes con el agua caliente y exprímela a través de un paño no muy tupido. Cuela la leche por un colador fino." },
+      { e: "🥚", t: "Mezclar con las yemas", d: "Revuelve la leche de coco con las yemas y la sal usando una cuchara de madera, y apártala." },
+      { e: "🍯", t: "Hacer el almíbar", d: "En una olla gruesa hierve el agua con el azúcar a fuego fuerte, sin revolver, hasta punto de hebra: las gotas caen lentas de la cuchara y forman un hilito.", tt: "unos 5 min" },
+      { e: "🔥", t: "Cocinar la crema", d: "Apaga el fuego, agrega la mezcla de yemas y revuelve hasta tener una crema. Vuelve a fuego muy suave y sigue revolviendo hasta que esté a punto de hervir y salgan burbujitas por los lados. Retírala y deja que se enfríe un poco." },
+      { e: "🔪", t: "Cortar el bizcochuelo", d: "Córtalo en tajadas pequeñas, de unos 4 × 8 cm y no más de 1 cm de grosor." },
+      { e: "🥃", t: "Armar por capas", d: "En una dulcera de vidrio pon una capa de crema y luego una de bizcochuelo rociado con el coñac mezclado con el agua. Repite y termina con crema. Espolvorea canela." },
+      { e: "❄️", t: "Enfriar y servir", d: "Mételo en la nevera y sírvelo bien frío." }
+    ],
+    video: ""
+  },
+  {
+    id: "pan-de-jamon", titulo: "Pan de jamón", categoria: "Panes", de: "Armando Scannone", fuente: "scannone",
+    plato: "🥖", color: "#ead2b2", porciones: 10, tiempoTexto: "Unas 4 h (con los leudados)", dificultad: "Media",
+    descripcion: "El pan de Navidad caraqueño: masa dulce enrollada con jamón, aceitunas y pasas, barnizada con yema y azúcar.",
+    nota: "Es la versión de 10 porciones de las dos que trae el libro. “400 grados” en el libro son unos 200 °C.",
+    ingredientes: [
+      { g: "La masa", e: "🫧", n: "Levadura en pasta o granulada (unas 3 cdas)", c: 45, u: "g" },
+      { e: "💧", n: "Agua tibia", c: 0.5, u: "taza" },
+      { e: "🍬", n: "Azúcar (para la levadura)", c: 1, u: "cdta" },
+      { e: "🌾", n: "Harina (unas 4 tazas)", c: 0.5, u: "kg" },
+      { e: "🍬", n: "Azúcar", c: 3, u: "cda" },
+      { e: "🧂", n: "Sal", c: 0.75, u: "cdta" },
+      { e: "🧈", n: "Mantequilla", c: 6, u: "cda" },
+      { e: "🥚", n: "Huevo", c: 1, u: "" },
+      { e: "🥛", n: "Leche tibia", c: [6, 8], u: "cda" },
+      { e: "🧈", n: "Mantequilla (para la bandeja)", c: 1, u: "cda" },
+      { g: "El relleno", e: "🍖", n: "Jamón planchado, picadito", c: 0.5, u: "kg" },
+      { e: "🫒", n: "Aceitunas (la pulpa, picadita)", c: 25, u: "" },
+      { e: "🍇", n: "Pasas", c: 0.75, u: "taza" },
+      { g: "Para barnizar", e: "🥚", n: "Yema de huevo", c: 1, u: "" },
+      { e: "🍬", n: "Azúcar", c: 1, u: "cdta" }
+    ],
+    pasos: [
+      { e: "🫧", t: "Activar la levadura", d: "Mezcla la levadura con el agua tibia y la cucharadita de azúcar. Tápala y déjala en un lugar tibio.", min: 30 },
+      { e: "🌾", t: "Hacer la masa", d: "Pon la harina con un hueco en el centro y agrega ahí la levadura, el azúcar, la sal, la mantequilla y el huevo. Amasa añadiendo la leche poco a poco hasta tener una masa suave que se despegue sin estar pegajosa. También sirve una batidora con gancho." },
+      { e: "⏳", t: "Primer leudado", d: "Haz una bola, ponla en un envase enharinado, tápala con un paño y déjala en un lugar tibio hasta que doble su tamaño.", tt: "1½ h o más" },
+      { e: "📏", t: "Estirar", d: "Amasa un poco sobre la mesa enharinada y estira con el rodillo un rectángulo de unos 25 × 45 cm y 1 cm de grosor." },
+      { e: "🍖", t: "Rellenar y enrollar", d: "Reparte el jamón, las aceitunas y las pasas sobre la masa. Enróllala firme y cierra los extremos. Ponla en la bandeja engrasada con la unión hacia abajo." },
+      { e: "⏳", t: "Segundo leudado", d: "Tápala con un paño y déjala en un lugar tibio hasta que doble su tamaño.", tt: "1 h" },
+      { e: "🔥", t: "Hornear", d: "Hornea a 200 °C (400 °F), con el horno ya caliente, hasta que esté bien dorado.", min: 20 },
+      { e: "🖌️", t: "Barnizar y terminar", d: "Bate la yema con el azúcar, barniza el pan y hornéalo unos minutos más. Déjalo enfriar antes de cortar.", min: 5 }
+    ],
+    video: ""
+  },
+  {
+    id: "pasticho", titulo: "Pasticho", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
+    plato: "🍝", color: "#efcfb5", porciones: 12, tiempoTexto: "Unas 3 h", dificultad: "Difícil",
+    descripcion: "La lasaña venezolana: relleno de cochino con pasas, aceitunas y alcaparras, bechamel, queso de mano y parmesano.",
+    nota: "Dos cantidades del PDF parecen errores de transcripción y están por confirmar: dice “12 kilos” de queso de mano (puse ½ kg) y “1/12” de cucharadita de sal en la pasta (puse ½ cdta). Si compras la pasta hecha, usa ¾ kg de láminas para lasaña y salta los pasos de la pasta.",
+    ingredientes: [
+      { g: "El relleno", e: "🧈", n: "Mantequilla", c: 2, u: "cda" },
+      { e: "🫒", n: "Aceite", c: 0.25, u: "taza" },
+      { e: "🥬", n: "Ajo porro pequeño, la parte blanca, picadita", c: 1, u: "" },
+      { e: "🧅", n: "Cebollas grandes picaditas", c: 2, u: "" },
+      { e: "🧄", n: "Ajo machacado", c: 2, u: "diente" },
+      { e: "🍅", n: "Tomates picaditos, sin piel ni semillas (unos 6)", c: 1, u: "kg" },
+      { e: "🫑", n: "Pimentón rojo picadito", c: 0.5, u: "" },
+      { e: "🌶️", n: "Ají dulce picadito, sin semillas", c: 1, u: "" },
+      { e: "🍅", n: "Salsa de tomate ketchup", c: 1 / 3, u: "taza" },
+      { e: "🐖", n: "Carne magra de cochino, molida", c: 1, u: "kg" },
+      { e: "🫛", n: "Alcaparras pequeñas picaditas", c: 10, u: "" },
+      { e: "🫒", n: "Aceitunas medianas (la pulpa, picadita)", c: 10, u: "" },
+      { e: "🍇", n: "Pasas", c: 4, u: "cda" },
+      { e: "🍶", n: "Salsa inglesa Worcestershire", c: 0.5, u: "cda" },
+      { e: "🥒", n: "Encurtidos en mostaza picaditos", c: 3, u: "cda" },
+      { e: "🍷", n: "Vino moscatel", c: 0.25, u: "taza" },
+      { e: "🧂", n: "Sal", c: 2.5, u: "cdta" },
+      { e: "⚫", n: "Pimienta negra recién molida", c: 0.5, u: "cdta" },
+      { g: "La bechamel", e: "🧈", n: "Mantequilla", c: 2, u: "cda" },
+      { e: "🧅", n: "Cebolla mediana picadita", c: 1, u: "" },
+      { e: "🌾", n: "Harina", c: 2, u: "cda" },
+      { e: "🥛", n: "Leche", c: 4 / 3, u: "taza" },
+      { e: "🧂", n: "Sal (⅛ cdta)", c: 1, u: "pizca" },
+      { e: "⚪", n: "Pimienta blanca recién molida (⅛ cdta)", c: 1, u: "pizca" },
+      { g: "La pasta", e: "🌾", n: "Harina", c: 0.5, u: "kg" },
+      { e: "🧂", n: "Sal (por confirmar)", c: 0.5, u: "cdta" },
+      { e: "🫒", n: "Aceite", c: 1, u: "cdta" },
+      { e: "🥚", n: "Huevos de unos 60 g", c: 5, u: "" },
+      { e: "💧", n: "Agua (según el tamaño de los huevos)", c: 1, u: "cdta" },
+      { g: "Para armar", e: "💧", n: "Agua para cocinar la pasta, con sal y aceite", c: 12, u: "taza" },
+      { e: "🧀", n: "Queso de mano (por confirmar)", c: 0.5, u: "kg" },
+      { e: "🧀", n: "Queso parmesano rallado", c: 200, u: "g" },
+      { e: "🧈", n: "Mantequilla (para el molde y por encima)", c: 2, u: "cda" }
+    ],
+    pasos: [
+      { e: "🧅", t: "Sofreír", d: "Calienta la mantequilla y el aceite en un caldero. Sofríe el ajo porro unos 3 minutos, agrega la cebolla y el ajo, y cocina hasta que marchiten.", tt: "unos 7 min" },
+      { e: "🍅", t: "Tomate y carne", d: "Agrega el tomate, el pimentón, el ají dulce y el ketchup, y cocina 5 minutos. Añade la carne, revuelve y cocina 10 minutos más.", min: 15 },
+      { e: "🥘", t: "Terminar el relleno", d: "Agrega el resto de los ingredientes del relleno, baja el fuego, tapa y cocina hasta que seque. Aparta.", min: 30 },
+      { e: "🥛", t: "Hacer la bechamel", d: "Derrite la mantequilla y fríe la cebolla hasta que marchite. Fuera del fuego, agrega la harina con un batidor e inmediatamente la leche. Vuelve al fuego revolviendo, sazona y cocina hasta que espese como una crema." },
+      { e: "🥚", t: "Amasar la pasta", d: "Mezcla los huevos con el aceite y la sal. Agrega la harina y el agua poco a poco, primero con los dedos y luego amasando hasta que la masa no se pegue a la mesa ni a las manos. Déjala reposar tapada.", min: 15 },
+      { e: "📏", t: "Estirar y cortar", d: "Pásala por la máquina de pasta hasta tener una lámina fina y córtala en rectángulos de unos 20 × 10 cm. Ponlos en una bandeja enharinada, separando las capas con papel encerado." },
+      { e: "🍝", t: "Cocinar las láminas", d: "En agua hirviendo con sal y aceite, cocina las láminas por tandas, revolviendo para que no se peguen. Pásalas 1 o 2 minutos a agua fría y luego sobre un paño.", tt: "3 min por tanda" },
+      { e: "🔥", t: "Preparar el molde", d: "Precalienta el horno a 200 °C (400 °F) y engrasa con mantequilla un molde de vidrio de unos 33 × 22 × 5 cm." },
+      { e: "🧀", t: "Armar por capas", d: "Pon capas de pasta, bechamel, relleno, queso de mano y parmesano, y repite. Termina con pasta cubierta de bechamel, parmesano y puntitos de mantequilla." },
+      { e: "🔥", t: "Hornear", d: "Hornea hasta que esté dorado por encima.", min: 40 }
+    ],
+    video: ""
+  },
+  {
+    id: "hallacas", titulo: "Hallacas caraqueñas", categoria: "Platos fuertes", de: "Armando Scannone", fuente: "scannone",
+    plato: "🫔", color: "#d6dfbf", tiempoTexto: "3 días (2 si usas masa de maíz)", dificultad: "Difícil",
+    descripcion: "La hallaca caraqueña paso a paso: guiso de cochino y gallina, masa de maíz con onoto y adornos, envuelta en hoja de plátano. Rinde 50 hallacas.",
+    nota: "Se hace por etapas y conviene tener ayuda. Si usas masa de maíz ya hecha (⅔ de taza para el guiso y 5 kg para la masa), te ahorras cocinar y moler el maíz. Después de hervidas, espera 1 o 2 días antes de comerlas para que tomen su sabor.",
+    ingredientes: [
+      { g: "El guiso", e: "🌽", n: "Maíz blanco pilado, para cuajar el guiso (o 200 g de masa de maíz)", c: 100, u: "g" },
+      { e: "🐖", n: "Pernil de cochino con poca grasa", c: 3, u: "kg" },
+      { e: "🐔", n: "Gallinas de unos 2 kg", c: 2, u: "" },
+      { e: "🍋", n: "Limón", c: 1, u: "" },
+      { e: "🫒", n: "Aceite", c: 1, u: "taza" },
+      { e: "🧅", n: "Cebolla molida gruesa", c: 1.5, u: "kg" },
+      { e: "🥬", n: "Ajo porro (la parte blanca), picadito", c: 400, u: "g" },
+      { e: "🌱", n: "Cebollín en rueditas delgadas", c: 200, u: "g" },
+      { e: "🧄", n: "Dientes de ajo pelados", c: 0.75, u: "taza" },
+      { e: "🫛", n: "Alcaparras pequeñas", c: 0.5, u: "taza" },
+      { e: "🫑", n: "Pimentón rojo molido, sin semillas", c: 1, u: "kg" },
+      { e: "🍅", n: "Tomate molido, sin piel ni semillas", c: 2, u: "kg" },
+      { e: "🌶️", n: "Ajíes dulces picaditos", c: 4, u: "" },
+      { e: "🌶️", n: "Ají picante picadito", c: 1, u: "cda" },
+      { e: "🥒", n: "Encurtidos en mostaza, triturados", c: 1, u: "taza" },
+      { e: "🍷", n: "Vino dulce (moscatel o marsala)", c: 2, u: "taza" },
+      { e: "🫙", n: "Vinagre", c: 1, u: "taza" },
+      { e: "🍶", n: "Salsa inglesa Worcestershire", c: 2 / 3, u: "taza" },
+      { e: "🟫", n: "Papelón", c: 550, u: "g" },
+      { e: "🌶️", n: "Pimentón rojo seco, molido", c: 1.5, u: "cda" },
+      { e: "🌶️", n: "Ají picante seco, molido", c: 2, u: "cdta" },
+      { e: "⚫", n: "Pimienta negra recién molida", c: 1, u: "cda" },
+      { e: "🧂", n: "Sal", c: 5, u: "cda" },
+      { e: "🍲", n: "Caldo de las gallinas (más ½ taza para el ajo y 1½ para el maíz)", c: 2, u: "taza" },
+      { e: "🟡", n: "Mostaza preparada", c: 0.75, u: "taza" },
+      { g: "La masa", e: "🥓", n: "Tocino para la manteca (o 5 tazas de manteca de cochino)", c: 1.5, u: "kg" },
+      { e: "💧", n: "Agua (para la manteca)", c: 1.5, u: "taza" },
+      { e: "🧂", n: "Sal (para la manteca)", c: 2, u: "cdta" },
+      { e: "🌽", n: "Maíz blanco pilado (o 5 kg de masa de maíz)", c: 2.25, u: "kg" },
+      { e: "🍲", n: "Caldo de gallina", c: 3, u: "taza" },
+      { e: "🧂", n: "Sal", c: 5, u: "cda" },
+      { e: "🟠", n: "Semillas de onoto", c: 6, u: "cda" },
+      { g: "Los adornos", e: "🫑", n: "Pimentones rojos", c: 1, u: "kg" },
+      { e: "🫒", n: "Aceite", c: 3, u: "cda" },
+      { e: "🥓", n: "Tocino", c: 0.5, u: "kg" },
+      { e: "🌰", n: "Almendras", c: 150, u: "g" },
+      { e: "🧅", n: "Cebollas pequeñas", c: 0.5, u: "kg" },
+      { e: "🫛", n: "Alcaparras pequeñas", c: 150, u: "g" },
+      { e: "🫒", n: "Aceitunas medianas", c: 400, u: "g" },
+      { e: "🍇", n: "Pasas sin semillas", c: 250, u: "g" },
+      { e: "🥒", n: "Encurtidos en vinagre, picaditos", c: 0.5, u: "taza" },
+      { g: "Para armar", e: "🍃", n: "Hojas de plátano para hallacas", c: 7, u: "kg" },
+      { e: "🧵", n: "Pabilo para amarrar", c: null, u: "sin medida" },
+      { e: "💧", n: "Agua con sal para hervirlas", c: null, u: "sin medida" }
+    ],
+    pasos: [
+      { e: "🌽", t: "Día 1 · Maíz para cuajar el guiso", d: "Lava el ½ taza de maíz pilado hasta que el agua salga clara, cúbrelo con 5–8 cm de agua y hiérvelo. Quita ¼ a ⅓ del agua caliente, completa con agua fría y deja enfriar. Para hallacas el maíz se cocina más que para arepas, así la masa queda más fina.", tt: "25 a 28 min" },
+      { e: "🐖", t: "Día 2 · Precocer el cochino", d: "Quita el exceso de grasa, frota la carne con limón y enjuágala. Hiérvela junto con el tocino de los adornos, cubiertos de agua; debe quedar rosada. Déjala 5 minutos más en la olla, enfría, aparta el tocino y corta el cochino en trozos de unos 3 cm. Desecha el líquido.", tt: "7 a 8 min" },
+      { e: "🐔", t: "Cocinar las gallinas", d: "Límpialas, frótalas con limón y cocina cada una en la olla de presión con 4 a 5 tazas de agua, hasta que ablanden sin pasarse. Reposa 10 minutos, quita la piel y desmenuza en trozos no muy pequeños. Guarda el caldo en la nevera.", min: 35 },
+      { e: "🧅", t: "Hacer el sofrito", d: "Tritura los ajos con las alcaparras y ½ taza de caldo. En una olla grande (unos 12 litros, mejor de acero inoxidable) cocina el aceite con la cebolla, el ajo porro, el cebollín y la mezcla de ajo hasta que marchiten.", min: 15 },
+      { e: "🍅", t: "Sazonar el guiso", d: "Agrega el pimentón, el tomate, los ajíes, los encurtidos, el vino, el vinagre, la salsa inglesa, el papelón, el pimentón y el ají secos, la pimienta, la sal, las 2 tazas de caldo y la mostaza. Deja hervir.", min: 10 },
+      { e: "🥘", t: "Agregar las carnes", d: "Agrega el cochino y cocina 40 minutos. Luego la gallina, y cocina 30 a 40 minutos más revolviendo con cuidado para que no se desbarate. Prueba: la sazón debe quedar muy fuerte.", tt: "70 a 80 min" },
+      { e: "🌽", t: "Cuajar el guiso", d: "Enjuaga y escurre el maíz del día 1, muélelo fino y tritúralo con 1½ taza de caldo. Agrégalo al guiso y cocina a fuego lento, revolviendo, hasta que espese y quede solo 1–2 cm de líquido encima. Tapa con un paño y deja enfriar en un lugar fresco hasta el día siguiente.", min: 30 },
+      { e: "🥓", t: "Hacer la manteca", d: "Cocina el tocino picadito con 1½ taza de agua y la sal hasta que dore y ya no suelte grasa. Cuela, deja enfriar y guárdala tapada fuera de la nevera. Salen unas 5 tazas.", min: 30 },
+      { e: "🌽", t: "Cocinar el maíz de la masa", d: "Lava los 2¼ kg de maíz, cúbrelo con 10 cm de agua y hiérvelo hasta que ablande con el centro un poco duro. Quita ¼ a ⅓ del agua, completa con agua fría y déjalo tapado hasta el día siguiente.", tt: "25 a 28 min" },
+      { e: "🫑", t: "Preparar los adornos", d: "Hornea los pimentones untados en aceite a 180 °C (350 °F), dándoles vuelta; envuélvelos en un paño húmedo, pélalos y córtalos en tiras de 1 cm. Corta el tocino en tiritas de 4–5 cm. Pela las almendras escaldándolas unos segundos. Corta las cebollas en ruedas finas. Escurre alcaparras, aceitunas y encurtidos (en trocitos) y limpia las pasas. Guarda cada uno aparte en la nevera.", min: 50 },
+      { e: "🌽", t: "Día 3 · Moler el maíz", d: "Lava y escurre el maíz, quítale los picos y pedacitos oscuros, y muélelo con el molino bien apretado para que la masa quede muy fina." },
+      { e: "🟠", t: "Manteca con onoto", d: "Calienta 2 tazas de manteca con el onoto solo hasta que tome un color caramelo oscuro, sin quemarlo, y cuélala. Servirá para dar color a la masa y engrasar las hojas." },
+      { e: "👐", t: "Amasar", d: "Incorpora al maíz unas 3 tazas de manteca sin color, 1 taza con onoto (según el color que quieras) y la sal. Amasa, vuelve a pasar por el molino, agrega las 3 tazas de caldo y amasa hasta que quede suave y compacta. Cúbrela con un paño húmedo." },
+      { e: "🍃", t: "Preparar las hojas", d: "Clasifícalas en grandes (40 × 30 cm, para abajo y para la envoltura o camisa), medianas (20 × 25 cm, para las tapas) y fajas (10–15 cm de ancho). Lávalas, sécalas y engrasa con manteca de onoto el lado de los nervios marcados. Las fajas no se engrasan." },
+      { e: "🫓", t: "Extender la masa", d: "Pon una bola de masa de 5–7 cm en el centro de una hoja grande, cúbrela con un plástico grueso y aplástala con una tabla, girándola un poco, hasta un círculo de 1–2 mm. Para las tapas usa bolitas de 3–4 cm." },
+      { e: "🥘", t: "Rellenar", d: "Sobre la hoja con masa pon ½ taza de guiso frío y los adornos: 3 ruedas de cebolla, 2 tiras de pimentón, 2 de tocino, 2 aceitunas, 2 almendras, 4 alcaparras, 6 pasas y 4 o 5 trocitos de encurtido." },
+      { e: "🎁", t: "Cerrar y amarrar", d: "Tapa con una hoja pequeña con masa y presiona los bordes. Dobla los lados y los extremos hacia arriba, envuelve en la camisa y luego en la faja. Amarra con pabilo cruzándolo 3 veces en cada sentido, terminando en el centro. Si una hoja se rompe, añade otra para que no entre agua." },
+      { e: "♨️", t: "Hervir", d: "Mételas en agua hirviendo con sal, bien cubiertas y con trozos de hoja encima para que no floten. Tapa la olla.", tt: "1 h" },
+      { e: "❄️", t: "Escurrir y guardar", d: "Sácalas y déjalas escurrir sobre una superficie inclinada. Cuando enfríen, guárdalas en la nevera: duran hasta 4 semanas, aunque después de la segunda toman sabor a hoja." },
+      { e: "🍽️", t: "Calentar y servir", d: "Caliéntalas 15–20 minutos en agua hirviendo con sal y escúrrelas 1 minuto paradas; o envueltas en papel de aluminio, 30–35 minutos en el horno a 200 °C (400 °F); o al vapor. Desátalas, quita la faja y la camisa, corta los bordes de la hoja y sírvelas sobre su hoja." }
+    ],
+    video: ""
+  },
+  {
+    id: "hallacas-mama", titulo: "Hallacas de mamá", categoria: "Platos fuertes", de: "Memeyita",
+    plato: "🫔", color: "#dbe3c6", tiempoTexto: "2 días", dificultad: "Difícil",
+    descripcion: "Las hallacas del cuaderno de mamá: guiso de res, cochino y pollo, masa de harina PAN con onoto y sus adornos. Para 20 hallacas y 10 bollos.",
+    nota: "Del cuaderno de mamá. La hoja de los adornos está muy borrosa y algunas líneas son por confirmar. El cuaderno no explica cómo armar ni hervir las hallacas, ni en qué paso van la zanahoria y el vino. Donde dice “¼” sin unidad (alcaparras, aceitunas, pasas) seguramente es ¼ kg.",
+    ingredientes: [
+      { g: "La masa", e: "🌽", n: "Harina PAN (o 1 kg de masa preparada)", c: 2, u: "kg" },
+      { g: "Las hojas", e: "🍃", n: "Hojas limpias", c: 1, u: "paq" },
+      { g: "Las carnes", e: "🥩", n: "Carne de res, picada", c: 0.5, u: "kg" },
+      { e: "🐖", n: "Carne de cochino, picada", c: 0.5, u: "kg" },
+      { e: "🐔", n: "Pechuga sin hueso", c: 1, u: "" },
+      { e: "🥓", n: "Tocino (tocineta)", c: 0.25, u: "kg" },
+      { e: "🧈", n: "Mantequilla", c: 0.25, u: "kg" },
+      { e: "🐖", n: "Manteca de cochino", c: 0.125, u: "kg" },
+      { g: "Los vegetales y aliños", e: "🌿", n: "Compuesto (perejil y cilantro)", c: 1, u: "ramo" },
+      { e: "🟠", n: "Onoto", c: 0.5, u: "bolsita" },
+      { e: "🥒", n: "Encurtidos en mostaza", c: 1, u: "pote" },
+      { e: "🫛", n: "Alcaparras", c: 0.25, u: "kg" },
+      { e: "🫒", n: "Aceitunas rellenas", c: 0.25, u: "kg" },
+      { e: "🍇", n: "Pasas", c: 0.25, u: "kg" },
+      { e: "🍅", n: "Tomates", c: 1, u: "kg" },
+      { e: "🧅", n: "Cebollas", c: 0.5, u: "kg" },
+      { e: "🫑", n: "Pimentón rojo (2 para pelar, 3 para picar)", c: 0.5, u: "kg" },
+      { e: "🧄", n: "Ajo (cabeza y media)", c: 1.5, u: "cabeza" },
+      { e: "🥬", n: "Ajo porro", c: 1, u: "" },
+      { e: "🌱", n: "Cebollín", c: 0.5, u: "paq" },
+      { e: "🌶️", n: "Ajíes dulces", c: 6, u: "" },
+      { e: "🥕", n: "Zanahorias", c: 0.25, u: "kg" },
+      { e: "🍷", n: "Vino moscatel o tinto", c: 0.5, u: "botella" },
+      { e: "🧂", n: "Sal, pimienta, comino y ají picante o dulce", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🍃", t: "Día 1 · Preparar las hojas", d: "Lava las hojas y córtalas: unas de 50 × 50 cm, otras de 30 × 50 cm, y las fajas de 10 cm." },
+      { e: "🧅", t: "Picar los aliños", d: "Pica los aliños. Pon en agua tibia los ajos, las cebollas y el pimentón. Los anillos grandes de cebolla guárdalos para el adorno; el resto pícalo en trozos de unos 3 × 3 cm, y los centros úsalos para los aliños." },
+      { e: "🍅", t: "Preparar el tomate", d: "Pela y despepa los tomates, sácales el jugo (se bota) y pícalos en cuadritos." },
+      { e: "🫑", t: "Preparar el pimentón", d: "El pimentón para aliñar se pica en cuadritos. El del adorno se unta con manteca, se hornea y luego se pela; debe quedar rojo." },
+      { e: "🟠", t: "Hacer el sofrito", d: "Machaca los ajos en un mortero. Une el ajo, el pimentón y la cebolla con ¼ kg de manteca a la que antes le diste color con las semillas de onoto. Pásalo por la hornilla a fuego medio, sin cocinarlo mucho, solo hasta que la cebolla se ponga transparente. Aliña con sal, pimienta, comino y ají picante o dulce." },
+      { e: "🍲", t: "Ablandar las carnes", d: "Pon todas las carnes juntas en una olla grande (tocino, cochino, falda y gallina o pollo) con cebolla, pimentón, ajo, cebollín, compuesto y perejil. Ablándalas sin recocinar; el pollo estará antes. Sepáralas, selecciónalas y refrigéralas. Guarda el caldo aparte, y también la salsa de los aliños, separando una parte." },
+      { e: "👐", t: "Día 2 · Amasar", d: "Se amanece amasando: a la harina PAN agrégale la mitad del caldo, la manteca con onoto, la mantequilla, la sal y el comino." },
+      { e: "🔪", t: "Picar las carnes", d: "Pica las carnes. No mezcles la pechuga: es para adornar." },
+      { e: "🥘", t: "Hacer el guiso", d: "Vierte las carnes en la mitad del sofrito, únelas bien y agrégales más o menos la mitad del caldo, comino y alcaparras. Dale un hervor y prueba la sazón. Para darle más consistencia puedes diluir en el guiso una pelota de masa." },
+      { e: "🥄", t: "Salsita para los adornos", d: "Aparta 2 o 3 cucharones de sofrito y mézclalos con manteca con onoto para hacer una salsita para los adornos." }
+    ],
+    extras: [{ titulo: "Adornos por hallaca (hoja borrosa, por confirmar)", items: [
+      { e: "🥘", d: "1 cucharón de guiso." },
+      { e: "🐔", d: "1 tira de pechuga." },
+      { e: "🫒", d: "2 aceitunas rellenas." },
+      { e: "🫛", d: "2 alcaparras." },
+      { e: "🧅", d: "1 rodaja de cebolla." },
+      { e: "🫑", d: "1 tira de pimentón." },
+      { e: "🥒", d: "Encurtidos (4 o 5 pedacitos)." },
+      { e: "🥄", d: "1 cucharadita de la salsita de sofrito." },
+      { e: "🍇", d: "6 pasas." }
+    ]}],
+    video: ""
+  },
+  {
+    id: "bollos-pelones", titulo: "Bollos pelones", categoria: "Platos fuertes", de: "Memeyita",
+    plato: "🧆", color: "#ecd9b4", dificultad: "Media",
+    descripcion: "Bolitas de masa con comino y onoto, rellenas de un guiso de carne bien picadita.",
+    nota: "Del cuaderno de mamá. No dice cómo se cocinan los bollos ya rellenos.",
+    ingredientes: [
+      { g: "La masa", e: "🌽", n: "Masa (2 o 3 pelotitas)", c: null, u: "sin medida" },
+      { e: "🌿", n: "Comino (un punto)", c: null, u: "al gusto" },
+      { e: "🟠", n: "Onoto, para el color", c: null, u: "al gusto" },
+      { e: "🧈", n: "Mantequilla", c: null, u: "sin medida" },
+      { e: "🟡", n: "Mostaza (un punto)", c: null, u: "al gusto" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" },
+      { g: "El guiso", e: "🥩", n: "Carne, bien picadita", c: null, u: "sin medida" },
+      { e: "🧅", n: "Cebolla", c: null, u: "sin medida" },
+      { e: "🫑", n: "Pimentón", c: null, u: "sin medida" },
+      { e: "🧄", n: "Ajo", c: null, u: "sin medida" },
+      { e: "🍅", n: "Tomate", c: null, u: "sin medida" },
+      { e: "🌿", n: "Comino y adobo", c: null, u: "al gusto" },
+      { e: "🍞", n: "Bizcocho, si el guiso queda aguado", c: null, u: "sin medida" }
+    ],
+    pasos: [
+      { e: "🥘", t: "Hacer el guiso", d: "Pica la carne bien menudita y agrégale cebolla, pimentón, ajo, tomate, comino y adobo. Sofríe y cocina la carne. Si queda aguado, añade bizcocho." },
+      { e: "👐", t: "Preparar la masa", d: "A la masa ponle un punto de comino, el onoto para el color y mantequilla, de modo que quede durita. Mientras amasas, añade un punto de mostaza y la sal." },
+      { e: "⚪", t: "Formar las bolitas", d: "Haz bolitas de unos 5 cm de diámetro." },
+      { e: "🥟", t: "Rellenar y tapar", d: "Rellena cada bolita con el guiso y ciérrala." }
+    ],
+    video: ""
+  },
+  {
+    id: "carne-mechada", titulo: "Carne mechada", categoria: "Platos fuertes", de: "Memeyita",
+    plato: "🥩", color: "#e3c7aa", tiempoTexto: "Unos 45 min", dificultad: "Fácil",
+    descripcion: "Falda cocinada en olla de presión con los aliños, mechada y guisada con su propio consomé.",
+    nota: "Del cuaderno de mamá. La carne se cocina en el consomé con los aliños para aprovecharlo después.",
+    ingredientes: [
+      { e: "🥩", n: "Falda", c: 0.5, u: "kg" },
+      { e: "🧅", n: "Aliños (cebolla, pimentón, ajo, ají dulce)", c: null, u: "sin medida" },
+      { e: "🌿", n: "Comino", c: null, u: "al gusto" },
+      { e: "🧄", n: "Ajo", c: null, u: "al gusto" },
+      { e: "🧂", n: "Adobo completo", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "♨️", t: "Olla de presión", d: "Pon la carne en la olla de presión con todos los aliños, para aprovechar el consomé. Cuenta media hora después de que empiece a sonar el pitico.", tt: "30 min" },
+      { e: "🔪", t: "Picar los aliños", d: "Vuelve a picar los aliños, ahora en cuadritos." },
+      { e: "🥩", t: "Mechar", d: "Mecha la carne y límpiala." },
+      { e: "🥘", t: "Guisar", d: "Agrégale los aliños, el comino, el ajo y el adobo completo, y ponla a cocinar con un poquito del consomé." }
+    ],
+    video: ""
+  },
+  {
+    id: "polenta", titulo: "Polenta", categoria: "Platos fuertes", de: "Memeyita",
+    plato: "🥧", color: "#f0dca6", porciones: 8, tiempoTexto: "Unas 2 h 30 min", dificultad: "Media",
+    descripcion: "Pastel horneado de masa de maíz dulce, relleno de un guiso de cochino y pollo con aceitunas, pasas y alcaparras.",
+    nota: "De una hoja suelta del cuaderno de mamá. No dice para cuántas personas es: las porciones son aproximadas.",
+    ingredientes: [
+      { g: "La masa", e: "🌽", n: "Harina de maíz Juana o similar", c: 3, u: "taza" },
+      { e: "🥚", n: "Huevo entero", c: 1, u: "" },
+      { e: "🥚", n: "Yemas", c: 4, u: "" },
+      { e: "🧈", n: "Mantequilla", c: 5, u: "cdta" },
+      { e: "🍬", n: "Azúcar", c: 1 / 3, u: "taza" },
+      { e: "🥛", n: "Leche", c: 2.25, u: "taza" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" },
+      { e: "🍷", n: "Vino", c: 1, u: "chorrito" },
+      { g: "El guiso", e: "🐖", n: "Cochino", c: 0.5, u: "kg" },
+      { e: "🐔", n: "Pechugas de pollo", c: 2, u: "" },
+      { e: "🧈", n: "Mantequilla", c: 2, u: "cdta" },
+      { e: "🫒", n: "Aceite", c: 2, u: "cda" },
+      { e: "🍷", n: "Vino, mejor blanco", c: 0.5, u: "taza" },
+      { e: "🫒", n: "Aceitunas pequeñas", c: 1, u: "frasquito" },
+      { e: "🧄", n: "Ajo molido", c: 0.5, u: "cdta" },
+      { e: "🍅", n: "Tomates perita", c: 6, u: "" },
+      { e: "🧅", n: "Cebolla grande", c: 1, u: "" },
+      { e: "🍇", n: "Pasas", c: 1, u: "copita" },
+      { e: "🫛", n: "Alcaparras", c: 0.5, u: "cda" },
+      { e: "💧", n: "Agua caliente", c: 1.5, u: "taza" },
+      { g: "Para armar", e: "🧈", n: "Mantequilla para el molde", c: null, u: "sin medida" },
+      { e: "🍬", n: "Azúcar para espolvorear", c: null, u: "un poco" }
+    ],
+    pasos: [
+      { e: "👐", t: "Hacer la masa", d: "Mezcla los ingredientes de la masa y trabájala hasta que esté bien suave." },
+      { e: "🐔", t: "Cocinar el pollo", d: "Sofríe el pollo en la mantequilla y el aceite, y desmenúzalo." },
+      { e: "🐖", t: "Dorar el cochino", d: "Dora el cochino." },
+      { e: "🍅", t: "Hacer el guiso", d: "Tritura la cebolla, el tomate y las alcaparras, y únelos a las carnes hasta que se cocinen. Luego agrega el resto de los ingredientes del guiso." },
+      { e: "🥧", t: "Armar", d: "Enmantequilla el molde y cúbrelo con masa. Rellena con el guiso, tapa con más masa y espolvorea un poquito de azúcar por encima." },
+      { e: "🔥", t: "Hornear", d: "Hornea a 180 °C (350 °F).", tt: "1 h 15 min" }
+    ],
+    video: ""
+  },
+  {
+    id: "quibe", titulo: "Quibe", categoria: "Cocina árabe", de: "Memeyita",
+    plato: "🧆", color: "#e6d0b4", dificultad: "Media",
+    descripcion: "Quibe frito de carne de res y cochino con trigo, hierbas y mucha canela.",
+    nota: "De una hoja suelta del cuaderno de mamá. El huevo solo se usa si el quibe es frito.",
+    ingredientes: [
+      { e: "🥩", n: "Carne de res molida", c: 0.5, u: "kg" },
+      { e: "🐖", n: "Carne de cochino molida", c: 0.5, u: "kg" },
+      { e: "🧅", n: "Cebolla", c: 1, u: "" },
+      { e: "🧄", n: "Ajo", c: null, u: "al gusto" },
+      { e: "🌿", n: "Albahaca", c: null, u: "al gusto" },
+      { e: "🍃", n: "Yerbabuena", c: null, u: "al gusto" },
+      { e: "🟤", n: "Canela (mucha)", c: null, u: "al gusto" },
+      { e: "🌾", n: "Trigo", c: 1, u: "taza" },
+      { e: "🥚", n: "Huevo (si es frito)", c: 1, u: "" },
+      { e: "🌾", n: "Harina", c: null, u: "un poco" }
+    ],
+    pasos: [
+      { e: "🥩", t: "Adobar la carne", d: "Adoba la carne con la cebolla, el ajo, las hierbas y la canela." },
+      { e: "🌾", t: "Remojar el trigo", d: "Lava bien el trigo y déjalo remojando.", tt: "1 h" },
+      { e: "🌀", t: "Mezclar", d: "Mezcla la carne con el trigo, el huevo y un poquito de harina." },
+      { e: "🍳", t: "Freír", d: "Forma los quibes y fríelos. Si quieres, rellénalos con piñones y cebolla frita." }
+    ],
+    video: ""
+  },
+  {
+    id: "labin", titulo: "Labin (yogur y queso de yogur)", categoria: "Cocina árabe", de: "Memeyita",
+    plato: "🥛", color: "#eef0ea", dificultad: "Fácil",
+    descripcion: "Yogur casero blandito y, si se escurre, labin para untar con aceite y sal.",
+    nota: "De una hoja suelta del cuaderno de mamá. No dice cuánto tiempo hay que dejarlo cuajar ni escurrir.",
+    ingredientes: [
+      { e: "🥛", n: "Leche", c: 1, u: "l" },
+      { e: "🥣", n: "Yogur natural", c: 0.5, u: "pote" },
+      { e: "🫒", n: "Aceite (para el labin escurrido)", c: null, u: "al gusto" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🔥", t: "Calentar la leche", d: "Calienta la leche sin que llegue a hervir y déjala reposar un poco." },
+      { e: "🥣", t: "Agregar el yogur", d: "Échale el medio pote de yogur y mezcla." },
+      { e: "🧺", t: "Dejar cuajar", d: "Tápalo con un trapo y déjalo en un sitio medio caliente, sin moverlo. Así queda un labin blandito, como un yogur." },
+      { e: "🧻", t: "Escurrir (labin)", d: "Para un labin más firme, pon la mezcla cuajada sobre una servilleta de hilo, sin estrujar, y déjala hasta que bote toda el agua." },
+      { e: "🫒", t: "Terminar", d: "Ve echándole aceite poco a poco, con sal." }
+    ],
+    extras: [{ titulo: "Para acompañar", items: [
+      { e: "🫒", t: "Aceitunas negras", d: "Con limón y hojas de orégano." }
+    ]}],
+    video: ""
+  },
+  {
+    id: "cremas-rapidas", titulo: "Tres cremas para untar", categoria: "Cocina árabe", de: "Memeyita",
+    plato: "🫘", color: "#ead9bf", dificultad: "Fácil",
+    descripcion: "Versiones rápidas, todo a la licuadora: crema de garbanzos, de pimentón y de berenjena.",
+    nota: "Del cuaderno de mamá, anotadas de la cuenta de TikTok “Recetitas” (28-2-26).",
+    ingredientes: [
+      { g: "Crema de garbanzos", e: "🫘", n: "Garbanzos cocidos", c: 3, u: "taza" },
+      { e: "🥄", n: "Tahini", c: 1, u: "cda" },
+      { e: "🌿", n: "Comino", c: 0.5, u: "cdta" },
+      { e: "🍋", n: "Limones (el jugo)", c: 2, u: "" },
+      { e: "🧄", n: "Ajo, dientes grandes", c: 3, u: "diente" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" },
+      { g: "Crema de pimentón", e: "🫑", n: "Pimentones asados y pelados", c: 3, u: "" },
+      { e: "🌿", n: "Comino", c: 0.5, u: "cda" },
+      { e: "🍯", n: "Endulzante", c: 1, u: "cda" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" },
+      { e: "🌰", n: "Nueces (un puñado)", c: 60, u: "g" },
+      { e: "🍞", n: "Pan rallado, para espesar", c: null, u: "un poco" },
+      { g: "Crema de berenjena", e: "🍆", n: "Berenjenas asadas", c: 2, u: "" },
+      { e: "🍋", n: "Limón (el jugo)", c: 1, u: "" },
+      { e: "🥣", n: "Yogur griego", c: 2, u: "cda" },
+      { e: "🥄", n: "Tahini", c: 1, u: "cda" },
+      { e: "🧄", n: "Ajo", c: 3, u: "diente" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🌀", t: "Licuar", d: "Pon los ingredientes de cada crema en la licuadora, por separado, y licúa hasta que quede suave. A la de pimentón añádele pan rallado si hace falta espesarla." },
+      { e: "🍽️", t: "Emplatar", d: "Sirve cada crema en su plato." },
+      { e: "🫒", t: "Decorar", d: "Decora con un chorrito de aceite de oliva." }
+    ],
+    video: ""
+  },
+  {
+    id: "sopa-ajoporro", titulo: "Sopa de ajo porro", categoria: "Sopas", de: "Memeyita",
+    plato: "🥣", color: "#e3e8cf", dificultad: "Fácil",
+    descripcion: "Sopa sencilla de ajo porro sofrito en mantequilla y harina, con consomé.",
+    nota: "Del cuaderno de mamá, que no trae cantidades.",
+    ingredientes: [
+      { e: "🥬", n: "Ajo porro", c: null, u: "sin medida" },
+      { e: "🧈", n: "Mantequilla", c: null, u: "sin medida" },
+      { e: "🌾", n: "Harina", c: null, u: "sin medida" },
+      { e: "🍲", n: "Consomé", c: null, u: "sin medida" }
+    ],
+    pasos: [
+      { e: "🔪", t: "Picar", d: "Pica el ajo porro en rueditas." },
+      { e: "🧈", t: "Sofreír", d: "Sofríelo en mantequilla y harina." },
+      { e: "🍲", t: "Hervir con consomé", d: "Añade el consomé y deja que hierva para que tome gusto." }
+    ],
+    video: ""
+  },
+  {
+    id: "crema-marisco", titulo: "Crema de marisco", categoria: "Sopas", de: "Memeyita",
+    plato: "🦐", color: "#f2d6c4", dificultad: "Fácil",
+    descripcion: "Crema de camarones con jerez, yemas y crema espesa.",
+    nota: "Recorte de revista pegado en el cuaderno de mamá. En lugar de camarones puedes usar cangrejo o langosta.",
+    ingredientes: [
+      { e: "🧅", n: "Cebolla picadita", c: 1, u: "taza" },
+      { e: "🧈", n: "Mantequilla", c: 2, u: "cda" },
+      { e: "🌾", n: "Harina", c: 2, u: "cda" },
+      { e: "🥫", n: "Consomé de pollo (latas de 385 g)", c: 2, u: "lata" },
+      { e: "🍷", n: "Jerez", c: 0.25, u: "taza" },
+      { e: "🥚", n: "Yemas de huevo, batidas", c: 4, u: "" },
+      { e: "🦐", n: "Camarones congelados", c: 225, u: "g" },
+      { e: "🥛", n: "Crema espesa", c: 1, u: "taza" },
+      { e: "🌿", n: "Perejil, para decorar", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🧅", t: "Saltear la cebolla", d: "En una cacerola, saltea la cebolla con la mantequilla." },
+      { e: "🌾", t: "Agregar la harina", d: "Añade la harina y revuelve.", min: 1 },
+      { e: "🍲", t: "Añadir el consomé", d: "Vierte el consomé poco a poco, revolviendo, y deja que hierva. Agrega el jerez." },
+      { e: "🥚", t: "Templar las yemas", d: "Mezcla un poco de ese caldo caliente con las yemas batidas y vuelve a echarlas en la cacerola." },
+      { e: "🦐", t: "Camarones y crema", d: "Agrega los camarones descongelados y la crema. Calienta bien, pero sin que hierva." },
+      { e: "🌿", t: "Servir", d: "Sirve enseguida, con perejil por encima." }
+    ],
+    video: ""
+  },
+  {
+    id: "gazpacho", titulo: "Gazpacho", categoria: "Sopas", de: "Memeyita",
+    plato: "🍅", color: "#f3c9b8", dificultad: "Fácil",
+    descripcion: "Sopa fría de tomate y cebolla licuados, con ajo, vinagre y pepino.",
+    nota: "De una hoja suelta del cuaderno de mamá. Solo dice que la cebolla y los tomates se trituran en la licuadora; los pasos siguientes son el orden lógico.",
+    ingredientes: [
+      { e: "🧅", n: "Cebolla grande", c: 1, u: "" },
+      { e: "🍅", n: "Tomates perita maduros, sin la piel", c: 6, u: "" },
+      { e: "🫒", n: "Aceite", c: null, u: "al gusto" },
+      { e: "🌿", n: "Perejil picadito", c: null, u: "al gusto" },
+      { e: "🫙", n: "Vinagre", c: null, u: "al gusto" },
+      { e: "💧", n: "Agua caliente", c: 1, u: "taza" },
+      { e: "🍶", n: "Salsa inglesa (unas goticas)", c: null, u: "al gusto" },
+      { e: "⚪", n: "Pimienta blanca", c: null, u: "al gusto" },
+      { e: "🧄", n: "Ajo triturado", c: 3, u: "diente" },
+      { e: "🫑", n: "Pimentón rallado por el lado grueso", c: null, u: "al gusto" },
+      { e: "🥒", n: "Pepinos en ruedas", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🌀", t: "Licuar", d: "Tritura la cebolla y los tomates en la licuadora." },
+      { e: "🥣", t: "Sazonar", d: "Agrega el aceite, el perejil, el vinagre, el agua caliente, unas goticas de salsa inglesa, la pimienta blanca, el ajo y el pimentón rallado." },
+      { e: "🥒", t: "Servir", d: "Sírvelo con los pepinos en ruedas." }
+    ],
+    video: ""
+  },
+  {
+    id: "arroz-chino", titulo: "Arroz chino", categoria: "Acompañantes", de: "Memeyita",
+    plato: "🍚", color: "#efe0b8", dificultad: "Fácil",
+    descripcion: "Arroz con jamón, cebollín, tortilla en cuadritos, raicillas y salsa de soya.",
+    nota: "Del cuaderno de mamá. El arroz se cocina sin sal, porque la salsa de soya ya sala.",
+    ingredientes: [
+      { e: "🍚", n: "Arroz, cocido sin sal", c: 3, u: "taza" },
+      { e: "🍖", n: "Jamón", c: 0.25, u: "kg" },
+      { e: "🌱", n: "Cebollín", c: 1, u: "paq" },
+      { e: "🥚", n: "Huevos (para 1 tortilla)", c: 2, u: "" },
+      { e: "🌱", n: "Raicillas (brotes de soya)", c: 1, u: "paq" },
+      { e: "🍶", n: "Salsa de soya", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🍚", t: "Cocinar el arroz", d: "Cocina el arroz sin sal." },
+      { e: "🍳", t: "Hacer la tortilla", d: "Haz una tortilla con los huevos y pícala en cuadritos." },
+      { e: "🌱", t: "Sancochar las raicillas", d: "Sancocha las raicillas y escúrrelas." },
+      { e: "🍖", t: "Sofreír", d: "Sofríelas junto con el jamón y el cebollín picadito." },
+      { e: "🥢", t: "Unir", d: "Une todo con el arroz y la tortilla, y sazona con salsa de soya." }
+    ],
+    video: ""
+  },
+  {
+    id: "carbonara", titulo: "Pasta a la carbonara", categoria: "Pastas y salsas", de: "Memeyita",
+    plato: "🍝", color: "#f1e2b9", dificultad: "Fácil",
+    descripcion: "La carbonara de la casa, con crema de leche, yemas, parmesano, tocineta y cebolla.",
+    nota: "De una hoja suelta del cuaderno de mamá. Ojo: dice que la pimienta va con cuidado y que ella no le echaría ajo.",
+    ingredientes: [
+      { g: "La salsa (se bate)", e: "🥛", n: "Crema de leche (mejor Avoset)", c: 2, u: "pote" },
+      { e: "🥚", n: "Yemas de huevo", c: 6, u: "" },
+      { e: "🧀", n: "Queso parmesano", c: null, u: "al gusto" },
+      { e: "⚫", n: "Pimienta (con cuidado)", c: null, u: "al gusto" },
+      { e: "🌿", n: "Perejil picado", c: null, u: "al gusto" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" },
+      { g: "Se fríe", e: "🥓", n: "Tocineta (paquete grande)", c: 1, u: "paq" },
+      { e: "🧅", n: "Cebolla grande, en ruedas delgadas", c: 1, u: "" },
+      { e: "🧄", n: "Ajo (opcional: ella no le echaría)", c: null, u: "al gusto" },
+      { g: "La pasta", e: "🍝", n: "Pasta, cocida y algo duroncita", c: null, u: "sin medida" }
+    ],
+    pasos: [
+      { e: "🥣", t: "Batir la salsa", d: "Bate la crema de leche con las yemas, el parmesano, la pimienta, el perejil y la sal." },
+      { e: "🥓", t: "Freír", d: "Fríe la tocineta con la cebolla en ruedas (y el ajo, si lo usas)." },
+      { e: "🍝", t: "Agregar la pasta", d: "Cuando la cebolla esté dorada, echa la pasta, cocida y algo duroncita, y déjala freír un poquito revolviendo bien." },
+      { e: "🔥", t: "Apagar y añadir la salsa", d: "Apaga el fuego y échale la salsa." }
+    ],
+    video: ""
+  },
+  {
+    id: "pesto", titulo: "Pesto", categoria: "Pastas y salsas", de: "Memeyita",
+    plato: "🌿", color: "#d5e5c5", dificultad: "Fácil",
+    descripcion: "El pesto de la casa, con nueces y un toque de mayonesa.",
+    nota: "De una hoja suelta del cuaderno de mamá. Las avellanas están tachadas y cambiadas por nueces.",
+    ingredientes: [
+      { e: "🌰", n: "Nueces", c: null, u: "al gusto" },
+      { e: "🌿", n: "Albahaca", c: null, u: "al gusto" },
+      { e: "🥚", n: "Mayonesa", c: null, u: "al gusto" },
+      { e: "🧄", n: "Ajo", c: null, u: "al gusto" },
+      { e: "🧀", n: "Queso parmesano", c: null, u: "al gusto" },
+      { e: "🌱", n: "Perejil", c: null, u: "al gusto" },
+      { e: "🧂", n: "Sal", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🌀", t: "Triturar", d: "Tritura todos los ingredientes juntos." }
+    ],
+    video: ""
+  },
+  {
+    id: "tempura", titulo: "Tempura", categoria: "Pasapalos", de: "Memeyita",
+    plato: "🍤", color: "#f4e3b5", dificultad: "Fácil",
+    descripcion: "Masa para tempura con cerveza helada. Según el cuaderno: “Es excelente, ya lo probé”.",
+    nota: "Del cuaderno de mamá. Puedes usar agua en lugar de cerveza.",
+    ingredientes: [
+      { e: "🌾", n: "Harina", c: 65, u: "g" },
+      { e: "🌽", n: "Maicena", c: 65, u: "g" },
+      { e: "🍺", n: "Cerveza helada o agua", c: 160, u: "ml" },
+      { e: "🥚", n: "Yema de huevo", c: 1, u: "" }
+    ],
+    pasos: [
+      { e: "🥣", t: "Mezclar", d: "Mezcla todos los ingredientes." },
+      { e: "⏳", t: "Reposar", d: "Deja reposar la masa antes de usarla.", min: 15 }
+    ],
+    video: ""
+  },
+  {
+    id: "galletas-parmesano", titulo: "Galletas de parmesano", categoria: "Pasapalos", de: "Memeyita",
+    plato: "🧀", color: "#f3e2ad", dificultad: "Fácil",
+    descripcion: "Galletas saladas de parmesano, hechas con manga o galletera.",
+    nota: "Del cuaderno de mamá, que la anotó como receta de Kristina Wetter.",
+    ingredientes: [
+      { e: "🧈", n: "Mantequilla", c: 110, u: "g" },
+      { e: "🧀", n: "Queso parmesano", c: 2, u: "taza" },
+      { e: "🌾", n: "Harina de trigo", c: 1, u: "taza" }
+    ],
+    pasos: [
+      { e: "🔥", t: "Preparar", d: "Precalienta el horno a 175 °C (350 °F) y prepara una bandeja con spray antiadherente." },
+      { e: "🧈", t: "Batir", d: "Bate la mantequilla hasta que esté cremosa e incorpora el parmesano." },
+      { e: "🌾", t: "Agregar la harina", d: "Incorpora la harina y sigue batiendo hasta que se forme la masa: estará lista cuando se despegue de las paredes del recipiente." },
+      { e: "🍪", t: "Formar", d: "Llena la manga o la galletera con tu disco favorito y forma las galletas sobre la bandeja." },
+      { e: "🔥", t: "Hornear", d: "Hornéalas hasta que estén doraditas." }
+    ],
+    video: ""
+  },
+  {
+    id: "galletas-maicena", titulo: "Galletas de maicena para Navidad", categoria: "Dulces", de: "Memeyita",
+    plato: "🍪", color: "#f2e6c9", dificultad: "Fácil",
+    descripcion: "Galletas de maicena que se deshacen en la boca, hechas con manga.",
+    nota: "Del cuaderno de mamá. El tiempo depende de tu horno.",
+    ingredientes: [
+      { e: "🧈", n: "Mantequilla", c: 0.25, u: "kg" },
+      { e: "🍬", n: "Azúcar", c: 100, u: "g" },
+      { e: "🌽", n: "Maicena", c: 450, u: "g" },
+      { e: "🥚", n: "Yemas", c: 4, u: "" },
+      { e: "🥄", n: "Polvo de hornear", c: 1, u: "cdta" }
+    ],
+    pasos: [
+      { e: "🧈", t: "Cremar", d: "Bate la mantequilla con el azúcar hasta que esté cremosa." },
+      { e: "🥚", t: "Agregar las yemas", d: "Añade las yemas una a una, batiendo bien." },
+      { e: "🌽", t: "Agregar la maicena", d: "Por último agrega la maicena cernida con el polvo de hornear y revuelve bien." },
+      { e: "🍪", t: "Formar", d: "Pon la masa en una manga de boca grande y ve formando las galletas sobre bandejas engrasadas." },
+      { e: "🔥", t: "Hornear", d: "Hornea a 160 °C.", tt: "15 a 18 min" }
+    ],
+    video: ""
+  },
+  {
+    id: "pasta-seca", titulo: "Galletas tipo pasta seca", categoria: "Dulces", de: "Memeyita",
+    plato: "🍪", color: "#f3ddc3", dificultad: "Fácil",
+    descripcion: "Galletas de mantequilla con limón y vainilla, decoradas con chispitas de colores.",
+    nota: "Del cuaderno de mamá, anotada de TikTok de Isabel Otero (11-03). En la lista dice 1 cdta de vainilla y ralladura de limón, y en la preparación dice 1 cda de vainilla y 1 cda de jugo de limón.",
+    ingredientes: [
+      { e: "🥚", n: "Huevos", c: 3, u: "" },
+      { e: "🌾", n: "Harina todo uso", c: 0.5, u: "kg" },
+      { e: "🍬", n: "Azúcar", c: 0.25, u: "kg" },
+      { e: "🧈", n: "Mantequilla", c: 0.25, u: "kg" },
+      { e: "🍶", n: "Vainilla", c: 1, u: "cdta" },
+      { e: "🍋", n: "Ralladura de limón", c: 1, u: "limón" },
+      { e: "🥄", n: "Polvo Royal", c: 1, u: "cda" },
+      { e: "💧", n: "Agua fría", c: 1, u: "cda" },
+      { e: "🌈", n: "Chispitas de colores", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🧈", t: "Mantequilla y azúcar", d: "Mezcla la mantequilla con el azúcar, revolviendo." },
+      { e: "🥚", t: "Huevos", d: "Agrega los huevos uno por uno." },
+      { e: "🌾", t: "Preparar la harina", d: "Mezcla el polvo Royal con la harina." },
+      { e: "🍋", t: "Sabores", d: "Añade la vainilla, el limón y la cucharada de agua fría." },
+      { e: "🥣", t: "Agregar la harina", d: "Incorpora la harina poco a poco." },
+      { e: "🔥", t: "Hornear", d: "Forma las galletas en una bandeja enmantequillada y enharinada, decóralas con chispitas de colores y hornéalas a temperatura media.", tt: "15 min" }
+    ],
+    extras: [{ titulo: "Versión II (Mariana Castillo, TikTok)", items: [
+      { e: "🧈", t: "Ingredientes", d: "250 g de mantequilla (1 taza + 1 cda), 500 g de harina leudante (3½ tazas menos 2 cdas), 2 huevos, 250 g de azúcar (1¼ taza) y 1 cda de vainilla." },
+      { e: "📝", t: "Preparación", d: "Se procede igual que la receta anterior." }
+    ]}],
+    video: ""
+  },
+  {
+    id: "chip-cookies", titulo: "Galletas con chispas de chocolate", categoria: "Dulces", de: "Memeyita",
+    plato: "🍪", color: "#e8d1b5", tiempoTexto: "14 min de horno", dificultad: "Fácil",
+    descripcion: "Las clásicas chocolate chip cookies, con azúcar morena y mucha chispa.",
+    nota: "Del cuaderno de mamá, anotada de TikTok de Noor Waked (28-2-26). Los ingredientes deben estar a temperatura ambiente.",
+    ingredientes: [
+      { e: "🧈", n: "Mantequilla (2 barras)", c: 225, u: "g" },
+      { e: "🟫", n: "Azúcar morena", c: 1, u: "taza" },
+      { e: "🍬", n: "Azúcar blanca", c: 0.5, u: "taza" },
+      { e: "🥚", n: "Huevo", c: 1, u: "" },
+      { e: "🍶", n: "Vainilla", c: 2, u: "cda" },
+      { e: "🌾", n: "Harina todo uso", c: 2, u: "taza" },
+      { e: "🥄", n: "Polvo de hornear", c: 0.5, u: "cdta" },
+      { e: "🥄", n: "Bicarbonato", c: 0.5, u: "cdta" },
+      { e: "🧂", n: "Sal", c: 1, u: "pizca" },
+      { e: "🍫", n: "Chispas de chocolate", c: 2, u: "taza" }
+    ],
+    pasos: [
+      { e: "🧈", t: "Blanquear la mantequilla", d: "Bate la mantequilla con un batidor hasta que se ponga clara." },
+      { e: "🍬", t: "Agregar el azúcar", d: "Agrega los azúcares e integra todo." },
+      { e: "🥚", t: "Huevo y vainilla", d: "Añade el huevo y la vainilla, e integra." },
+      { e: "🌾", t: "Secos", d: "Agrega la harina, el bicarbonato, el polvo de hornear y la sal." },
+      { e: "🍫", t: "Chispas", d: "Añade las chispas de chocolate." },
+      { e: "🔥", t: "Hornear", d: "Hornea a 190 °C (375 °F). Al sacarlas, puedes emparejarlas con un cortador redondo.", min: 14 }
+    ],
+    video: ""
+  },
+  {
+    id: "cerezas-flambe", titulo: "Cerezas flambé", categoria: "Dulces", de: "Memeyita",
+    plato: "🍒", color: "#f1cdcd", dificultad: "Media",
+    descripcion: "Cerezas en un caramelo de mantequilla con cítricos, flameadas con coñac y servidas sobre helado de vainilla.",
+    nota: "Recorte de revista pegado en el cuaderno de mamá. Al flamear, aparta la cara y ten una tapa a mano.",
+    ingredientes: [
+      { e: "🍒", n: "Cerezas en lata, sin semillas y escurridas", c: 1, u: "lata" },
+      { e: "🍒", n: "Jugo de las cerezas", c: 1, u: "taza" },
+      { e: "🍬", n: "Azúcar", c: 0.5, u: "taza" },
+      { e: "🧈", n: "Mantequilla", c: 2, u: "cda" },
+      { e: "🍋", n: "Limón (el jugo)", c: 1, u: "" },
+      { e: "🍊", n: "Naranja (el jugo)", c: 1, u: "" },
+      { e: "🥃", n: "Kirsch o licor de cereza", c: 4, u: "cda" },
+      { e: "🥃", n: "Coñac", c: 2, u: "cda" },
+      { e: "🍨", n: "Helado de vainilla y galletitas", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🍯", t: "Dorar el azúcar", d: "En una sartén de fondo grueso, mezcla el azúcar con la mantequilla hasta que esté dorada." },
+      { e: "🍊", t: "Agregar los jugos", d: "Añade el jugo de limón, el de naranja y el de cereza, y cocina hasta que la mezcla esté suave." },
+      { e: "🍒", t: "Cerezas y kirsch", d: "Añade las cerezas y el kirsch, y calienta unos minutos más." },
+      { e: "🔥", t: "Flamear", d: "Vierte el coñac y enciéndelo." },
+      { e: "🍨", t: "Servir", d: "Sirve sobre bolas de helado de vainilla, con galletitas." }
     ],
     video: ""
   },
@@ -1026,6 +1778,360 @@ const REMEDIOS = [
    ing: nombres en el mismo orden ("Grupo::Nombre" cuando empieza un grupo)
    pasos: [título, texto, tiempo opcional]   extras: [título, [[título, texto], ...]] */
 const TR_EN = {
+  "hallacas-mama": {
+    titulo: "Mum's hallacas", tiempoTexto: "2 days",
+    descripcion: "The hallacas from mum's notebook: beef, pork and chicken stew, Harina PAN dough with annatto, and the garnishes. Makes 20 hallacas and 10 bollos.",
+    nota: "From mum's notebook. The garnish page is very faded and some lines need confirming. The notebook doesn't explain how to assemble or boil the hallacas, or when the carrot and wine go in. Where it says “¼” with no unit (capers, olives, raisins) it's probably ¼ kg.",
+    ing: ["The dough::Harina PAN (or 1 kg of ready-made corn dough)", "The leaves::Clean banana leaves", "The meats::Beef, chopped", "Pork, chopped", "Boneless chicken breast", "Bacon", "Butter", "Lard", "Vegetables and seasonings::Parsley and coriander", "Annatto (onoto)", "Mustard pickles", "Capers", "Stuffed olives", "Raisins", "Tomatoes", "Onions", "Red capsicum (2 to peel, 3 to chop)", "Garlic (a head and a half)", "Leek", "Spring onion", "Ají dulce (sweet peppers)", "Carrots", "Muscat or red wine", "Salt, pepper, cumin and hot or sweet chilli"],
+    pasos: [
+      ["Day 1 · Prepare the leaves", "Wash the leaves and cut them: some 50 × 50 cm, others 30 × 50 cm, and the strips 10 cm wide."],
+      ["Chop the seasonings", "Chop the seasonings. Put the garlic, onions and capsicum in warm water. Keep the large onion rings for the garnish; chop the rest into pieces of about 3 × 3 cm, and use the centres for the seasoning."],
+      ["Prepare the tomato", "Peel and seed the tomatoes, squeeze out the juice (discard it) and dice them."],
+      ["Prepare the capsicum", "The capsicum for seasoning is diced. The one for the garnish is brushed with lard, roasted and peeled; it should stay red."],
+      ["Make the sofrito", "Crush the garlic in a mortar. Combine the garlic, capsicum and onion with ¼ kg of lard you've first coloured with the annatto seeds. Cook over medium heat, not for long, just until the onion turns translucent. Season with salt, pepper, cumin and hot or sweet chilli."],
+      ["Simmer the meats", "Put all the meats together in a large pot (bacon, pork, beef and hen or chicken) with onion, capsicum, garlic, spring onion and herbs. Cook until tender without overcooking; the chicken will be ready first. Separate, sort and refrigerate them. Keep the broth, and the seasoning sauce, setting part of it aside."],
+      ["Day 2 · Knead", "Start the day kneading: to the Harina PAN add half the broth, the annatto lard, butter, salt and cumin."],
+      ["Chop the meats", "Chop the meats. Don't mix in the chicken breast: it's for the garnish."],
+      ["Make the stew", "Add the meats to half of the sofrito, combine well and add about half the broth, cumin and capers. Bring to the boil and taste the seasoning. To thicken it, you can dissolve a ball of dough in the stew."],
+      ["Sauce for the garnish", "Set aside 2 or 3 ladles of sofrito and mix with annatto lard to make a little sauce for the garnishes."]
+    ],
+    extras: [["Garnish for each hallaca (faded page, to confirm)", [
+      [, "1 ladle of stew."], [, "1 strip of chicken breast."], [, "2 stuffed olives."], [, "2 capers."], [, "1 onion ring."],
+      [, "1 strip of capsicum."], [, "Pickles (4 or 5 small pieces)."], [, "1 teaspoon of the sofrito sauce."], [, "6 raisins."]
+    ]]]
+  },
+  "bollos-pelones": {
+    titulo: "Bollos pelones (stuffed corn dumplings)",
+    descripcion: "Corn dough balls with cumin and annatto, stuffed with a finely chopped meat stew.",
+    nota: "From mum's notebook. It doesn't say how to cook the filled bollos.",
+    ing: ["The dough::Corn dough (2 or 3 balls)", "Cumin (a touch)", "Annatto, for colour", "Butter", "Mustard (a touch)", "Salt", "The stew::Meat, finely chopped", "Onion", "Capsicum", "Garlic", "Tomato", "Cumin and seasoning", "Biscuit crumbs, if the stew is watery"],
+    pasos: [
+      ["Make the stew", "Chop the meat very finely and add onion, capsicum, garlic, tomato, cumin and seasoning. Sauté and cook the meat. If it's watery, add biscuit crumbs."],
+      ["Prepare the dough", "Add a touch of cumin, the annatto for colour and butter to the dough, so it's firm. While kneading, add a touch of mustard and the salt."],
+      ["Shape the balls", "Make balls about 5 cm across."],
+      ["Fill and close", "Fill each ball with stew and seal it."]
+    ]
+  },
+  "carne-mechada": {
+    titulo: "Carne mechada (shredded beef)", tiempoTexto: "About 45 min",
+    descripcion: "Flank steak pressure-cooked with the seasonings, shredded and stewed in its own broth.",
+    nota: "From mum's notebook. The meat cooks in the broth with the seasonings so you can use the broth afterwards.",
+    ing: ["Flank steak (falda)", "Seasonings (onion, capsicum, garlic, ají dulce)", "Cumin", "Garlic", "All-purpose seasoning (adobo)"],
+    pasos: [
+      ["Pressure cooker", "Put the meat in the pressure cooker with all the seasonings, to make the most of the broth. Count half an hour from when it starts whistling.", "30 min"],
+      ["Chop the seasonings", "Chop the seasonings again, this time into small dice."],
+      ["Shred", "Shred the meat and clean it."],
+      ["Stew", "Add the seasonings, cumin, garlic and adobo, and cook it with a little of the broth."]
+    ]
+  },
+  "polenta": {
+    titulo: "Polenta (corn pie)", tiempoTexto: "About 2 h 30 min",
+    descripcion: "A baked pie of sweet corn dough filled with a pork and chicken stew with olives, raisins and capers.",
+    nota: "From a loose page in mum's notebook. It doesn't say how many it serves: the servings are approximate.",
+    ing: ["The dough::Juana corn flour or similar", "Whole egg", "Egg yolks", "Butter", "Sugar", "Milk", "Salt", "Wine", "The stew::Pork", "Chicken breasts", "Butter", "Oil", "Wine, ideally white", "Small olives", "Ground garlic", "Roma tomatoes", "Large onion", "Raisins", "Capers", "Hot water", "To assemble::Butter for the dish", "Sugar for sprinkling"],
+    pasos: [
+      ["Make the dough", "Mix the dough ingredients and work it until very soft."],
+      ["Cook the chicken", "Sauté the chicken in the butter and oil, and shred it."],
+      ["Brown the pork", "Brown the pork."],
+      ["Make the stew", "Blend the onion, tomato and capers and add them to the meats until cooked. Then add the rest of the stew ingredients."],
+      ["Assemble", "Butter the dish and line it with dough. Fill with the stew, cover with more dough and sprinkle a little sugar on top."],
+      ["Bake", "Bake at 180 °C (350 °F).", "1 h 15 min"]
+    ]
+  },
+  "quibe": {
+    titulo: "Kibbeh (quibe)",
+    descripcion: "Fried kibbeh of beef and pork with bulgur, herbs and plenty of cinnamon.",
+    nota: "From a loose page in mum's notebook. The egg is only used if the kibbeh is fried.",
+    ing: ["Beef mince", "Pork mince", "Onion", "Garlic", "Basil", "Spearmint", "Cinnamon (lots)", "Bulgur wheat", "Egg (if frying)", "Flour"],
+    pasos: [
+      ["Season the meat", "Season the meat with the onion, garlic, herbs and cinnamon."],
+      ["Soak the bulgur", "Rinse the bulgur well and leave it to soak.", "1 h"],
+      ["Mix", "Mix the meat with the bulgur, the egg and a little flour."],
+      ["Fry", "Shape the kibbeh and fry them. If you like, fill them with pine nuts and fried onion."]
+    ]
+  },
+  "labin": {
+    titulo: "Labneh (yoghurt and yoghurt cheese)",
+    descripcion: "Soft homemade yoghurt and, once drained, labneh to spread with oil and salt.",
+    nota: "From a loose page in mum's notebook. It doesn't say how long to leave it to set or drain.",
+    ing: ["Milk", "Natural yoghurt", "Oil (for drained labneh)", "Salt"],
+    pasos: [
+      ["Warm the milk", "Warm the milk without letting it boil and let it rest a little."],
+      ["Add the yoghurt", "Add the half tub of yoghurt and mix."],
+      ["Let it set", "Cover with a cloth and leave it somewhere warm without moving it. This gives a soft labneh, like yoghurt."],
+      ["Drain (labneh)", "For a firmer labneh, put the set mixture on a linen napkin, without squeezing, and leave it until all the liquid drains out."],
+      ["Finish", "Add oil little by little, with salt."]
+    ],
+    extras: [["To serve with it", [["Black olives", "With lemon and oregano leaves."]]]]
+  },
+  "cremas-rapidas": {
+    titulo: "Three quick dips",
+    descripcion: "Quick blender versions: chickpea dip, capsicum dip and eggplant dip.",
+    nota: "From mum's notebook, taken from the TikTok account “Recetitas” (28-2-26).",
+    ing: ["Chickpea dip::Cooked chickpeas", "Tahini", "Cumin", "Lemons (juice)", "Garlic, large cloves", "Salt", "Capsicum dip::Roasted, peeled capsicums", "Cumin", "Sweetener", "Salt", "Walnuts (a handful)", "Breadcrumbs, to thicken", "Eggplant dip::Roasted eggplants", "Lemon (juice)", "Greek yoghurt", "Tahini", "Garlic", "Salt"],
+    pasos: [
+      ["Blend", "Put each dip's ingredients in the blender separately and blend until smooth. Add breadcrumbs to the capsicum dip if it needs thickening."],
+      ["Plate", "Serve each dip in its own bowl."],
+      ["Garnish", "Finish with a drizzle of olive oil."]
+    ]
+  },
+  "sopa-ajoporro": {
+    titulo: "Leek soup",
+    descripcion: "A simple soup of leek sautéed in butter and flour, with consommé.",
+    nota: "From mum's notebook, which gives no amounts.",
+    ing: ["Leek", "Butter", "Flour", "Consommé"],
+    pasos: [
+      ["Slice", "Slice the leek into thin rounds."],
+      ["Sauté", "Sauté it in butter and flour."],
+      ["Simmer in consommé", "Add the consommé and let it boil so it takes on flavour."]
+    ]
+  },
+  "crema-marisco": {
+    titulo: "Seafood bisque",
+    descripcion: "Creamy prawn soup with sherry, egg yolks and thickened cream.",
+    nota: "Magazine clipping stuck in mum's notebook. Instead of prawns you can use crab or lobster.",
+    ing: ["Finely chopped onion", "Butter", "Flour", "Chicken consommé (385 g cans)", "Sherry", "Egg yolks, beaten", "Frozen prawns", "Thickened cream", "Parsley, to garnish"],
+    pasos: [
+      ["Sauté the onion", "In a saucepan, sauté the onion in the butter."],
+      ["Add the flour", "Add the flour and stir."],
+      ["Add the consommé", "Pour in the consommé little by little, stirring, and bring to the boil. Add the sherry."],
+      ["Temper the yolks", "Mix a little of the hot broth into the beaten yolks, then return them to the pan."],
+      ["Prawns and cream", "Add the thawed prawns and the cream. Heat through without letting it boil."],
+      ["Serve", "Serve straight away, topped with parsley."]
+    ]
+  },
+  "gazpacho": {
+    titulo: "Gazpacho",
+    descripcion: "Cold soup of blended tomato and onion, with garlic, vinegar and cucumber.",
+    nota: "From a loose page in mum's notebook. It only says to blend the onion and tomatoes; the next steps follow the logical order.",
+    ing: ["Large onion", "Ripe Roma tomatoes, peeled", "Oil", "Finely chopped parsley", "Vinegar", "Hot water", "Worcestershire sauce (a few drops)", "White pepper", "Crushed garlic", "Capsicum, coarsely grated", "Sliced cucumbers"],
+    pasos: [
+      ["Blend", "Blend the onion and tomatoes."],
+      ["Season", "Add the oil, parsley, vinegar, hot water, a few drops of Worcestershire sauce, white pepper, garlic and grated capsicum."],
+      ["Serve", "Serve with the cucumber slices."]
+    ]
+  },
+  "arroz-chino": {
+    titulo: "Chinese-style fried rice",
+    descripcion: "Rice with ham, spring onion, diced omelette, bean sprouts and soy sauce.",
+    nota: "From mum's notebook. Cook the rice without salt, since the soy sauce is salty.",
+    ing: ["Rice, cooked without salt", "Ham", "Spring onion", "Eggs (for 1 omelette)", "Bean sprouts", "Soy sauce"],
+    pasos: [
+      ["Cook the rice", "Cook the rice without salt."],
+      ["Make the omelette", "Make an omelette with the eggs and dice it."],
+      ["Blanch the sprouts", "Blanch the bean sprouts and drain them."],
+      ["Stir-fry", "Stir-fry them with the ham and chopped spring onion."],
+      ["Combine", "Mix everything with the rice and omelette, and season with soy sauce."]
+    ]
+  },
+  "carbonara": {
+    titulo: "Pasta carbonara",
+    descripcion: "The house carbonara, with cream, egg yolks, parmesan, bacon and onion.",
+    nota: "From a loose page in mum's notebook. Note: it says to go easy on the pepper and that she wouldn't add garlic.",
+    ing: ["The sauce (whisked)::Cream (ideally Avoset)", "Egg yolks", "Parmesan", "Pepper (go easy)", "Chopped parsley", "Salt", "Fried::Bacon (large packet)", "Large onion, thinly sliced into rings", "Garlic (optional: she wouldn't add it)", "The pasta::Pasta, cooked al dente"],
+    pasos: [
+      ["Whisk the sauce", "Whisk the cream with the yolks, parmesan, pepper, parsley and salt."],
+      ["Fry", "Fry the bacon with the onion rings (and the garlic, if using)."],
+      ["Add the pasta", "When the onion is golden, add the cooked, al dente pasta and let it fry a little, stirring well."],
+      ["Off the heat, add the sauce", "Turn off the heat and pour in the sauce."]
+    ]
+  },
+  "pesto": {
+    titulo: "Pesto",
+    descripcion: "The house pesto, with walnuts and a touch of mayonnaise.",
+    nota: "From a loose page in mum's notebook. Hazelnuts are crossed out and replaced with walnuts.",
+    ing: ["Walnuts", "Basil", "Mayonnaise", "Garlic", "Parmesan", "Parsley", "Salt"],
+    pasos: [["Blend", "Blend all the ingredients together."]]
+  },
+  "tempura": {
+    titulo: "Tempura batter",
+    descripcion: "Tempura batter made with ice-cold beer. In the notebook: “It's excellent, I've tried it”.",
+    nota: "From mum's notebook. You can use water instead of beer.",
+    ing: ["Flour", "Cornflour", "Ice-cold beer or water", "Egg yolk"],
+    pasos: [
+      ["Mix", "Mix all the ingredients."],
+      ["Rest", "Let the batter rest before using it."]
+    ]
+  },
+  "galletas-parmesano": {
+    titulo: "Parmesan biscuits",
+    descripcion: "Savoury parmesan biscuits, piped or made with a cookie press.",
+    nota: "From mum's notebook, where she noted it as Kristina Wetter's recipe.",
+    ing: ["Butter", "Parmesan", "Plain flour"],
+    pasos: [
+      ["Get ready", "Preheat the oven to 175 °C (350 °F) and spray a baking tray with non-stick spray."],
+      ["Beat", "Beat the butter until creamy and mix in the parmesan."],
+      ["Add the flour", "Add the flour and keep beating until a dough forms: it's ready when it comes away from the sides of the bowl."],
+      ["Shape", "Fill the piping bag or cookie press with your favourite disc and shape the biscuits on the tray."],
+      ["Bake", "Bake until golden."]
+    ]
+  },
+  "galletas-maicena": {
+    titulo: "Christmas cornflour cookies",
+    descripcion: "Melt-in-the-mouth cornflour cookies, piped with a bag.",
+    nota: "From mum's notebook. The time depends on your oven.",
+    ing: ["Butter", "Sugar", "Cornflour", "Egg yolks", "Baking powder"],
+    pasos: [
+      ["Cream", "Beat the butter with the sugar until creamy."],
+      ["Add the yolks", "Add the yolks one at a time, beating well."],
+      ["Add the cornflour", "Finally add the cornflour sifted with the baking powder and mix well."],
+      ["Shape", "Put the dough in a piping bag with a wide nozzle and pipe the cookies onto greased trays."],
+      ["Bake", "Bake at 160 °C.", "15 to 18 min"]
+    ]
+  },
+  "pasta-seca": {
+    titulo: "Butter cookies (pasta seca)",
+    descripcion: "Butter cookies with lemon and vanilla, topped with coloured sprinkles.",
+    nota: "From mum's notebook, taken from Isabel Otero's TikTok (11-03). The list says 1 tsp vanilla and lemon zest, while the method says 1 tbsp vanilla and 1 tbsp lemon juice.",
+    ing: ["Eggs", "Plain flour", "Sugar", "Butter", "Vanilla", "Lemon zest", "Baking powder", "Cold water", "Coloured sprinkles"],
+    pasos: [
+      ["Butter and sugar", "Mix the butter with the sugar, stirring."],
+      ["Eggs", "Add the eggs one by one."],
+      ["Prepare the flour", "Mix the baking powder into the flour."],
+      ["Flavours", "Add the vanilla, the lemon and the tablespoon of cold water."],
+      ["Add the flour", "Add the flour little by little."],
+      ["Bake", "Shape the cookies on a buttered and floured tray, top with coloured sprinkles and bake at a medium temperature.", "15 min"]
+    ],
+    extras: [["Version II (Mariana Castillo, TikTok)", [
+      ["Ingredients", "250 g butter (1 cup + 1 tbsp), 500 g self-raising flour (3½ cups less 2 tbsp), 2 eggs, 250 g sugar (1¼ cups) and 1 tbsp vanilla."],
+      ["Method", "Same as the recipe above."]
+    ]]]
+  },
+  "chip-cookies": {
+    titulo: "Chocolate chip cookies", tiempoTexto: "14 min baking",
+    descripcion: "Classic chocolate chip cookies, with brown sugar and plenty of chips.",
+    nota: "From mum's notebook, taken from Noor Waked's TikTok (28-2-26). The ingredients should be at room temperature.",
+    ing: ["Butter (2 sticks)", "Brown sugar", "White sugar", "Egg", "Vanilla", "Plain flour", "Baking powder", "Bicarb soda", "Salt", "Chocolate chips"],
+    pasos: [
+      ["Cream the butter", "Beat the butter with a whisk until pale."],
+      ["Add the sugar", "Add the sugars and combine."],
+      ["Egg and vanilla", "Add the egg and vanilla and combine."],
+      ["Dry ingredients", "Add the flour, bicarb soda, baking powder and salt."],
+      ["Chips", "Fold in the chocolate chips."],
+      ["Bake", "Bake at 190 °C (375 °F). As they come out, you can neaten them with a round cutter."]
+    ]
+  },
+  "cerezas-flambe": {
+    titulo: "Cherries flambé",
+    descripcion: "Cherries in a buttery citrus caramel, flamed with cognac and served over vanilla ice cream.",
+    nota: "Magazine clipping stuck in mum's notebook. When flaming, keep your face back and have a lid at hand.",
+    ing: ["Tinned pitted cherries, drained", "Cherry juice", "Sugar", "Butter", "Lemon (juice)", "Orange (juice)", "Kirsch or cherry liqueur", "Cognac", "Vanilla ice cream and biscuits"],
+    pasos: [
+      ["Caramelise the sugar", "In a heavy-based pan, cook the sugar with the butter until golden."],
+      ["Add the juices", "Add the lemon, orange and cherry juice and cook until the mixture is smooth."],
+      ["Cherries and kirsch", "Add the cherries and kirsch and heat a few minutes more."],
+      ["Flame", "Pour in the cognac and set it alight."],
+      ["Serve", "Serve over scoops of vanilla ice cream, with biscuits."]
+    ]
+  },
+  "pisca-andina": {
+    titulo: "Pisca andina (Andean breakfast soup)", tiempoTexto: "About 30 min",
+    descripcion: "The Andean breakfast broth: consommé with potato, coriander and a poached egg in every bowl.",
+    nota: "Add the eggs quickly and apart from each other so they cook evenly. They should end up firm rather than runny.",
+    ing: ["Grated onion", "Grated tomato, peeled and seeded", "Butter", "Whole garlic", "Beef consommé", "Salt, if needed", "Ground white pepper", "Worcestershire sauce", "Coriander sprigs", "Medium potato, diced small (½ cup)", "Eggs", "Finely chopped coriander"],
+    pasos: [
+      ["Make the sofrito", "In a frying pan cook the butter with the onion, tomato and garlic until dry and jammy. Remove the garlic."],
+      ["Season the consommé", "Put the consommé in a pot with the sofrito, salt if needed, pepper, Worcestershire sauce and coriander sprigs. Bring to the boil."],
+      ["Cook the potato", "Add the potato and cook over medium heat until tender but still firm. Remove the coriander sprigs."],
+      ["Poach the eggs", "With the consommé boiling, slide the eggs in one at a time using a small cup, each in a different spot on the surface so they don't join.", "4 to 5 min"],
+      ["Serve", "Take off the heat and serve one egg in each bowl or cup. Sprinkle with chopped coriander and serve straight away."]
+    ]
+  },
+  "quesillo": {
+    titulo: "Quesillo (Venezuelan flan)", tiempoTexto: "2 h + overnight in the fridge", porcionesTexto: "12 to 14",
+    descripcion: "The classic quesillo, baked in a water bath in a caramel-lined tin and turned out the next day.",
+    nota: "The book says “400 degrees”: that's about 200 °C. The tin is about 18 cm across and 10 cm deep.",
+    ing: ["The caramel::Sugar", "Water", "The water bath::Lemon", "The custard::Eggs", "Grated lemon zest", "Milk", "Sugar", "Vanilla essence"],
+    pasos: [
+      ["Preheat the oven", "Set the oven to 200 °C (400 °F)."],
+      ["Make the caramel", "In the tin itself, boil the sugar with the water until it turns to a dark caramel, without burning. Off the heat, tilt the tin to coat the sides and let it cool.", "6 to 8 min"],
+      ["Set up the water bath", "Put a tray larger than the tin in the oven with about 5 cm of water and the lemon, which stops the tray going black. Let the water heat up."],
+      ["Make the custard", "Lightly whisk the eggs with the lemon zest. Add the milk, sugar and vanilla and keep whisking until combined."],
+      ["Bake covered", "Pour the mixture into the caramel tin, cover with foil and bake inside the water bath."],
+      ["Bake uncovered", "Remove the foil and keep baking until a skewer comes out dry. Then leave it 30 minutes in the switched-off oven."],
+      ["Chill", "Let it cool and keep it in the fridge until the next day.", "Until the next day"],
+      ["Turn out", "Take it out of the fridge half an hour before and turn it out onto a tray with a rim. If caramel sticks to the tin, warm it briefly over the heat and pour it on top."]
+    ],
+    extras: [["Tip", [["Lots of little holes", "If you like your quesillo full of little holes, whisk the mixture hard before pouring it into the tin."]]]]
+  },
+  "bienmesabe": {
+    titulo: "Bienmesabe (coconut trifle)", tiempoTexto: "About 2 h + fridge", porcionesTexto: "8 to 10",
+    descripcion: "A colonial Caracas dessert: layers of coconut and egg-yolk cream with sponge cake soaked in cognac, topped with cinnamon.",
+    nota: "The sponge cake is made separately: the book refers to its own sponge cake (pan de Saboya) recipe.",
+    ing: ["The coconut cream::Large coconuts (500–600 g of flesh each), or 3 to 3½ cups of coconut milk", "Hot water (to extract the milk)", "Egg yolks", "Salt", "The syrup::Water", "Sugar", "To assemble::Sponge cake", "Cognac", "Water", "Ground cinnamon"],
+    pasos: [
+      ["Grate the coconut", "Take the flesh out of the coconuts and grate it on the coarse side. You'll get about 6 cups."],
+      ["Make the coconut milk", "Blend the flesh in batches with the hot water and squeeze it through a loosely woven cloth. Strain the milk through a fine sieve."],
+      ["Mix with the yolks", "Stir the coconut milk with the yolks and salt using a wooden spoon, and set aside."],
+      ["Make the syrup", "In a heavy pot boil the water and sugar over high heat, without stirring, to the thread stage: drops fall slowly from the spoon and form a thin thread.", "about 5 min"],
+      ["Cook the cream", "Turn off the heat, add the yolk mixture and stir into a cream. Return to very low heat and keep stirring until it almost boils and small bubbles appear at the edges. Remove and let it cool a little."],
+      ["Slice the sponge", "Cut it into small slices, about 4 × 8 cm and no more than 1 cm thick."],
+      ["Layer it up", "In a glass dish lay a layer of cream, then sponge sprinkled with the cognac mixed with the water. Repeat and finish with cream. Dust with cinnamon."],
+      ["Chill and serve", "Put it in the fridge and serve well chilled."]
+    ]
+  },
+  "pan-de-jamon": {
+    titulo: "Pan de jamón (Christmas ham bread)", tiempoTexto: "About 4 h (including rising)",
+    descripcion: "Caracas' Christmas bread: sweet dough rolled up with ham, olives and raisins, glazed with egg yolk and sugar.",
+    nota: "This is the 10-serving version of the two in the book. “400 degrees” in the book is about 200 °C.",
+    ing: ["The dough::Fresh or dried yeast (about 3 tbsp)", "Warm water", "Sugar (for the yeast)", "Flour (about 4 cups)", "Sugar", "Salt", "Butter", "Egg", "Warm milk", "Butter (for the tray)", "The filling::Thinly sliced ham, chopped", "Olives (flesh only, chopped)", "Raisins", "To glaze::Egg yolk", "Sugar"],
+    pasos: [
+      ["Activate the yeast", "Mix the yeast with the warm water and the teaspoon of sugar. Cover and leave somewhere warm."],
+      ["Make the dough", "Make a well in the flour and add the yeast, sugar, salt, butter and egg. Knead, adding the milk little by little, until the dough is soft and comes away cleanly without being sticky. A mixer with a dough hook works too."],
+      ["First rise", "Shape into a ball, put it in a floured bowl, cover with a cloth and leave somewhere warm until doubled.", "1½ h or more"],
+      ["Roll out", "Knead briefly on a floured bench and roll out a rectangle of about 25 × 45 cm and 1 cm thick."],
+      ["Fill and roll", "Spread the ham, olives and raisins over the dough. Roll it up tightly and seal the ends. Place it on the greased tray, seam side down."],
+      ["Second rise", "Cover with a cloth and leave somewhere warm until doubled.", "1 h"],
+      ["Bake", "Bake in a preheated oven at 200 °C (400 °F) until well browned."],
+      ["Glaze and finish", "Beat the yolk with the sugar, brush it over the bread and bake a few minutes more. Let it cool before slicing."]
+    ]
+  },
+  "pasticho": {
+    titulo: "Pasticho (Venezuelan lasagne)", tiempoTexto: "About 3 h",
+    descripcion: "Venezuelan lasagne: pork filling with raisins, olives and capers, béchamel, queso de mano and parmesan.",
+    nota: "Two amounts in the PDF look like transcription errors and still need confirming: it says “12 kilos” of queso de mano (I used ½ kg) and “1/12” teaspoon of salt in the pasta (I used ½ tsp). If you buy ready-made pasta, use ¾ kg of lasagne sheets and skip the pasta steps.",
+    ing: ["The filling::Butter", "Oil", "Small leek, white part, finely chopped", "Large onions, finely chopped", "Crushed garlic", "Tomatoes, peeled, seeded and chopped (about 6)", "Red capsicum, finely chopped", "Ají dulce (sweet pepper), seeded and chopped", "Tomato ketchup", "Lean pork mince", "Small capers, chopped", "Medium olives (flesh only, chopped)", "Raisins", "Worcestershire sauce", "Mustard pickles, chopped", "Muscat wine", "Salt", "Freshly ground black pepper", "The béchamel::Butter", "Medium onion, finely chopped", "Flour", "Milk", "Salt (⅛ tsp)", "Freshly ground white pepper (⅛ tsp)", "The pasta::Flour", "Salt (to confirm)", "Oil", "Eggs, about 60 g each", "Water (depending on egg size)", "To assemble::Water for cooking the pasta, with salt and oil", "Queso de mano (to confirm)", "Grated parmesan", "Butter (for the dish and on top)"],
+    pasos: [
+      ["Sauté", "Heat the butter and oil in a heavy pot. Fry the leek for about 3 minutes, add the onion and garlic and cook until soft.", "about 7 min"],
+      ["Tomato and meat", "Add the tomato, capsicum, ají dulce and ketchup and cook for 5 minutes. Add the mince, stir and cook 10 minutes more."],
+      ["Finish the filling", "Add the rest of the filling ingredients, lower the heat, cover and cook until dry. Set aside."],
+      ["Make the béchamel", "Melt the butter and fry the onion until soft. Off the heat, whisk in the flour and straight away the milk. Return to the heat, stirring, season and cook until thick and creamy."],
+      ["Knead the pasta", "Mix the eggs with the oil and salt. Add the flour and water little by little, first with your fingers and then kneading until the dough no longer sticks to the bench or your hands. Leave it to rest, covered."],
+      ["Roll and cut", "Run it through a pasta machine into thin sheets and cut rectangles of about 20 × 10 cm. Lay them on a floured tray, separating layers with greaseproof paper."],
+      ["Cook the sheets", "In boiling water with salt and oil, cook the sheets in batches, stirring so they don't stick. Dip them in cold water for 1 or 2 minutes, then lay them on a tea towel.", "3 min per batch"],
+      ["Prepare the dish", "Preheat the oven to 200 °C (400 °F) and butter a glass baking dish of about 33 × 22 × 5 cm."],
+      ["Layer it up", "Layer pasta, béchamel, filling, queso de mano and parmesan, and repeat. Finish with pasta topped with béchamel, parmesan and dots of butter."],
+      ["Bake", "Bake until golden on top."]
+    ]
+  },
+  "hallacas": {
+    titulo: "Hallacas caraqueñas", tiempoTexto: "3 days (2 if you use masa harina dough)",
+    descripcion: "The Caracas hallaca step by step: pork and hen stew, corn dough coloured with annatto, and garnishes, wrapped in banana leaves. Makes 50.",
+    nota: "It's made in stages and it helps to have company. With ready-made corn dough (⅔ cup for the stew and 5 kg for the dough) you skip cooking and grinding the corn. After boiling, wait 1 or 2 days before eating so they develop their flavour.",
+    ing: ["The stew::Hulled white corn, to thicken the stew (or 200 g of corn dough)", "Lean leg of pork", "Boiling hens, about 2 kg each", "Lemon", "Oil", "Coarsely minced onion", "Leek (white part), finely chopped", "Spring onion, thinly sliced", "Peeled garlic cloves", "Small capers", "Red capsicum, minced, seeded", "Tomato, minced, peeled and seeded", "Ají dulce (sweet peppers), chopped", "Hot chilli, finely chopped", "Mustard pickles, blended", "Sweet wine (muscat or marsala)", "Vinegar", "Worcestershire sauce", "Papelón (unrefined cane sugar)", "Ground dried red capsicum (paprika)", "Ground dried chilli", "Freshly ground black pepper", "Salt", "Hen broth (plus ½ cup for the garlic and 1½ for the corn)", "Prepared mustard", "The dough::Pork fat for rendering (or 5 cups of lard)", "Water (for the lard)", "Salt (for the lard)", "Hulled white corn (or 5 kg of corn dough)", "Hen broth", "Salt", "Annatto seeds (onoto)", "The garnishes::Red capsicums", "Oil", "Bacon", "Almonds", "Small onions", "Small capers", "Medium olives", "Seedless raisins", "Pickles in vinegar, chopped", "To assemble::Banana leaves for hallacas", "Kitchen twine", "Salted water for boiling"],
+    pasos: [
+      ["Day 1 · Corn to thicken the stew", "Wash the ½ cup of hulled corn until the water runs clear, cover with 5–8 cm of water and boil. Pour off ¼ to ⅓ of the hot water, top up with cold water and let it cool. For hallacas the corn is cooked longer than for arepas, so the dough is finer.", "25 to 28 min"],
+      ["Day 2 · Parboil the pork", "Trim the excess fat, rub the meat with lemon and rinse. Boil it with the bacon for the garnishes, covered with water; it should stay pink. Leave it 5 more minutes in the pot, cool, set the bacon aside and cut the pork into pieces of about 3 cm. Discard the liquid.", "7 to 8 min"],
+      ["Cook the hens", "Clean them, rub with lemon and cook each in the pressure cooker with 4 to 5 cups of water until tender but not too soft. Rest 10 minutes, remove the skin and pull the meat into not-too-small pieces. Keep the broth in the fridge."],
+      ["Make the sofrito", "Blend the garlic with the capers and ½ cup of broth. In a large pot (about 12 litres, ideally stainless steel) cook the oil with the onion, leek, spring onion and garlic mixture until soft."],
+      ["Season the stew", "Add the capsicum, tomato, peppers, pickles, wine, vinegar, Worcestershire sauce, papelón, dried capsicum and chilli, pepper, salt, the 2 cups of broth and the mustard. Bring to the boil."],
+      ["Add the meats", "Add the pork and cook 40 minutes. Then the hen, and cook 30 to 40 minutes more, stirring gently so it doesn't fall apart. Taste: the seasoning should be very strong.", "70 to 80 min"],
+      ["Thicken the stew", "Rinse and drain the day-1 corn, grind it finely and blend with 1½ cups of broth. Add it to the stew and cook over low heat, stirring, until thick with only 1–2 cm of liquid on top. Cover with a cloth and leave to cool somewhere cool until the next day."],
+      ["Render the lard", "Cook the chopped pork fat with 1½ cups of water and the salt until golden and no more fat comes out. Strain, cool and keep covered out of the fridge. You'll get about 5 cups."],
+      ["Cook the corn for the dough", "Wash the 2¼ kg of corn, cover with 10 cm of water and boil until soft but still slightly firm in the centre. Pour off ¼ to ⅓ of the water, top up with cold water and leave covered until the next day.", "25 to 28 min"],
+      ["Prepare the garnishes", "Roast the oiled capsicums at 180 °C (350 °F), turning them; wrap in a damp cloth, peel and cut into 1 cm strips. Cut the bacon into 4–5 cm strips. Blanch the almonds for a few seconds and peel. Slice the onions thinly. Drain the capers, olives and pickles (cut small) and pick over the raisins. Keep each one separately in the fridge."],
+      ["Day 3 · Grind the corn", "Wash and drain the corn, remove the tips and dark bits, and grind it with the mill set tight so the dough is very fine."],
+      ["Annatto lard", "Heat 2 cups of lard with the annatto only until it turns a dark caramel colour, without burning, and strain. It's for colouring the dough and greasing the leaves."],
+      ["Knead the dough", "Work into the corn about 3 cups of plain lard, 1 cup of annatto lard (depending on the colour you want) and the salt. Knead, put it through the mill again, add the 3 cups of broth and knead until soft and compact. Cover with a damp cloth."],
+      ["Prepare the leaves", "Sort them into large (40 × 30 cm, for the base and the outer wrap), medium (20 × 25 cm, for the tops) and strips (10–15 cm wide). Wash, dry and grease the ribbed side with annatto lard. The strips aren't greased."],
+      ["Spread the dough", "Place a ball of dough 5–7 cm across in the centre of a large leaf, cover with thick plastic and press it with a board, twisting slightly, into a circle 1–2 mm thick. For the tops use balls of 3–4 cm."],
+      ["Fill", "On the dough-covered leaf put ½ cup of cold stew and the garnishes: 3 onion rings, 2 capsicum strips, 2 bacon strips, 2 olives, 2 almonds, 4 capers, 6 raisins and 4 or 5 bits of pickle."],
+      ["Close and tie", "Cover with a small dough-covered leaf and press the edges. Fold the sides and ends upwards, wrap in the outer leaf and then in a strip. Tie with twine, crossing it 3 times each way and finishing in the centre. If a leaf tears, add another so no water gets in."],
+      ["Boil", "Put them into boiling salted water, well covered and with pieces of leaf on top so they don't float. Cover the pot.", "1 h"],
+      ["Drain and store", "Take them out and drain on a sloping surface. Once cool, keep them in the fridge: they last up to 4 weeks, though after the second week they take on a leafy taste."],
+      ["Reheat and serve", "Heat them 15–20 minutes in boiling salted water and drain 1 minute standing up; or wrapped in foil, 30–35 minutes in the oven at 200 °C (400 °F); or steamed. Untie, remove the strip and outer leaf, trim the leaf edges and serve on its own leaf."]
+    ]
+  },
   "pan": {
     titulo: "Bread (basic dough)", tiempoTexto: "1 h 15 min + baking",
     descripcion: "The house dough. Use it for savoury and sweet breads, fruit rings, cachitos and pan de jamón.",
@@ -1117,27 +2223,27 @@ const TR_EN = {
     ]]]
   },
   "asado-negro": {
-    titulo: "Asado negro", tiempoTexto: "1 night + about 3 h",
-    descripcion: "Eye of round (muchacho) marinated overnight, seared with brown sugar or papelón and slow-cooked in its sauce until tender.",
-    nota: "Transcribed from Memeyita's messages, step by step with her photos. Still to confirm: the name of the recipe, the marinade ingredients and the end of the pressure-cooker step, which is cut off in the message.",
-    ing: ["The meat::Eye of round (muchacho)", "The marinade::Marinade ingredients", "For searing::Oil", "Brown sugar or papelón (unrefined cane sugar)", "For the pressure cooker::Water", "Onion", "Capsicum", "Garlic", "Ají dulce (sweet pepper)", "“Some h…” (the message is cut off)"],
+    titulo: "Asado negro (Venezuelan pot roast)", tiempoTexto: "1 night + about 3 h",
+    descripcion: "Eye of round (muchacho) marinated overnight, seared with brown sugar or papelón and slow-cooked in its sauce until tender and dark.",
+    nota: "Combines Memeyita's messages, step by step with her photos, with the notes in her notebook. In the messages she pressure-cooks it for about 60 minutes; the notebook says half an hour. The end of the pressure-cooker message, cut off at “some h…”, still needs confirming.",
+    ing: ["The meat::Eye of round (muchacho)", "The marinade::Cumin", "Pepper", "Garlic", "For searing::Oil", "Brown sugar or papelón (unrefined cane sugar)", "For the pressure cooker::Water", "Onion", "Capsicum", "Garlic", "Ají dulce (sweet pepper)", "“Some h…” (the message is cut off)", "To finish::Worcestershire sauce (optional)"],
     pasos: [
-      ["Marinate overnight", "Leave the two pieces of muchacho marinating overnight, so you can start cooking them early.", "Overnight"],
-      ["Sear the meat", "Sear the meat in oil with brown sugar or papelón, turning it until it is browned and dark on all sides."],
-      ["Pressure cooker", "Cook the meat in the pressure cooker with water, onion, capsicum, garlic, ají dulce and some h… (the message is cut off here).", "About 60 min"],
+      ["Marinate overnight", "Season the two pieces of muchacho with cumin and pepper, rub them well with the garlic and leave them overnight, so you can start cooking early.", "Overnight"],
+      ["Sear the meat", "Sear the meat in oil with brown sugar or papelón, turning it until it's browned and dark on all sides."],
+      ["Pressure cooker", "Cook the meat in the pressure cooker with water, onion, capsicum, garlic, ají dulce and some h… (the message is cut off here).", "30 to 60 min"],
       ["Take out the meat", "Take the meat out of the pot and leave it ready to slice."],
       ["Keep the broth", "The broth left in the pot is ready."],
-      ["Make the sauce", "Combine the broth with the marinade ingredients."],
-      ["Slice the meat", "Cut the meat into slices."],
-      ["Into the pot with the sauce", "Place the slices in the pot (caldero) and add the sauce to start cooking."],
+      ["Make the sauce", "Blend the broth with all the marinade seasonings into a sauce."],
+      ["Slice into rounds", "Cut the meat into rounds with a knife."],
+      ["Into the pot with the sauce", "Place the rounds in the pot (caldero) and add the sauce to start cooking."],
       ["Cook covered", "First cook it covered, so it cooks faster."],
-      ["Cook until tender", "Keep cooking over medium heat for at least 2 hours, or until the meat is tender.", "2 h or more"]
+      ["Cook until dark", "Keep cooking over medium heat for at least 2 hours, until the meat is tender and the sauce turns dark. If you like, add a splash of Worcestershire sauce.", "2 h or more"]
     ]
   },
   "rosbif-cebolla": {
     titulo: "Roast beef with onion", tiempoTexto: "15 min marinade + about 20 min",
     descripcion: "Beef tenderloin or round, marinated, browned in the pot and served in slices with fried onion and its sauce with cloves and allspice.",
-    nota: "From the recipe book. Steps 4 to 6 are on the next page (p. 432), just before the roast beef with mushrooms. The meat should stay pink inside.",
+    nota: "From Armando Scannone's book. Steps 4 to 6 are on the next page (p. 432), just before the roast beef with mushrooms. The meat should stay pink inside.",
     ing: ["The meat::Beef tenderloin or round, trimmed", "The marinade::Finely grated onion", "Crushed garlic", "Oil", "Freshly ground black pepper", "Salt", "Worcestershire sauce", "For cooking::Oil", "Butter", "Onion rings (1 medium onion)", "Whole cloves", "Allspice berries", "Beef consommé"],
     pasos: [
       ["Marinate the meat", "Make a marinade with the grated onion, garlic, the tablespoon of oil, pepper, salt and Worcestershire sauce. Rub it over the meat and leave it to marinate.", "10 to 15 min"],
@@ -1590,7 +2696,7 @@ const UI = {
 const t = k => UI[LANG][k];
 
 const LABELS = {
-  "Todas": "All", "Panes": "Breads", "Dulces": "Sweets", "Platos fuertes": "Mains", "Cocina árabe": "Middle Eastern", "Desayunos": "Breakfast",
+  "Todas": "All", "Panes": "Breads", "Dulces": "Sweets", "Platos fuertes": "Mains", "Cocina árabe": "Middle Eastern", "Desayunos": "Breakfast", "Sopas": "Soups", "Acompañantes": "Sides", "Pastas y salsas": "Pasta & sauces", "Pasapalos": "Starters & snacks", "Mamá": "Mum",
   "Para la piel": "Skin care", "Hierbas medicinales": "Medicinal herbs", "Para las plantas": "For the garden",
   "La familia": "Family", "Suegra": "My mother-in-law", "Fácil": "Easy", "Media": "Medium", "Difícil": "Hard",
   "Frecuencia": "How often", "Se deja": "Leave on"
@@ -1598,12 +2704,21 @@ const LABELS = {
 const LABELS_ES = { "Suegra": "Mi suegra" };
 const lbl = s => LANG === "en" ? (LABELS[s] || s) : (LABELS_ES[s] || s);
 
+const FUENTES = {
+  scannone: { chef: "Armando Scannone", es: "Adaptada de una receta de Armando Scannone", en: "Adapted from a recipe by Armando Scannone" }
+};
+const fuenteDe = r => r.fuente && FUENTES[r.fuente];
+
 /* Unidades: clave → [singular ES, plural ES, singular EN, plural EN] */
 const UNIDADES = {
   taza: ["taza", "tazas", "cup", "cups"], cda: ["cda", "cdas", "tbsp", "tbsp"], cdta: ["cdta", "cdtas", "tsp", "tsp"],
   diente: ["diente", "dientes", "clove", "cloves"], lata: ["lata", "latas", "can", "cans"], rodaja: ["rodaja", "rodajas", "slice", "slices"],
   "limón": ["limón", "limones", "lemon", "lemons"], gotas: ["gota", "gotas", "drop", "drops"], trozos: ["trozo", "trozos", "piece", "pieces"],
   cabeza: ["cabeza", "cabezas", "head", "heads"],
+  paq: ["paquete", "paquetes", "packet", "packets"], pote: ["pote", "potes", "tub", "tubs"], ramo: ["ramo", "ramos", "bunch", "bunches"],
+  bolsita: ["bolsita", "bolsitas", "small bag", "small bags"], botella: ["botella", "botellas", "bottle", "bottles"],
+  frasquito: ["frasquito", "frasquitos", "small jar", "small jars"], copita: ["copita", "copitas", "small glass", "small glasses"],
+  chorrito: ["chorrito", "chorritos", "splash", "splashes"],
   dsp: ["cda de postre", "cdas de postre", "dsp", "dsp"], pizca: ["pizca", "pizcas", "pinch", "pinches"], ramita: ["ramita", "ramitas", "sprig", "sprigs"],
   "al gusto": ["al gusto", "al gusto", "to taste", "to taste"], "sin medida": ["sin medida", "sin medida", "no amount given", "no amount given"],
   "por confirmar": ["por confirmar", "por confirmar", "to confirm", "to confirm"], "un poco": ["un poco", "un poco", "a little", "a little"]
@@ -1757,6 +2872,7 @@ function renderList(sec) {
           <div class="pic" style="background:${r.color}">
             ${plato(r)}
             ${r._orig === "en" ? `<span class="badge en">${t("originalEn")}</span>` : ""}
+            ${fuenteDe(r) ? `<span class="badge chef">👨‍🍳 ${esc(fuenteDe(r).chef)}</span>` : ""}
             ${r.video ? `<span class="badge video">▶ Video</span>` : ""}
           </div>
           <h3>${esc(r.titulo)}</h3>
@@ -1801,7 +2917,7 @@ function renderDetail(base) {
 
       <section class="rhead">
         <div>
-          ${r._orig === "en" || r._tr ? `<div class="langtags">${r._orig === "en" ? `<span class="sample en">${t("originalEn")}</span>` : ""}${r._tr ? `<span class="sample">${t("traducidaDe")(r._orig)}</span>` : ""}</div>` : ""}
+          ${r._orig === "en" || r._tr || fuenteDe(r) ? `<div class="langtags">${fuenteDe(r) ? `<span class="sample chef">👨‍🍳 ${esc(fuenteDe(r)[LANG])}</span>` : ""}${r._orig === "en" ? `<span class="sample en">${t("originalEn")}</span>` : ""}${r._tr ? `<span class="sample">${t("traducidaDe")(r._orig)}</span>` : ""}</div>` : ""}
           <h1>${esc(r.titulo)}</h1>
           <p class="desc">${esc(r.descripcion)}</p>
           <div class="facts">
@@ -1880,7 +2996,7 @@ function renderDetail(base) {
         </div>
       </section>
 
-      <div class="tags"><span>${t("recetaFamilia")}</span><span>🍽 ${esc(lbl(r.categoria))}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>` : ""}
+      <div class="tags"><span>${fuenteDe(r) ? "👨‍🍳 " + esc(fuenteDe(r).chef) : t("recetaFamilia")}</span><span>🍽 ${esc(lbl(r.categoria))}</span>${tiempoDe(r) ? `<span>⏱ ${esc(tiempoDe(r))}</span>` : ""}</div>` : ""}
     </article>`;
   renderChrome(sec);
 
