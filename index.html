@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recetas de Memeyita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Cocina de familia: crema cálido, verde hoja profundo, lima como acento de acción.
+     Layout: inicio = filtros + rejilla de tarjetas; receta = cabecera visual, ingredientes en fichas, pasos numerados. */
+  --bg: #f6f1e7;
+  --surface: #efe7d8;
+  --card: #fbf8f2;
+  --ink: #1f2a1c;
+  --muted: #6b6f5f;
+  --green: #2f4a2a;
+  --green-soft: #dfe6d3;
+  --lime: #d9ef5b;
+  --line: #e2d8c5;
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --body: "Outfit", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r: 18px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.5;
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.1; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; border-radius: 8px; }
+img { max-width: 100%; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+/* Barra superior */
+.top { border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 5; }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.brand { font-family: var(--display); font-size: 1.35rem; color: var(--green); text-decoration: none; font-weight: 600; }
+.brand small { display: block; font-family: var(--body); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.count { font-size: .85rem; color: var(--muted); }
+
+/* Inicio */
+.hero { padding: 48px 0 28px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: end; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); color: var(--green); font-weight: 400; }
+.hero h1 em { font-style: italic; font-weight: 600; }
+.hero p { color: var(--muted); max-width: 46ch; margin: 14px 0 0; font-size: 1.05rem; }
+.search { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 12px 18px; }
+.search input { border: 0; background: transparent; font: inherit; flex: 1; min-width: 0; color: var(--ink); outline: none; }
+.search:focus-within { border-color: var(--green); }
+
+.filters { display: flex; flex-direction: column; gap: 14px; padding: 8px 0 24px; }
+.tabs { display: flex; gap: 22px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+.tab { background: none; border: 0; padding: 8px 0 12px; font-family: var(--display); font-size: 1.35rem; color: #a9a593; border-bottom: 3px solid transparent; margin-bottom: -1px; }
+.tab[aria-pressed="true"] { color: var(--ink); border-color: var(--green); }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.chips span { font-size: .85rem; color: var(--muted); margin-right: 4px; }
+.chip { border: 1px solid var(--line); background: var(--card); border-radius: 999px; padding: 6px 14px; font-size: .9rem; }
+.chip[aria-pressed="true"] { background: var(--green); color: #fff; border-color: var(--green); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; padding-bottom: 48px; }
+.card { background: none; border: 0; padding: 0; text-align: left; display: flex; flex-direction: column; gap: 12px; }
+.card .pic { border-radius: var(--r); aspect-ratio: 5 / 4; display: grid; place-items: center; position: relative; transition: transform .2s; }
+.card:hover .pic { transform: translateY(-3px); }
+.card h3 { font-size: 1.3rem; }
+.card p { margin: 0; color: var(--muted); font-size: .92rem; }
+.meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.badge { position: absolute; top: 12px; left: 12px; background: var(--lime); color: var(--ink); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+.badge.video { left: auto; right: 12px; background: var(--green); color: #fff; }
+.empty { grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--muted); }
+
+/* Plato ilustrado */
+.plate { width: 66%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle, #fffdf8 0 58%, #f1ebdf 59% 66%, #fffdf8 67% 100%);
+  box-shadow: 0 18px 30px -14px rgba(47, 74, 42, .45), 0 2px 0 rgba(0,0,0,.03); }
+.plate span { font-size: clamp(3rem, 8vw, 5rem); line-height: 1; }
+.plate img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+/* Receta */
+.recipe { padding: 20px 0 64px; display: flex; flex-direction: column; gap: 22px; }
+.back { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: .9rem; align-self: flex-start; }
+.rhead { background: var(--card); border-radius: 28px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; }
+.rhead h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); color: var(--green); }
+.rhead .desc { color: var(--muted); max-width: 42ch; margin: 14px 0 18px; }
+.rhead .pic { border-radius: 24px; aspect-ratio: 1; display: grid; place-items: center; }
+.rhead .pic .plate { width: 78%; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; }
+.fact { background: var(--surface); border-radius: 12px; padding: 8px 14px; font-size: .9rem; }
+.fact b { display: block; font-size: .7rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.note { margin: 18px 0 0; padding: 14px 18px; border-left: 3px solid var(--lime); background: var(--surface); border-radius: 0 12px 12px 0; font-family: var(--display); font-style: italic; font-size: 1.05rem; }
+.note small { display: block; font-family: var(--body); font-style: normal; font-size: .8rem; color: var(--muted); margin-top: 4px; }
+.sample { display: inline-block; font-size: .75rem; color: var(--muted); border: 1px dashed var(--muted); border-radius: 999px; padding: 2px 10px; margin-bottom: 12px; }
+
+.panel { background: var(--card); border-radius: 24px; padding: 24px; }
+.phead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.phead h2 { font-size: 1.6rem; }
+.phead .sub { font-size: .85rem; color: var(--muted); font-family: var(--body); font-weight: 400; margin-left: 8px; }
+.servings { display: flex; align-items: center; gap: 4px; background: var(--surface); border-radius: 999px; padding: 4px; }
+.servings button { width: 34px; height: 34px; border-radius: 50%; border: 0; background: var(--card); font-size: 1.1rem; }
+.servings output { min-width: 96px; text-align: center; font-size: .9rem; font-variant-numeric: tabular-nums; }
+
+.ings { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 12px; }
+.ing { position: relative; background: var(--surface); border: 2px solid transparent; border-radius: 16px; padding: 16px 10px 12px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.ing .e { font-size: 2.4rem; line-height: 1.1; }
+.ing .q { font-weight: 600; font-variant-numeric: tabular-nums; font-size: .95rem; }
+.ing .n { font-size: .85rem; color: var(--muted); line-height: 1.3; }
+.ing .tick { position: absolute; top: 8px; left: 8px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid #c9bfa9; display: grid; place-items: center; font-size: .75rem; color: #fff; }
+.ing[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); }
+.ing[aria-pressed="true"] .tick { background: var(--green); border-color: var(--green); }
+
+.map { display: flex; gap: 0; overflow-x: auto; padding: 4px 2px 14px; margin-bottom: 8px; }
+.map button { flex: 1 0 104px; background: none; border: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; padding: 0 4px; font-size: .8rem; color: var(--muted); text-align: center; }
+.map button::after { content: ""; position: absolute; top: 28px; left: calc(50% + 32px); right: calc(-50% + 32px); border-top: 2px dotted #c9bfa9; }
+.map button:last-child::after { display: none; }
+.map .dot { width: 56px; height: 56px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-size: 1.6rem; position: relative; }
+.map .dot i { position: absolute; top: -4px; left: -4px; width: 22px; height: 22px; border-radius: 50%; background: var(--green); color: #fff; font-style: normal; font-size: .72rem; font-weight: 600; display: grid; place-items: center; }
+.map button.done .dot { background: var(--green-soft); }
+
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.step { display: grid; grid-template-columns: 56px 1fr auto; gap: 16px; align-items: start; background: var(--surface); border-radius: 16px; padding: 16px; border: 2px solid transparent; text-align: left; width: 100%; }
+.step .num { width: 56px; height: 56px; border-radius: 14px; background: var(--card); display: grid; place-items: center; font-size: 1.7rem; position: relative; }
+.step .num i { position: absolute; bottom: -6px; right: -6px; width: 24px; height: 24px; border-radius: 50%; background: var(--green); color: #fff; font-style: normal; font-size: .75rem; font-weight: 600; display: grid; place-items: center; }
+.step h3 { font-family: var(--body); font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
+.step p { margin: 0; color: #3e4536; max-width: 65ch; }
+.step .time { font-size: .8rem; background: var(--card); border-radius: 999px; padding: 4px 10px; white-space: nowrap; color: var(--muted); font-variant-numeric: tabular-nums; }
+.step[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); }
+.step[aria-pressed="true"] h3 { text-decoration: line-through; text-decoration-color: rgba(47,74,42,.5); }
+.hint { font-size: .82rem; color: var(--muted); margin: 0 0 12px; }
+
+.video { display: grid; grid-template-columns: 1fr 1.4fr; gap: 20px; align-items: center; }
+.vbox { aspect-ratio: 16 / 9; border-radius: 16px; background: repeating-linear-gradient(-45deg, var(--surface) 0 14px, #e9e0cf 14px 28px); display: grid; place-items: center; text-align: center; color: var(--muted); padding: 16px; }
+.vbox .play { width: 64px; height: 64px; border-radius: 50%; background: var(--card); display: grid; place-items: center; margin: 0 auto 8px; font-size: 1.4rem; color: var(--green); }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--green); color: #fff; text-decoration: none; border-radius: 999px; padding: 12px 20px; font-weight: 500; }
+.tags { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; background: var(--surface); border-radius: 999px; padding: 14px 20px; font-size: .9rem; color: var(--green); }
+
+footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .85rem; }
+
+@media (max-width: 760px) {
+  .hero, .rhead, .video { grid-template-columns: 1fr; }
+  .hero { padding-top: 32px; }
+  .rhead { padding: 22px; }
+  .rhead .pic { order: -1; aspect-ratio: 4 / 3; }
+  .step { grid-template-columns: 48px 1fr; }
+  .step .num { width: 48px; height: 48px; }
+  .step .time { grid-column: 2; justify-self: start; }
+  .panel { padding: 18px; }
+  .tags { border-radius: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">Recetas de Memeyita<small>Cocina de familia</small></a>
+    <span class="count" id="count"></span>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer>
+  <div class="wrap">Recetas de mamá, de la abuela y de quienes han pasado por nuestra cocina. Las marcadas como “ejemplo” son para mostrar el formato y se reemplazan por las de la familia.</div>
+</footer>
+
+<script>
+/* ==========================================================
+   CÓMO AGREGAR UNA RECETA
+   Copia un bloque { ... } de la lista RECETAS y cambia los datos.
+   - id: palabra corta sin espacios ni acentos (se usa en el enlace: #arepas)
+   - categoria: "Desayunos" | "Platos fuertes" | "Dulces" | "Bebidas" (o crea otra)
+   - de: "Mamá" | "Abuela" | "Familia y amigos"
+   - c: cantidad numérica (se ajusta con las porciones). Usa null para "al gusto".
+   - video: enlace de YouTube cuando lo grabes (déjalo "" mientras tanto)
+   - foto: opcional; ruta a una foto del plato (ej. "fotos/arepas.jpg")
+   ========================================================== */
+const RECETAS = [
+  {
+    id: "arepas", titulo: "Arepas", categoria: "Desayunos", de: "Abuela", ejemplo: true,
+    plato: "🫓", color: "#eadfc6", tiempo: 35, porciones: 4, dificultad: "Fácil",
+    descripcion: "La base de todo desayuno: crujientes por fuera, suaves por dentro, listas para rellenar con lo que haya en la nevera.",
+    nota: "La masa está lista cuando no se pega en las manos ni se agrieta en los bordes.",
+    ingredientes: [
+      { e: "🌽", n: "Harina de maíz precocida", c: 2, u: "tazas" },
+      { e: "💧", n: "Agua tibia", c: 2.5, u: "tazas" },
+      { e: "🧂", n: "Sal", c: 1, u: "cdta" },
+      { e: "🫒", n: "Aceite", c: 1, u: "cda" },
+      { e: "🧀", n: "Queso o relleno", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🥣", t: "Mezclar agua y sal", d: "En un bol grande, disuelve la sal en el agua tibia y agrega el aceite." },
+      { e: "🌽", t: "Agregar la harina", d: "Añade la harina poco a poco mientras mezclas con la mano hasta que no queden grumos." },
+      { e: "⏳", t: "Reposar la masa", d: "Deja reposar unos minutos; la masa se pone firme y fácil de trabajar.", min: 5 },
+      { e: "👐", t: "Formar las arepas", d: "Haz bolitas del tamaño de una mandarina y aplánalas entre las palmas hasta 1,5 cm de grosor." },
+      { e: "🔥", t: "Cocinar en el budare", d: "En budare o sartén a fuego medio, cocina cada lado hasta que se forme una costra dorada. Suenan huecas al tocarlas.", min: 15 },
+      { e: "🧀", t: "Abrir y rellenar", d: "Ábrelas con un cuchillo por el borde, unta mantequilla y rellena." }
+    ],
+    video: ""
+  },
+  {
+    id: "cachapas", titulo: "Cachapas", categoria: "Desayunos", de: "Mamá", ejemplo: true,
+    plato: "🥞", color: "#f1e2a8", tiempo: 25, porciones: 4, dificultad: "Fácil",
+    descripcion: "Panquecas de maíz tierno, dulces y saladas a la vez, dobladas sobre queso de mano que se derrite.",
+    nota: "Si el maíz está muy jugoso, agrega un poco más de harina para que la mezcla no se corra.",
+    ingredientes: [
+      { e: "🌽", n: "Maíz tierno desgranado", c: 3, u: "tazas" },
+      { e: "🥛", n: "Leche", c: 0.5, u: "taza" },
+      { e: "🌾", n: "Harina de maíz precocida", c: 0.25, u: "taza" },
+      { e: "🍬", n: "Azúcar", c: 3, u: "cdas" },
+      { e: "🧂", n: "Sal", c: 0.5, u: "cdta" },
+      { e: "🧈", n: "Mantequilla", c: 2, u: "cdas" },
+      { e: "🧀", n: "Queso de mano", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🌀", t: "Licuar el maíz", d: "Licúa el maíz con la leche hasta obtener una mezcla espesa con algo de textura." },
+      { e: "🥣", t: "Completar la mezcla", d: "Agrega la harina, el azúcar y la sal. Mezcla bien." },
+      { e: "🧈", t: "Engrasar el budare", d: "Calienta el budare a fuego medio y úntalo con mantequilla." },
+      { e: "🔥", t: "Cocinar", d: "Vierte media taza de mezcla, extiéndela en círculo y voltea cuando los bordes estén dorados.", min: 8 },
+      { e: "🧀", t: "Rellenar y doblar", d: "Pon el queso sobre la cachapa caliente y dóblala por la mitad." }
+    ],
+    video: ""
+  },
+  {
+    id: "pabellon", titulo: "Pabellón criollo", categoria: "Platos fuertes", de: "Abuela", ejemplo: true,
+    plato: "🍛", color: "#d9c3a5", tiempo: 150, porciones: 6, dificultad: "Media",
+    descripcion: "Carne mechada, caraotas negras, arroz blanco y tajadas. El plato del domingo.",
+    nota: "La carne queda mejor si la mechas todavía tibia.",
+    ingredientes: [
+      { e: "🥩", n: "Falda de res", c: 1, u: "kg" },
+      { e: "🧅", n: "Cebolla", c: 1, u: "" },
+      { e: "🫑", n: "Pimentón rojo", c: 1, u: "" },
+      { e: "🧄", n: "Dientes de ajo", c: 3, u: "" },
+      { e: "🍅", n: "Tomates", c: 2, u: "" },
+      { e: "🌿", n: "Comino", c: 1, u: "cdta" },
+      { e: "🫘", n: "Caraotas negras cocidas", c: 2, u: "tazas" },
+      { e: "🍚", n: "Arroz blanco", c: 2, u: "tazas" },
+      { e: "🍌", n: "Plátanos maduros", c: 2, u: "" },
+      { e: "🫒", n: "Aceite", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🍲", t: "Hervir la carne", d: "Cocina la falda en agua con sal hasta que esté muy suave. Guarda un poco del caldo.", min: 90 },
+      { e: "🥩", t: "Mechar", d: "Deja entibiar y deshilacha la carne con dos tenedores o con las manos." },
+      { e: "🧅", t: "Hacer el sofrito", d: "Sofríe la cebolla, el pimentón y el ajo picados; agrega el tomate y el comino.", min: 10 },
+      { e: "🥘", t: "Guisar la carne", d: "Incorpora la carne mechada con un chorrito de caldo y cocina a fuego bajo.", min: 20 },
+      { e: "🫘", t: "Caraotas y arroz", d: "Calienta las caraotas con un poco de sofrito y prepara el arroz blanco.", min: 20 },
+      { e: "🍌", t: "Freír las tajadas", d: "Corta el plátano en diagonal y fríe hasta que esté dorado y caramelizado." },
+      { e: "🍽️", t: "Servir", d: "Arma el plato con el arroz, la carne, las caraotas y las tajadas a un lado." }
+    ],
+    video: ""
+  },
+  {
+    id: "quesillo", titulo: "Quesillo", categoria: "Dulces", de: "Mamá", ejemplo: true,
+    plato: "🍮", color: "#ecd2a0", tiempo: 75, porciones: 8, dificultad: "Media",
+    descripcion: "Flan venezolano con sus huequitos, bañado en caramelo. Se hace un día antes.",
+    nota: "Los huequitos salen de licuar bien los huevos; no le tengas miedo a la licuadora.",
+    ingredientes: [
+      { e: "🥫", n: "Leche condensada", c: 1, u: "lata" },
+      { e: "🥛", n: "Leche entera (misma lata)", c: 1, u: "lata" },
+      { e: "🥚", n: "Huevos", c: 5, u: "" },
+      { e: "🍶", n: "Vainilla", c: 1, u: "cdta" },
+      { e: "🍬", n: "Azúcar para el caramelo", c: 1, u: "taza" }
+    ],
+    pasos: [
+      { e: "🍯", t: "Hacer el caramelo", d: "Derrite el azúcar en la quesillera a fuego medio hasta que esté ámbar y cubre el fondo y los lados.", min: 8 },
+      { e: "🌀", t: "Licuar", d: "Licúa la leche condensada, la leche, los huevos y la vainilla." },
+      { e: "🫗", t: "Verter", d: "Vierte la mezcla sobre el caramelo y tapa la quesillera." },
+      { e: "♨️", t: "Baño de María", d: "Cocina en baño de María a fuego bajo hasta que al insertar un palillo salga limpio.", min: 50 },
+      { e: "❄️", t: "Enfriar", d: "Deja enfriar y lleva a la nevera mínimo 4 horas." },
+      { e: "🍮", t: "Desmoldar", d: "Pasa un cuchillo por el borde y voltea sobre un plato hondo." }
+    ],
+    video: ""
+  },
+  {
+    id: "papelon", titulo: "Papelón con limón", categoria: "Bebidas", de: "Familia y amigos", ejemplo: true,
+    plato: "🍋", color: "#dfe6b8", tiempo: 20, porciones: 8, dificultad: "Fácil",
+    descripcion: "La bebida fría de la casa: papelón disuelto con limón recién exprimido y mucho hielo.",
+    nota: "Pruébalo antes de servir: cada papelón endulza distinto.",
+    ingredientes: [
+      { e: "🟫", n: "Papelón (panela)", c: 500, u: "g" },
+      { e: "💧", n: "Agua", c: 2, u: "litros" },
+      { e: "🍋", n: "Limones", c: 4, u: "" },
+      { e: "🧊", n: "Hielo", c: null, u: "al gusto" }
+    ],
+    pasos: [
+      { e: "🔪", t: "Rallar el papelón", d: "Ralla o pica el papelón para que se disuelva más rápido." },
+      { e: "💧", t: "Disolver", d: "Mezcla con el agua y revuelve hasta que no queden trozos. Puedes calentarlo a fuego bajo.", min: 10 },
+      { e: "🍋", t: "Agregar el limón", d: "Ya frío, añade el jugo de los limones y ajusta al gusto." },
+      { e: "🧊", t: "Servir", d: "Sirve en vasos con bastante hielo." }
+    ],
+    video: ""
+  }
+];
+
+const CATEGORIAS = ["Todas", ...new Set(RECETAS.map(r => r.categoria))];
+const ORIGENES = ["Mamá", "Abuela", "Familia y amigos"];
+
+const state = { cat: "Todas", de: null, q: "", servings: {}, checks: {} };
+try { Object.assign(state.checks, JSON.parse(localStorage.getItem("memeyita-checks") || "{}")); } catch (e) {}
+function saveChecks() { try { localStorage.setItem("memeyita-checks", JSON.stringify(state.checks)); } catch (e) {} }
+
+const app = document.getElementById("app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const tiempo = m => m >= 60 ? `${Math.floor(m / 60)} h${m % 60 ? " " + (m % 60) + " min" : ""}` : `${m} min`;
+const norm = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+
+function fmt(n) {
+  const whole = Math.floor(n + 1e-9), frac = n - whole;
+  const fr = [[0, ""], [0.25, "¼"], [1 / 3, "⅓"], [0.5, "½"], [2 / 3, "⅔"], [0.75, "¾"], [1, ""]];
+  let best = fr[0];
+  for (const f of fr) if (Math.abs(frac - f[0]) < Math.abs(frac - best[0])) best = f;
+  if (n >= 20) return String(Math.round(n));
+  const w = best[0] === 1 ? whole + 1 : whole;
+  if (Math.abs(frac - best[0]) > 0.09) return n.toFixed(1).replace(".", ",");
+  return (w ? w : "") + best[1] || "0";
+}
+
+function ytEmbed(url) {
+  if (!url) return "";
+  const m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  return m ? `https://www.youtube-nocookie.com/embed/${m[1]}` : "";
+}
+
+function plato(r) {
+  return `<div class="plate">${r.foto ? `<img src="${esc(r.foto)}" alt="${esc(r.titulo)}">` : `<span aria-hidden="true">${r.plato}</span>`}</div>`;
+}
+
+function renderHome() {
+  const q = norm(state.q);
+  const list = RECETAS.filter(r =>
+    (state.cat === "Todas" || r.categoria === state.cat) &&
+    (!state.de || r.de === state.de) &&
+    (!q || norm(r.titulo + " " + r.descripcion + " " + r.ingredientes.map(i => i.n).join(" ")).includes(q))
+  );
+  app.innerHTML = `
+    <section class="wrap hero">
+      <div>
+        <h1>Lo que se cocina <em>en casa</em>, guardado para siempre.</h1>
+        <p>Las recetas de mamá, de la abuela y las que hemos ido sumando en el camino, paso a paso y con fotos de cada ingrediente.</p>
+      </div>
+      <label class="search" for="q">
+        <span aria-hidden="true">🔎</span>
+        <input id="q" type="search" placeholder="Busca una receta o un ingrediente" value="${esc(state.q)}">
+      </label>
+    </section>
+    <section class="wrap filters" aria-label="Filtros">
+      <div class="tabs" role="group" aria-label="Categoría">
+        ${CATEGORIAS.map(c => `<button class="tab" data-cat="${esc(c)}" aria-pressed="${state.cat === c}">${esc(c)}</button>`).join("")}
+      </div>
+      <div class="chips" role="group" aria-label="Receta de">
+        <span>Receta de:</span>
+        ${ORIGENES.map(o => `<button class="chip" data-de="${esc(o)}" aria-pressed="${state.de === o}">${esc(o)}</button>`).join("")}
+      </div>
+    </section>
+    <section class="wrap grid">
+      ${list.map(r => `
+        <button class="card" data-go="${r.id}">
+          <div class="pic" style="background:${r.color}">
+            ${plato(r)}
+            ${r.ejemplo ? `<span class="badge">Ejemplo</span>` : ""}
+            ${r.video ? `<span class="badge video">▶ Video</span>` : ""}
+          </div>
+          <h3>${esc(r.titulo)}</h3>
+          <p>${esc(r.descripcion)}</p>
+          <div class="meta"><span>⏱ ${tiempo(r.tiempo)}</span><span>🍽 ${r.porciones} porciones</span><span>De ${esc(r.de)}</span></div>
+        </button>`).join("") || `<p class="empty">No hay recetas con esos filtros. Prueba con otra categoría o borra la búsqueda.</p>`}
+    </section>`;
+  document.getElementById("count").textContent = `${RECETAS.length} recetas`;
+
+  const qi = document.getElementById("q");
+  qi.addEventListener("input", e => {
+    state.q = e.target.value;
+    const pos = e.target.selectionStart;
+    renderHome();
+    const n = document.getElementById("q"); n.focus(); n.setSelectionRange(pos, pos);
+  });
+  app.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { state.cat = b.dataset.cat; renderHome(); });
+  app.querySelectorAll("[data-de]").forEach(b => b.onclick = () => { state.de = state.de === b.dataset.de ? null : b.dataset.de; renderHome(); });
+  app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { location.hash = b.dataset.go; });
+}
+
+function renderRecipe(r) {
+  const s = state.servings[r.id] || r.porciones;
+  const k = r.porciones ? s / r.porciones : 1;
+  const ch = state.checks[r.id] || (state.checks[r.id] = { i: [], p: [] });
+  const ready = ch.i.length;
+
+  app.innerHTML = `
+    <article class="wrap recipe">
+      <button class="back" id="back">← Todas las recetas</button>
+
+      <section class="rhead">
+        <div>
+          ${r.ejemplo ? `<span class="sample">Receta de ejemplo</span>` : ""}
+          <h1>${esc(r.titulo)}</h1>
+          <p class="desc">${esc(r.descripcion)}</p>
+          <div class="facts">
+            <div class="fact"><b>Tiempo</b>${tiempo(r.tiempo)}</div>
+            <div class="fact"><b>Porciones</b>${r.porciones}</div>
+            <div class="fact"><b>Dificultad</b>${esc(r.dificultad)}</div>
+            <div class="fact"><b>Receta de</b>${esc(r.de)}</div>
+          </div>
+          ${r.nota ? `<p class="note">“${esc(r.nota)}”<small>Truco de ${esc(r.de === "Familia y amigos" ? "la familia" : r.de.toLowerCase())}</small></p>` : ""}
+        </div>
+        <div class="pic" style="background:${r.color}">${plato(r)}</div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-ing">
+        <div class="phead">
+          <h2 id="h-ing">Ingredientes<span class="sub">${ready} de ${r.ingredientes.length} listos</span></h2>
+          <div class="servings" role="group" aria-label="Porciones">
+            <button id="minus" aria-label="Menos porciones">−</button>
+            <output aria-live="polite">${s} porciones</output>
+            <button id="plus" aria-label="Más porciones">+</button>
+          </div>
+        </div>
+        <p class="hint">Toca cada ingrediente cuando lo tengas listo en la mesa.</p>
+        <div class="ings">
+          ${r.ingredientes.map((g, i) => `
+            <button class="ing" data-i="${i}" aria-pressed="${ch.i.includes(i)}">
+              <span class="tick" aria-hidden="true">✓</span>
+              <span class="e" aria-hidden="true">${g.e}</span>
+              <span class="q">${g.c == null ? esc(g.u) : fmt(g.c * k) + (g.u ? " " + esc(g.u) : "")}</span>
+              <span class="n">${esc(g.n)}</span>
+            </button>`).join("")}
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-pasos">
+        <div class="phead"><h2 id="h-pasos">Pasos<span class="sub">${ch.p.length} de ${r.pasos.length} hechos</span></h2></div>
+        <nav class="map" aria-label="Resumen de pasos">
+          ${r.pasos.map((p, i) => `
+            <button data-jump="${i}" class="${ch.p.includes(i) ? "done" : ""}">
+              <span class="dot"><i>${i + 1}</i><span aria-hidden="true">${p.e}</span></span>
+              ${esc(p.t)}
+            </button>`).join("")}
+        </nav>
+        <div class="steps">
+          ${r.pasos.map((p, i) => `
+            <button class="step" id="paso-${i}" data-p="${i}" aria-pressed="${ch.p.includes(i)}">
+              <span class="num"><span aria-hidden="true">${p.e}</span><i>${i + 1}</i></span>
+              <span><h3>${esc(p.t)}</h3><p>${esc(p.d)}</p></span>
+              ${p.min ? `<span class="time">⏱ ${tiempo(p.min)}</span>` : "<span></span>"}
+            </button>`).join("")}
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-video">
+        <div class="video">
+          ${ytEmbed(r.video)
+            ? `<iframe class="vbox" style="border:0;padding:0;width:100%" src="${ytEmbed(r.video)}" title="Video: ${esc(r.titulo)}" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+            : `<div class="vbox"><div><div class="play" aria-hidden="true">▶</div>${r.video ? "Video disponible" : "Video próximamente"}</div></div>`}
+          <div>
+            <h2 id="h-video" style="font-size:1.6rem">Míralo en video</h2>
+            <p style="color:var(--muted);max-width:42ch">${r.video
+              ? "Prepárala conmigo paso a paso."
+              : "Todavía no hemos grabado esta receta. Cuando la preparemos en casa, el video aparecerá aquí."}</p>
+            ${r.video ? `<a class="btn" href="${esc(r.video)}" target="_blank" rel="noopener">▶ Ver el video</a>` : ""}
+          </div>
+        </div>
+      </section>
+
+      <div class="tags"><span>🏡 Receta de familia</span><span>🍽 ${esc(r.categoria)}</span><span>⏱ ${tiempo(r.tiempo)}</span></div>
+    </article>`;
+  document.getElementById("count").textContent = r.titulo;
+
+  document.getElementById("back").onclick = () => { location.hash = ""; };
+  document.getElementById("minus").onclick = () => { state.servings[r.id] = Math.max(1, s - 1); keep(() => renderRecipe(r)); };
+  document.getElementById("plus").onclick = () => { state.servings[r.id] = s + 1; keep(() => renderRecipe(r)); };
+  app.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { toggle(ch.i, +b.dataset.i); keep(() => renderRecipe(r)); });
+  app.querySelectorAll("[data-p]").forEach(b => b.onclick = () => { toggle(ch.p, +b.dataset.p); keep(() => renderRecipe(r)); });
+  app.querySelectorAll("[data-jump]").forEach(b => b.onclick = () => {
+    document.getElementById("paso-" + b.dataset.jump).scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
+
+function toggle(arr, v) { const i = arr.indexOf(v); i < 0 ? arr.push(v) : arr.splice(i, 1); saveChecks(); }
+function keep(fn) { const y = window.scrollY; const id = document.activeElement && document.activeElement.id; const di = document.activeElement && (document.activeElement.dataset.i ?? document.activeElement.dataset.p); fn(); window.scrollTo(0, y); }
+
+function route() {
+  const id = location.hash.slice(1);
+  const r = RECETAS.find(x => x.id === id);
+  if (r) { renderRecipe(r); window.scrollTo(0, 0); } else renderHome();
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
